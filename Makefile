@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/05/28 15:05:48 by jlu              ###   ########.fr        #
+#    Updated: 2024/05/30 15:40:25 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,15 @@ NAME = minishell
 
 LIBFT = ./libft/libft.a	
 
-SRC = 
+SRC = ./src/main.c \
+	  ./src/shell_util.c \
 
 #BSRC =
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+# needs include
+#RLFLAG = -lreadline
 
 # -g
 # -fsanitize=address
@@ -44,9 +47,9 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
 		@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
-		@$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) $(LIBFT)
+		@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -lreadline -o $(NAME)
 		@echo "$(CYAN)--------------------------------"
-		@echo "$(NAME) = Let's get piping!"
+		@echo "$(NAME) = Who threw the blue shell!"
 		@echo "$(CYAN)--------------------------------$(RESET)"
 
 $(LIBFT):

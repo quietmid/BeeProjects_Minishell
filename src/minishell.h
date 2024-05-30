@@ -6,14 +6,14 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/05/29 16:50:09 by jlu              ###   ########.fr       */
+/*   Updated: 2024/05/30 15:38:59 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//libft
+//libft library
 # include "../libft/libft.h"
 
 //library headers
@@ -27,5 +27,18 @@
 
 # include <readline/readline.h>
 # include <readline/history.h>
- 
+
+//struct
+
+typedef struct s_data
+{
+	char *path;
+}		t_data;
+
+//functions
+
+//utils
+
+char	*find_path(char **envp);
+
 #endif
