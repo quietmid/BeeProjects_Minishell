@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/05/30 15:40:25 by jlu              ###   ########.fr        #
+#    Updated: 2024/05/30 17:03:30 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ LIBFT = ./libft/libft.a
 
 SRC = ./src/main.c \
 	  ./src/shell_util.c \
+	  ./src/init.c \
 
 #BSRC =
 

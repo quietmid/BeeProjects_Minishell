@@ -6,13 +6,14 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/05/30 15:42:59 by jlu              ###   ########.fr       */
+/*   Updated: 2024/05/30 16:56:02 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_minishell(t_data *data)
+void ft_minishell(void)
+//void ft_minishell(t_data *data)
 {
 	int file;
 	char *line;
@@ -23,7 +24,7 @@ void ft_minishell(t_data *data)
 		exit(EXIT_FAILURE);
 	line = readline("minishell-8.8$ ");
 	end = "exit";
-	while (ft_strcmp(line, end) != 0)
+	while (ft_strcmp(line, end) != 0) // later on, we will switch to just while (1)? because typing exit will be a command
 	{
 		ft_putstr_fd(line, file);
 		// if (parse the line == cmd)
@@ -46,7 +47,8 @@ int main(int ac, char **ag, char **envp)
 	data.path = find_path(envp);
 	if (ac != 1) // probably don't need
 		return (0);
-	ft_minishell(&data);
+	signal_setup();
+	ft_minishell();
 	// start the program
 	// free all the shit
 	return (0);
