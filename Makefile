@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/05/30 17:03:30 by jlu              ###   ########.fr        #
+#    Updated: 2024/05/31 15:45:35 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ RESET     := \x1b[0m #reseting the text formatting to default state
 
 OBJECTS_DIR = obj
 OBJECTS = $(addprefix $(OBJECTS_DIR)/,$(notdir $(SRC:.c=.o)))
-#BOBJECTS = $(addprefix $(OBJECTS_DIR)/,$(notdir $(BSRC:.c=.o)))
+BOBJECTS = $(addprefix $(OBJECTS_DIR)/,$(notdir $(BSRC:.c=.o)))
 
 all: $(NAME)
 
@@ -83,12 +83,11 @@ clean:
 		@rm -rf .bonus
 		@rm -rf .here_doc_temp
 		@rm -rf obj
-		@echo "$(WHITE) $(OBJECTS_DIR) $(GREEN) REMOVED"
 
 fclean: clean
 		@$(MAKE) fclean -C ./libft
 		@rm -rf $(NAME)
-		@echo "$(WHITE) $(PROJECT) $(RESET) $(GREEN) SO CLEANED"
+		@echo "$(WHITE) $(PROJECT) $(RESET) $(GREEN) FULLY CLEANED"
 
 re: fclean all
 

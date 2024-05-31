@@ -6,11 +6,14 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/17 16:27:29 by jlu               #+#    #+#              #
-#    Updated: 2024/04/08 15:02:17 by jlu              ###   ########.fr        #
+#    Updated: 2024/05/31 15:46:55 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+PROJECT = libft
 NAME = libft.a
+
+LIBH = libft.h
 
 SRC = ft_atoi.c \
 	  ft_bzero.c \
@@ -64,27 +67,43 @@ BSRC = ft_lstnew_bonus.c \
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-OBJECTS = $(SRC:.c=.o)
+#Color ANSI Code
+BOLD   := \033[1m./SRC/
+RED    := \033[31;1m
+GREEN  := \033[32;1m
+YELLOW := \033[33;1m
+BLUE   := \033[34;1m
+MAGENTA   := \033[35;1m
+CYAN      := \033[36;1m
+WHITE     := \033[37;1m
+RESET     := \x1b[0m #reseting the text formatting to default state
 
-BOBJECTS = $(BSRC:.c=.o)
+OBJECTS_DIR = obj
+OBJECTS = $(addprefix $(OBJECTS_DIR)/,$(notdir $(SRC:.c=.o)))
+BOBJECTS = $(addprefix $(OBJECTS_DIR)/,$(notdir $(BSRC:.c=.o)))
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(BOBJECTS)
-	ar rcs $(NAME) $(OBJECTS) $(BOBJECTS)
+		@ar rcs $(NAME) $(OBJECTS) $(BOBJECTS)
+		@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
+		@echo "$(CYAN)--------------------------------"
+		@echo "$(NAME) = LIBFT at your service"
+		@echo "$(CYAN)--------------------------------$(RESET)"
 
-bonus: .bonus
-
-.bonus: $(OBJECTS) $(BOBJECTS)
-	ar rcs $(NAME) $(OBJECTS) $(BOBJECTS)
-	touch .bonus
-
+$(OBJECTS_DIR)/%.o: ./%.c 
+		@mkdir -p $(OBJECTS_DIR)
+		@$(CC) $(CFLAGS) -c -o $@ $^ 
+		
 clean: 
-	rm -f $(OBJECTS) $(BOBJECTS) .bonus
+		@rm -rf $(OBJECTS_DIR)/*.o
+		@rm -rf .bonus
+		@rm -rf obj
 
 fclean: clean
-	rm -f $(NAME) 
+	@rm -f $(NAME)
+	@echo "$(WHITE) $(PROJECT) $(RESET) $(GREEN) LIBFT SERVICE COMPLETED"
 	
-re: fclean all
+re: fclean all 
 
 .PHONY: all clean fclean re bonus
