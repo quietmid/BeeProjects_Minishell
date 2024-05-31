@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/05/30 17:33:05 by jlu              ###   ########.fr       */
+/*   Updated: 2024/05/31 15:49:29 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@
 
 void	sigint_handler(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT) // if ctrl - c. new line and print the name again
 		readline("\nminishell-8.8$ ");
-	else if (sig == SIGKILL)
+	else if (sig == SIGKILL) // if ctrl - d, print exit and exit minishell
 	{
-		printf("exit");
-		exit(EXIT_SUCCESS) ;
+		readline("exit\n");
 	}
 }
 /*
@@ -40,5 +39,6 @@ void	sigint_handler(int sig)
 void	signal_setup(void)
 {
 	signal(SIGINT, sigint_handler);
+	signal(SIGKILL, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
