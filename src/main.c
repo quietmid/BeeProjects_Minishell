@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/01 17:00:27 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:27:11 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	exec_fork(t_data *data)
 	printf("%s\n", path_cmd);
 	if (pid == 0)
 	{
+		signal_setup(SIG_CHILD);
 		printf("in child");
 		if (execve(path_cmd, data->line, data->envp) == -1)
 			printf("fail\n");
@@ -81,44 +82,34 @@ void	execute(t_data	*data)
 }
 void	ft_minishell(t_data *data)
 {
-	//int file;
 	char *line;
-	// char *end;
 
-	// file = open(".temp", O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	// if (file < 0) // 
-	// 	exit(EXIT_FAILURE);
-	// line = readline("minishell-8.8$ ");
-	// end = "exit";
-	//while (ft_strcmp(line, end) != 0) // later on, we will switch to just while (1)? because typing exit will be a command
 	while (1)
 	{
-		//ft_putstr_fd(line, file);
-		// if (parse the line == cmd)
-		// 		execute the cmd
-		// else
-		// 		minishell-8.8$: "line": command not found
+		signal_setup(SIG_PARENT);
 		line = readline("minishell-8.8$ ");
+		if (line == NULL)
+		{
+			ft_putstr_fd("exit\n", 1);
+			line = "exit";
+		}
 		parse(data, line);
 		execute(data);
 		free(line);
-		//line = readline("minishell-8.8$ ");
 	}
 	free(line);
-	//unlink(".temp"); // unlink temp when all finished
 }
 
 
 int main(int ac, char **ag, char **envp)
 {
 	t_data	data;
+	
 	data = (t_data){0};
-	ag = NULL;
+	(void)ac;
+	(void)ag;
 	data.envp = envp;
 	data.paths = get_paths(envp);
-	if (ac != 1) // probably don't need
-		return (0);
-	signal_setup();
 	ft_minishell(&data);
 	// start the program
 	// free all the shit

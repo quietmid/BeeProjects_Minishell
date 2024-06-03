@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/03 13:53:47 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/03 15:15:40 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,19 @@
 # include <string.h>
 # include <sys/types.h>
 # include <signal.h>
+# include <termios.h>
 
 # include <readline/readline.h>
 # include <readline/history.h>
 
 //struct
+
+typedef enum e_mode
+{
+		SIG_PARENT = 0,
+		SIG_HEREDOC = 1,
+		SIG_CHILD = 2,
+}		t_mode;
 
 typedef struct s_data
 {
@@ -46,7 +54,7 @@ void	exec_builtin(t_data *data);
 //shell utils
 char	*find_path(char **envp);
 char	**get_paths(char **envp);
-void	signal_setup(void);
+void	signal_setup(int mode);
 void	sig_handler(int sig);
 void	rl_replace_line(const char *text, int clear_undo);
 

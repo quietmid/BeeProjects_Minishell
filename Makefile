@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/03 13:53:16 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/03 16:28:29 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT = ./libft/libft.a
 
 SRC = ./src/main.c \
 	  ./src/shell_util.c \
-	  ./src/init.c \
+	  ./src/signal.c \
 	  .src/builtin.c \
 	  .src/utils.c \
 
@@ -55,7 +55,7 @@ $(NAME): $(LIBFT) $(OBJECTS)
 		@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
 		@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -lreadline -lhistory -L $(RL_LIB) -I$(RL_HEADER) -o $(NAME)
 		@echo "$(CYAN)--------------------------------"
-		@echo "$(NAME) = Who threw the blue shell!"
+		@echo "$(NAME) = Who threw the red shell!"
 		@echo "$(CYAN)--------------------------------$(RESET)"
 
 $(LIBFT):
@@ -73,7 +73,7 @@ $(OBJECTS_DIR)/%.o: ./SRC/%.c
 #		@touch .bonus
 #		@$(CC) $(CFLAGS) $(BOBJECTS) $(LIBFT) -o $(NAME)
 #		@echo "$(CYAN)--------------------------------"
-#		@echo "$(NAME) = you have activated my bonus 😏!"
+#		@echo "$(NAME) = God damn blue shell!"
 #		@echo "$(CYAN)--------------------------------$(RESET)"
 #		@rm -f $(OBJECTS)
 
