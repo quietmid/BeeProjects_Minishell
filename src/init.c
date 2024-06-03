@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/05/31 15:49:29 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/03 13:50:29 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,24 @@
 * this handles the signals like ctrl - c | ctrl \ | ctrl d
 */
 
-void	sigint_handler(int sig)
+void	sig_handler(int sig)
 {
-	if (sig == SIGINT) // if ctrl - c. new line and print the name again
-		readline("\nminishell-8.8$ ");
-	else if (sig == SIGKILL) // if ctrl - d, print exit and exit minishell
+	if (sig == SIGINT)
 	{
-		readline("exit\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		write (1, "\n", 1);
+		rl_display();
 	}
 }
 /*
 * SIGINT - interrupt signal (ctrl + c)
-* SIGKILL - Kill signal 
 * SIGQUIT - ctrl + \  does nothing
-*           ctrl + d
+* EOF          ctrl + d
 */
 
 void	signal_setup(void)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGKILL, sigint_handler);
+	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

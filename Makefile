@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/01 18:45:32 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/06/03 13:52:30 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,9 @@ SRC = ./src/main.c \
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+
+RL_HEADER = ~/.brew/Cellar/readline/8.2.10/include
+RL_LIB = ~/.brew/Cellar/readline/8.2.10/lib
 # needs include
 #RLFLAG = -lreadline
 
@@ -50,7 +53,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
 		@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
-		@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -lreadline -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -lreadline -lhistory -L $(RL_LIB) -I(RL_HEADER) -o $(NAME)
 		@echo "$(CYAN)--------------------------------"
 		@echo "$(NAME) = Who threw the blue shell!"
 		@echo "$(CYAN)--------------------------------$(RESET)"
