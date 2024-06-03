@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/03 13:53:47 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/03 20:40:58 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define TRUE 1
+# define FALSE 0
 //struct
 
 typedef struct s_data
 {
 	char	**envp;
 	char	**paths;
+	char	*pwd;
 	char	**line;
 }		t_data;
 
@@ -42,9 +45,11 @@ typedef struct s_data
 //builtin
 int		is_builtin(t_data *data);
 void	exec_builtin(t_data *data);
+void	run_echo(t_data *data);
+void	run_pwd(t_data *data);
 
 //shell utils
-char	*find_path(char **envp);
+char	*get_pwd(char **envp);
 char	**get_paths(char **envp);
 void	signal_setup(void);
 void	sig_handler(int sig);

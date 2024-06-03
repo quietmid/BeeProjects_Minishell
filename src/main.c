@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/01 17:00:27 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:42:54 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	parse(t_data *data, const char *line)
 
 void	execute(t_data	*data)
 {
-	if (is_builtin(data) == 1)
+	if (is_builtin(data) == TRUE)
 		exec_builtin(data);
 	else
 		exec_fork(data);
@@ -116,6 +116,7 @@ int main(int ac, char **ag, char **envp)
 	ag = NULL;
 	data.envp = envp;
 	data.paths = get_paths(envp);
+	data.pwd = get_pwd(envp);
 	if (ac != 1) // probably don't need
 		return (0);
 	signal_setup();

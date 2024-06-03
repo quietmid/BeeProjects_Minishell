@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:36:15 by jlu               #+#    #+#             */
-/*   Updated: 2024/05/31 22:23:16 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:32:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,23 @@
 // 	return (cmd);
 // }
 
-char	*find_path(char **envp)
+char	*find_in_envp(char **envp, char *str)
 {
 	int	i;
+	int	len;
 
-	if (!envp || !*envp)
-		*envp = "PATH=/bin:/usr/bin";
+	len = ft_strlen(str);
+
+	// if (!envp || !*envp)
+	// 	*envp = "PATH=/bin:/usr/bin"; ???
 	i = 0;
-	while (ft_strncmp("PATH", *envp, 4))
+	while (ft_strncmp(*envp, str, len))
 	{
 		envp++;
 		if (!*envp)
 			return (NULL);
 	}
-	return (*envp + 5);
+	return (*envp + (len + 1));
 }
 
 /*
@@ -54,8 +57,24 @@ char	**get_paths(char **envp)
 
 	// if (!envp || !envp[0])
 	// 	return (1); //exit error?
-	paths = ft_split(find_path(envp), ':');
+	paths = ft_split(find_in_envp(envp, "PATH"), ':');
 	// if (!paths)
 	// 	"malloc error"
 	return (paths);
+}
+
+/*
+* get the pwd from the env
+*/
+char	*get_pwd(char **envp)
+{
+	char	*pwd;
+
+	if (!envp || !*envp)
+		pwd = getcwd(NULL, 0);
+	else
+		pwd = find_in_envp(envp, "PWD");
+		// if (!paths)
+		// 	"malloc error"
+	return (pwd);
 }
