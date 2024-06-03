@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
+#    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/05/31 15:45:35 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/01 18:45:32 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ LIBFT = ./libft/libft.a
 SRC = ./src/main.c \
 	  ./src/shell_util.c \
 	  ./src/init.c \
+	  .src/builtin.c \
+	  .src/utils.c \
 
 #BSRC =
 

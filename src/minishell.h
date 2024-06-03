@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/05/30 16:56:37 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/01 18:27:06 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,24 @@
 
 typedef struct s_data
 {
-	char *path;
+	char	**envp;
+	char	**paths;
+	char	**line;
 }		t_data;
 
 //functions
 
-//utils
+//builtin
+int		is_builtin(t_data *data);
+void	exec_builtin(t_data *data);
 
+//shell utils
 char	*find_path(char **envp);
+char	**get_paths(char **envp);
 void	signal_setup(void);
 void	sigint_handler(int sig);
+
+//basic utils
+int		ft_arrlen(char **array);
 
 #endif
