@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/03 13:52:30 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/03 13:53:16 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
 		@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
-		@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -lreadline -lhistory -L $(RL_LIB) -I(RL_HEADER) -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -lreadline -lhistory -L $(RL_LIB) -I$(RL_HEADER) -o $(NAME)
 		@echo "$(CYAN)--------------------------------"
 		@echo "$(NAME) = Who threw the blue shell!"
 		@echo "$(CYAN)--------------------------------$(RESET)"

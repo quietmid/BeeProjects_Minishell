@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/03 13:48:27 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/03 13:53:47 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*find_path(char **envp);
 char	**get_paths(char **envp);
 void	signal_setup(void);
 void	sig_handler(int sig);
+void	rl_replace_line(const char *text, int clear_undo);
 
 //basic utils
 int		ft_arrlen(char **array);
