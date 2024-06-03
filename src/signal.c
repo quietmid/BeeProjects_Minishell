@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/03 16:28:16 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/03 16:55:08 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ void	sig_handler(int sig)
 		rl_redisplay(); // Redisplay the prompt and input line;
 	}
 }
+void	heredoc_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write (1, "\n", 1);
+		//close (); we need to close whatever we have been writing into
+	}
+}
 /*
 * SIGINT - interrupt signal (ctrl + c)
 * SIGQUIT - ctrl + \  does nothing
@@ -50,12 +58,11 @@ void	signal_setup(int mode)
 	{
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
-		
 	}
 	else if (mode == SIG_HEREDOC)
 	{
-		
-
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_CHILD)
 	{
