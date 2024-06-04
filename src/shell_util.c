@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:36:15 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/03 20:32:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:45:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*find_in_envp(char **envp, char *str)
 	int	len;
 
 	len = ft_strlen(str);
-
 	// if (!envp || !*envp)
 	// 	*envp = "PATH=/bin:/usr/bin"; ???
 	i = 0;
@@ -70,8 +69,10 @@ char	*get_pwd(char **envp)
 {
 	char	*pwd;
 
-	if (!envp || !*envp)
+	if (!envp || !*envp) // maybe need to recheck if necessary
 		pwd = getcwd(NULL, 0);
+		// if (!pwd)
+		// 	error
 	else
 		pwd = find_in_envp(envp, "PWD");
 		// if (!paths)

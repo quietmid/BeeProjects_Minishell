@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:55:45 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/04 15:20:44 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:23:30 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,48 +65,6 @@ void	run_echo(t_data *data)
 	else if (n == 0 || (n == 1 && ft_arrlen(data->line) == 2))
 		ft_putstr_fd("\n", 2);
 }
-
-// /*
-// * execute builtin command echo (-n)
-// */
-// void	run_echo(t_data *data)
-// {
-// 	int	x;
-// 	int	n;
-// 	int	start;
-// 	int	len;
-
-// 	n = 0;
-// 	len = ft_arrlen(data->line);
-// 	if (len > 1)
-// 	{
-// 		x = 1;
-// 		start = 1;
-// 		printf("xxxxxxx\n");
-// 		while (data->line[x])
-// 		{
-// 			if (is_nflag(data->line[x]) == TRUE)
-// 			{
-// 				n = 1;
-// 				start++;
-// 				x++;
-// 			}
-// 			else
-// 				break ;
-// 		}
-// 		printf("n: %d\n", n);
-// 		printf("start: %d\n", start);
-// 		while (data->line[x])
-// 		{
-// 			if (x > start && x < len)
-// 				ft_putstr_fd(" ", 2);
-// 			ft_putstr_fd(data->line[x], 2);
-// 			x++;
-// 		}
-// 	}
-// 	if (n == 0 || (n == 1 && len == 2))
-// 		ft_putstr_fd("\n", 2);
-// }
 
 /*
 * execute builtin pwd
