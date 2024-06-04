@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/03 20:42:32 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:47:42 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_builtin(t_data *data)
 {
 	if (data->line[0] == NULL)
 		return (FALSE);
-	else if (ft_strcmp(data->line[0], "echo") == FALSE)
+	else if (ft_strcmp(data->line[0], "echo") == 0)
 		return (TRUE);
 	else if (ft_strcmp(data->line[0], "cd") == 0)
 		return (TRUE);
