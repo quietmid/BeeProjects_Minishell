@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/03 16:57:17 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/04 18:25:57 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,20 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <termios.h>
-
 # include <readline/readline.h>
 # include <readline/history.h>
 
 //struct
+typedef enum e_metachar
+{
+	PIPE = 124,
+	DOLLAR = 36,
+	INDIRECT = 60,
+	OUTDIRECT = 62,
+	SINGLEQ = 39,
+	DOUBLEQ = 34,
+	QUESTIONM = 63,
+}	t_metachar;
 
 typedef enum e_mode
 {
@@ -38,11 +47,18 @@ typedef enum e_mode
 		SIG_CHILD = 2,
 }		t_mode;
 
+typedef struct s_argv
+{
+	char *input;
+	struct s_argv *next;
+} t_argv;
+
 typedef struct s_data
 {
 	char	**envp;
 	char	**paths;
 	char	**line;
+	struct s_argv *agv;
 }		t_data;
 
 //functions
@@ -55,6 +71,11 @@ void	exec_builtin(t_data *data);
 void	heredoc_handler(int sig);
 void	signal_setup(int mode);
 void	sig_handler(int sig);
+
+// Parsing
+void	parse(t_data *data, const char *line);
+int	parse_start(t_data *data, const char *line);
+void	cmd_scan(char *str);
 
 //shell utils
 char	*find_path(char **envp);
