@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/04 15:54:19 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:16:58 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,16 @@ void	ft_minishell(t_data *data)
 	//unlink(".temp"); // unlink temp when all finished
 }
 
-
 int main(int ac, char **ag, char **envp)
 {
 	t_data	data;
 	data = (t_data){0};
 	ag = NULL;
-	data.envp = envp;
-	data.paths = get_paths(envp);
-	data.pwd = get_pwd(envp);
+
 	if (ac != 1) // probably don't need
 		return (0);
 	signal_setup();
+	env_setup(&data, envp);
 	ft_minishell(&data);
 	// start the program
 	// free all the shit
