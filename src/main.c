@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/03 16:27:11 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/05 22:52:39 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ void	exec_fork(t_data *data)
 	printf("done\n");
 }
 
-void	parse(t_data *data, const char *line)
-{
-	data->line = ft_split(line, ' ');
-	// if (!data->line)
-	// {
-	// 		"malloc error"? // what if we input NULL?
-	// }
-}
+//void	parse(t_data *data, const char *line)
+//{
+//	data->line = ft_split(line, ' ');
+//	// if (!data->line)
+//	// {
+//	// 		"malloc error"? // what if we input NULL?
+//	// }
+//}
 
 void	execute(t_data	*data)
 {
@@ -84,6 +84,7 @@ void	ft_minishell(t_data *data)
 {
 	char *line;
 
+	//(void)data;
 	while (1)
 	{
 		signal_setup(SIG_PARENT);
@@ -93,8 +94,9 @@ void	ft_minishell(t_data *data)
 			ft_putstr_fd("exit\n", 1);
 			line = "exit";
 		}
-		parse(data, line);
-		execute(data);
+		if (!parse_start(data, line))
+			break ;
+		//execute(data);
 		free(line);
 	}
 	free(line);
@@ -110,6 +112,7 @@ int main(int ac, char **ag, char **envp)
 	(void)ag;
 	data.envp = envp;
 	data.paths = get_paths(envp);
+	//init_data(&data);
 	ft_minishell(&data);
 	// start the program
 	// free all the shit

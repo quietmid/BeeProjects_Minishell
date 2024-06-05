@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/04 18:25:57 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/05 22:56:43 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,38 @@ typedef enum e_mode
 		SIG_CHILD = 2,
 }		t_mode;
 
-typedef struct s_argv
+typedef enum e_token
 {
-	char *input;
-	struct s_argv *next;
-} t_argv;
+	PIPE_TOKEN, // |
+	HERE_DOC_TOKEN, // <<
+	REDIR_IN_TOKEN,	 // <
+	REDIR_OUT_TOKEN, // >
+	REDIR_APP_OUT_TOKEN, // >>
+	STRING_TOKEN,
+	DOLLAR_TOKEN, // $
+}	t_token;
+
+typedef struct s_cmd
+{
+	char 			*input;
+	t_token			type;
+	struct s_cmd	*next;
+	struct s_cmd 	*prev;
+} 	t_cmd;
+
+typedef struct s_parse
+{
+	int	cmd_n;
+}	t_parse;
 
 typedef struct s_data
 {
 	char	**envp;
 	char	**paths;
 	char	**line;
-	struct s_argv *agv;
+	int		cmd_count;
+	struct s_cmd *cmd;
+	struct s_parse *par;
 }		t_data;
 
 //functions
@@ -74,8 +94,11 @@ void	sig_handler(int sig);
 
 // Parsing
 void	parse(t_data *data, const char *line);
-int	parse_start(t_data *data, const char *line);
-void	cmd_scan(char *str);
+void	space_replace(char *str);
+int		parse_start(t_data *data, char *line);
+//int		parse_start(char *line);
+int		pipe_scans(char *line);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 //shell utils
 char	*find_path(char **envp);

@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/03 16:28:29 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/05 22:17:10 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRC = ./src/main.c \
 	  ./src/signal.c \
 	  .src/builtin.c \
 	  .src/utils.c \
+	  .src/parse.c \
+	  .src/parse_util.c \
 
 #BSRC =
 
