@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/05 22:56:43 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/06 18:37:33 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,35 @@ typedef enum e_mode
 		SIG_CHILD = 2,
 }		t_mode;
 
-typedef enum e_token
+typedef enum e_token_type
 {
-	PIPE_TOKEN, // |
-	HERE_DOC_TOKEN, // <<
-	REDIR_IN_TOKEN,	 // <
-	REDIR_OUT_TOKEN, // >
-	REDIR_APP_OUT_TOKEN, // >>
-	STRING_TOKEN,
-	DOLLAR_TOKEN, // $
-}	t_token;
-
-typedef struct s_cmd
-{
-	char 			*input;
-	t_token			type;
-	struct s_cmd	*next;
-	struct s_cmd 	*prev;
-} 	t_cmd;
+	NO_TOKEN, // 0
+	PIPE_TOKEN, // | 1
+	HERE_DOC_TOKEN, // << 2 
+	REDIR_IN_TOKEN,	 // < 3
+	REDIR_OUT_TOKEN, // > 4 
+	REDIR_APP_OUT_TOKEN, // >> 5
+	STRING_TOKEN, // 6
+	DOLLAR_TOKEN, // $ 7
+	INFILE_TOKEN, // 8
+	OUTFILE_TOKEN, // 9
+	OUTFILE_TRUNC_TOKEN, // 10
+	DELIM_TOKEN, // 11
+}	t_token_type;
 
 typedef struct s_parse
 {
 	int	cmd_n;
 }	t_parse;
+
+typedef struct s_token
+{
+	int				idx;
+	char 			*input;
+	t_token_type	type;
+	//struct s_token	*next;
+	//struct s_token 	*prev;
+} 	t_token;
 
 typedef struct s_data
 {
@@ -77,7 +83,7 @@ typedef struct s_data
 	char	**paths;
 	char	**line;
 	int		cmd_count;
-	struct s_cmd *cmd;
+	t_token token[100];
 	struct s_parse *par;
 }		t_data;
 
@@ -95,10 +101,12 @@ void	sig_handler(int sig);
 // Parsing
 void	parse(t_data *data, const char *line);
 void	space_replace(char *str);
+void	assign_token(char *input, t_token *token, int idx);
 int		parse_start(t_data *data, char *line);
 //int		parse_start(char *line);
 int		pipe_scans(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+t_token_type deter_token_type(char *input);
 
 //shell utils
 char	*find_path(char **envp);
@@ -107,5 +115,6 @@ void	rl_replace_line(const char *text, int clear_undo);
 
 //basic utils
 int		ft_arrlen(char **array);
+void	ft_free_arr(char **array);
 
 #endif

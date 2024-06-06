@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 18:27:38 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/05 15:11:30 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/06 18:13:02 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,15 @@ int	ft_arrlen(char **array)
 		x++;
 	}
 	return (x);
+}
+
+void	ft_free_arr(char **array)
+{
+	int x;
+
+	x = 0;
+	while (array[x])
+		free(array[x++]);
+	free(array);
 }
 
