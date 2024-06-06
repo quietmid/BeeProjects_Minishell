@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/06 22:53:35 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:02:06 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,16 +127,12 @@ void	ft_minishell(t_data *data)
 		// else
 		// 		minishell-8.8$: "line": command not found
 		line = readline("minishell-8.8$ ");
-		if (line)
-		{
-			parse(data, line);
-			execute(data);
-			free(line);
-		}
-	
+		parse(data, line);
+		execute(data);
+		free(line);
 		//line = readline("minishell-8.8$ ");
 	}
-	//free(line);
+	free(line);
 	//unlink(".temp"); // unlink temp when all finished
 }
 
