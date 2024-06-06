@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/05 17:33:42 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:37:46 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "../libft/libft.h"
 
 //library headers
-# include <unistd.h> // write dup fork chdir
+# include <unistd.h> // write dup fork getcwd chdir
 # include <stdio.h> // printf readline 
 # include <stdlib.h> // malloc free getenv
 # include <sys/wait.h> // waitpid
@@ -32,14 +32,22 @@
 # define FALSE 0
 //struct
 
+typedef struct s_env
+{
+	char			*name;
+	char			*content;
+	struct s_env	*next;
+}					t_env;
+
 typedef struct s_data
 {
-	char	**envp;
-	char	**paths;
-	char	*pwd;
-	char	*oldpwd;
-	char	**line;
-}		t_data;
+	char	**line; // to be removed
+	char	*path_cmd;
+	char	**envi;
+	int		status;
+	t_env	*env;
+}			t_data;
+
 
 //functions
 
@@ -47,11 +55,13 @@ typedef struct s_data
 int		is_builtin(t_data *data);
 void	exec_builtin(t_data *data);
 void	run_echo(t_data *data);
-void	run_pwd(t_data *data);
 void	run_cd(t_data *data);
 
 //envp
 void	env_setup(t_data *data, char **envp);
+t_env	*search_env(t_data *data, char *str);
+void	env_to_arr(t_data *data);
+int		ft_envsize(t_env *lst);
 
 //shell utils
 void	signal_setup(void);
