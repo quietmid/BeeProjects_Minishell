@@ -6,12 +6,15 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:16:30 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/06 21:38:57 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:45:29 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+* calculate the size of the env ll
+*/
 int	ft_envsize(t_env *lst)
 {
 	int	count;
@@ -26,7 +29,24 @@ int	ft_envsize(t_env *lst)
 }
 
 /*
-*  iterate thru ll and look for node
+* iterate thru the env ll and check if key(str)exist
+*/
+int	env_key_exist(t_data *data, char *str)
+{
+	t_env	*env;
+
+	env = data->env;
+	while (env)
+	{
+		if (ft_strcmp(env->key, str) == 0)
+			return (TRUE);
+		env = env->next;
+	}
+	return (FALSE);
+}
+
+/*
+* iterate thru the env ll and return key(str)node
 */
 t_env	*search_env(t_data *data, char *str)
 {
@@ -37,17 +57,17 @@ t_env	*search_env(t_data *data, char *str)
 	{
 		while (env)
 		{
-			if (ft_strcmp(env->name, str) == 0)
+			if (ft_strcmp(env->key, str) == 0)
 				return (env);
 			env = env->next;
 		}
 		return (NULL); // env exist but node doesnt
 	}
-	return (NULL); // env does not exist?
+	return (NULL); // env does not exist
 }
 
 /*
-*  create a linked list node (splitting the env name and content)
+*  create a linked list node (splitting the key and value with '=')
 */
 t_env	*create_envnode(char *envp)
 {
@@ -60,25 +80,11 @@ t_env	*create_envnode(char *envp)
 	node = (void *)malloc(sizeof(t_env));
 	if (node == NULL)
 		return (NULL);
-	node->name = tmp[0];
-	node->content = tmp[1];
+	node->key = tmp[0];
+	node->value = tmp[1];
 	node->next = NULL;
 	return (node);
 }
-
-
-// /*
-// * make a array of strings from envp;paths
-// */
-// void    get_paths(t_data *data)
-// {
-// 	char	**paths;
-// 	paths = ft_split(, ':');
-// 	//paths = ft_split(find_in_envp(envp, "PATH"), ':');
-// 	// if (!paths)
-// 	// 	"malloc error"
-// 	data->paths = paths;
-// }
 
 /*
 * malloc a copy of the envp
@@ -103,36 +109,68 @@ t_env	*create_envnode(char *envp)
 // 	{
 // 		while (data->env)
 // 		{
-// 			// printf("%s", data->env->name);
-// 			// printf("=");
-// 			// printf("%s\n", data->env->content);
+// 			printf("%s", data->env->name);
+// 			printf("=");
+// 			printf("%s\n", data->env->content);
 // 			data->env = data->env->next;
 // 		}
 // 	}
 // }
 
+/*
+* convert env ll into an array before execve
+*/
+void	env_to_arr(t_data *data)
+{
+	t_env	*env;
+	char	**res;
+	char	*tmp;
+	int		x;
+
+	x = 0;
+	res = (char **)malloc((sizeof(char *)) * (ft_envsize(data->env) + 1));
+	env = data->env;
+	while (env)
+	{
+		tmp = ft_strjoin(env->key, "=");
+		// if (!tmp)
+		// 	malloc error
+		res[x] = ft_strjoin(tmp, env->value);
+		// if (!res[x])
+		// 	malloc error
+		free(tmp);
+		x++;
+		env = env->next;
+	}
+	res[x] = NULL;
+	data->env_arr = res;
+}
+
+/* 
+*export the env variables and create a linked list from it.
+*/
 void	env_setup(t_data *data, char **envp)
 {
-	t_env	*tmp;
 	t_env	*head;
+	t_env	*index;
 	t_env	*tail;
 	int		x;
 
-	tmp = NULL;
+	head = NULL;
 	x = 0;
 	while (envp[x])
 	{
-		head = create_envnode(envp[x]);
-		if (tmp == NULL)
-			tmp = head;
+		index = create_envnode(envp[x]);
+		if (head == NULL)
+			head = index;
 		else
 		{
-			tail = tmp;
+			tail = head;
 			while (tail->next != NULL)
 				tail = tail->next;
-			tail->next = head;
+			tail->next = index;
 		}
 		x++;
 	}
-	data->env = tmp;
+	data->env = head;
 }
