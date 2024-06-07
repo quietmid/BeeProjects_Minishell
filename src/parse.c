@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 14:11:48 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/07 15:41:02 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int ft_isspace(char c)
 		return (1);
 	return (0);
 }
+
 int empty_line(char *input)
 {
 	while (ft_isspace(*input))
@@ -27,12 +28,14 @@ int empty_line(char *input)
 		return (1);
 	return (0);
 }
+
 int ft_ismeta(char c)
 {
 	if (c == 124 || c == 36 || c == 60 || c == 62)
 		return (1);
 	return (0);
 }
+
 char *find_end(char *str)
 {
 	while (*str != '\0' && !ft_ismeta(*str) && !ft_isspace(*str))
@@ -72,10 +75,10 @@ int	parse_start(t_data *data, char *line)
 			data->token[i + 1].type = OUTFILE_TOKEN;
 		if (data->token[i].type == 5)
 			data->token[i + 1].type = OUTFILE_TRUNC_TOKEN;
-		printf("tokened:\n");
-		printf("idx: %d\n", data->token[i].idx);
-		printf("input: %s\n", data->token[i].input);
-		printf("type: %u\n", data->token[i].type);
+		//printf("tokened:\n");
+		//printf("idx: %d\n", data->token[i].idx);
+		//printf("input: %s\n", data->token[i].input);
+		//printf("type: %u\n", data->token[i].type);
 		i++;
 	}
 	ft_free_arr(result);
@@ -114,6 +117,7 @@ t_token_type deter_token_type(char *input)
 		return (STRING_TOKEN);
 	// do we need to check for input[0] == null?
 }
+
 //void	parse(t_data *data, const char *line)
 //{
 //	data->line = ft_split(line, ' ');

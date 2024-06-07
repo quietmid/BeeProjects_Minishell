@@ -6,57 +6,37 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/06 20:28:38 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:14:19 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-* convert ll into an array
-*/
-void	env_to_arr(t_data *data)
-{
-	t_env	*env;
-	char	**res;
-	char	*tmp;
-	int		x;
 
-	x = 0;
-	res = (char **)malloc((sizeof(char *)) * (ft_envsize(data->env) + 1));
-	env = data->env;
-	while (env)
-	{
-		tmp = ft_strjoin(env->name, "=");
-		// if (!tmp)
-		// 	malloc error
-		res[x] = ft_strjoin(tmp, env->content);
-		// if (!res[x])
-		// 	malloc error
-		free(tmp);
-		x++;
-		env = env->next;
-	}
-	res[x] = NULL;
-	data->envi = res;
-}
 
 /*
 * execute builtin pwd
 */
 void	run_pwd(t_data *data)
 {
-	t_env	*pwd;
+	t_env	*node;
+	char	*pwd;
 
 	if (!data->line[1])
 	{
-		pwd = search_env(data, "PWD");
-		// if (!pwd)
-		// {
-		// 	"error env not set"
-		// }
-		ft_putstr_fd(pwd->content, 2);
-		ft_putstr_fd("\n", 2);
+		node = search_env(data, "PWD");
+		if (node)
+		{
+			ft_putstr_fd(node->value, 2);
+			ft_putstr_fd("\n", 2);
+		}
+		else
+		{
+			pwd = getcwd(NULL, 0);
+			// if (!pwd)
+			// 	"getcwd fail"
+			ft_putendl_fd(pwd, 2);
+		}
 	}
 // 	else
 // 		"error invalid flag"
@@ -76,14 +56,14 @@ void	run_env(t_data *data)
 		{
 			while (env)
 			{
-				ft_putstr_fd(env->name, 2);
+				ft_putstr_fd(env->key, 2);
 				ft_putstr_fd("=", 2);
-				ft_putstr_fd(env->content, 2);
+				ft_putstr_fd(env->value, 2);
 				ft_putstr_fd("\n", 2);
 				env = env->next;
 			}
 		}
-		// error?
+		// error? can env be NULL?
 	}
 // 	else
 // 		"error invalid flag"
@@ -120,9 +100,9 @@ void	exec_builtin(t_data *data)
 {
 	// if (ft_strcmp(data->line[0], "echo") == 0)
 	// 	run_echo(data);
-	// else if (ft_strcmp(data->line[0], "cd") == 0)
-	// 	run_cd(data);
-	if (ft_strcmp(data->line[0], "pwd") == 0)
+	if (ft_strcmp(data->line[0], "cd") == 0)
+		run_cd(data);
+	else if (ft_strcmp(data->line[0], "pwd") == 0)
 		run_pwd(data);
 	// else if (ft_strcmp(data->line[0], "export") == 0)
 	// else if (ft_strcmp(data->line[0], "unset") == 0)

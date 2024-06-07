@@ -6,13 +6,15 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 15:20:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:28:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+/*
+* support find_path_cmd fxn (2/2)
+*/
 char	**prepare_paths(t_env *env)
 {
 	char	**paths;
@@ -20,10 +22,9 @@ char	**prepare_paths(t_env *env)
 	char	*tmp;
 	int		x;
 
-	paths = ft_split(env->content, ':');
+	paths = ft_split(env->value, ':');
 	// if (!paths)
 	// 	mallocerr
-	//ft_arr_print(paths);
 	res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
 	// if (!paths)
 	// 	mallocerr
@@ -41,7 +42,7 @@ char	**prepare_paths(t_env *env)
 }
 
 /*
-* look for the envp:path where the cmd belong 
+* look for the envp:path where the cmd belong  before execve (1/2)
 */
 char	*find_path_cmd(t_data *data)
 {
@@ -69,6 +70,7 @@ char	*find_path_cmd(t_data *data)
 	return (NULL);
 }
 
+/* TEST FORKING */ //delete later
 void	exec_fork(t_data *data)
 {
 	pid_t	pid;
@@ -82,23 +84,23 @@ void	exec_fork(t_data *data)
 		{
 			data->path_cmd = find_path_cmd(data);
 			if (!data->path_cmd)
-				printf("mallocerror"); // fix error
+				printf("mallocerror "); // fix error
 			env_to_arr(data);
-			execve(data->path_cmd, data->line, data->envi);
+			execve(data->path_cmd, data->line, data->env_arr);
+			// remember to check if execve fails to free all mallocs otherwise its fine.
 		}
-		printf("environ error"); // fix error
+		printf(" error *"); // fix error
 	}
+	wait (NULL);
 }
 
-//void	parse(t_data *data, const char *line)
-//{
-//	data->line = ft_split(line, ' ');
-//	// if (!data->line)
-//	// {
-//	// 		"malloc error"? // what if we input NULL?
-//	// }
-//}
+/* TEST PARSE */ //delete later
+void	parse(t_data *data, const char *line)
+{
+	data->line = ft_split(line, ' ');
+}
 
+/* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
 {
 	if (is_builtin(data) == TRUE)
@@ -107,36 +109,29 @@ void	execute(t_data	*data)
 		exec_fork(data);
 }
 
+/* TEST MINISHELL */ //delete later
 void	ft_minishell(t_data *data)
 {
 	char *line;
-	char *end;
 
-	//(void)data;
-	end = "exit";
 	while (1)
 	{
 		signal_setup(SIG_PARENT);
 		line = readline("minishell-8.8$ ");
-		if (ft_strcmp(line, end) == 0)
-			break ;
-		if (!parse_start(data, line))
-			break ;
+		parse(data, line);
 		execute(data);
 		free(line);
-		//line = readline("minishell-8.8$ ");
 	}
 	free(line);
-	//unlink(".temp"); // unlink temp when all finished
 }
 
 int main(int ac, char **ag, char **envp)
 {
 	t_data	data;
 	
-	data = (t_data){0};
 	(void)ac;
 	(void)ag;
+	data = (t_data){0};
 	if (ac != 1) // probably don't need
 		return (0);
 	env_setup(&data, envp);
@@ -145,3 +140,26 @@ int main(int ac, char **ag, char **envp)
 	// free all the shit
 	return (0);
 }
+
+// void	ft_minishell(t_data *data)
+// {
+// 	char *line;
+// 	char *end;
+
+// 	//(void)data;
+// 	end = "exit";
+// 	while (1)
+// 	{
+// 		signal_setup(SIG_PARENT);
+// 		line = readline("minishell-8.8$ ");
+// 		if (ft_strcmp(line, end) == 0)
+// 			break ;
+// 		if (!parse_start(data, line))
+// 			break ;
+// 		//execute(data);
+// 		free(line);
+// 		//line = readline("minishell-8.8$ ");
+// 	}
+// 	free(line);
+// 	//unlink(".temp"); // unlink temp when all finished
+// }
