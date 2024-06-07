@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/05 16:22:48 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/06/07 13:56:42 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,14 @@ LIBFT = ./libft/libft.a
 
 SRC = ./src/main.c \
 	  ./src/shell_util.c \
-	  ./src/init.c \
+	  ./src/signal.c \
 	  .src/builtin_init.c \
 	  .src/builtin_echo.c \
 	  .src/builtin_cd.c \
 	  .src/utils.c \
 	  .src/envp.c \
+	  .src/parse.c \
+	  .src/parse_util.c \
 
 #BSRC =
 
@@ -58,7 +60,7 @@ $(NAME): $(LIBFT) $(OBJECTS)
 		@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
 		@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -lreadline -lhistory -L $(RL_LIB) -I$(RL_HEADER) -o $(NAME)
 		@echo "$(CYAN)--------------------------------"
-		@echo "$(NAME) = Who threw the blue shell!"
+		@echo "$(NAME) = Who threw the red shell!"
 		@echo "$(CYAN)--------------------------------$(RESET)"
 
 $(LIBFT):
@@ -76,7 +78,7 @@ $(OBJECTS_DIR)/%.o: ./SRC/%.c
 #		@touch .bonus
 #		@$(CC) $(CFLAGS) $(BOBJECTS) $(LIBFT) -o $(NAME)
 #		@echo "$(CYAN)--------------------------------"
-#		@echo "$(NAME) = you have activated my bonus 😏!"
+#		@echo "$(NAME) = God damn blue shell!"
 #		@echo "$(CYAN)--------------------------------$(RESET)"
 #		@rm -f $(OBJECTS)
 

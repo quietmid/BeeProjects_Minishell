@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 18:27:38 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/05 17:36:03 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:51:38 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*free array of strings*/
 
 void	ft_free_arr(char **arr)
 {
@@ -43,9 +45,6 @@ int	ft_arr_len(char **array)
 	return (x);
 }
 
-/*
-* malloc a copy of an array
-*/
 char	**ft_arr_copy(char **arr)
 {
 	char	**res;
@@ -70,7 +69,7 @@ char	**ft_arr_copy(char **arr)
 }
 
 /*
-* print an array of strings + \n
+* print an array of strings + \n DEBUGG
 */
 
 void	ft_arr_print(char **arr)

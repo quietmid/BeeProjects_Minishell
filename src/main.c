@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 13:57:55 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:20:02 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ void	exec_fork(t_data *data)
 	}
 }
 
-void	parse(t_data *data, const char *line)
-{
-	data->line = ft_split(line, ' ');
-	// if (!data->line)
-	// {
-	// 		"malloc error"? // what if we input NULL?
-	// }
-}
+//void	parse(t_data *data, const char *line)
+//{
+//	data->line = ft_split(line, ' ');
+//	// if (!data->line)
+//	// {
+//	// 		"malloc error"? // what if we input NULL?
+//	// }
+//}
 
 void	execute(t_data	*data)
 {
@@ -109,25 +109,19 @@ void	execute(t_data	*data)
 
 void	ft_minishell(t_data *data)
 {
-	//int file;
 	char *line;
-	// char *end;
+	char *end;
 
-	// file = open(".temp", O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	// if (file < 0) // 
-	// 	exit(EXIT_FAILURE);
-	// line = readline("minishell-8.8$ ");
-	// end = "exit";
-	//while (ft_strcmp(line, end) != 0) // later on, we will switch to just while (1)? because typing exit will be a command
+	//(void)data;
+	end = "exit";
 	while (1)
 	{
-		//ft_putstr_fd(line, file);
-		// if (parse the line == cmd)
-		// 		execute the cmd
-		// else
-		// 		minishell-8.8$: "line": command not found
+		signal_setup(SIG_PARENT);
 		line = readline("minishell-8.8$ ");
-		parse(data, line);
+		if (ft_strcmp(line, end) == 0)
+			break ;
+		if (!parse_start(data, line))
+			break ;
 		execute(data);
 		free(line);
 		//line = readline("minishell-8.8$ ");
@@ -141,14 +135,11 @@ int main(int ac, char **ag, char **envp)
 	t_data	data;
 	
 	data = (t_data){0};
-	ag = NULL;
+	(void)ac;
+	(void)ag;
 	if (ac != 1) // probably don't need
 		return (0);
-	signal_setup();
 	env_setup(&data, envp);
-	//printlink(&data);
-	//env_to_arr(&data);
-	//ft_arr_print(data.envi);
 	ft_minishell(&data);
 	// start the program
 	// free all the shit

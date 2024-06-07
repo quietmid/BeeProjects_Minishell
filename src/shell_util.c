@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   shell_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:36:15 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/05 16:12:50 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:13:41 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //error handling functions
-
 
 // char	*find_cmd(char **ag, char **path)
 // {
