@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/06 18:41:51 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/07 14:11:48 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	parse_start(t_data *data, char *line)
 	char **result;
 	int i = 0;
 	
-	//if (!line || !*line || empty_line(line))
-	//	return (0); // failure
+	if (!line || !*line || empty_line(line))
+		return (1);
 	data->cmd_count = pipe_scans(line);
 	//printf("%d\n", data->cmd_count);
 	space_replace(line);
@@ -55,8 +55,8 @@ int	parse_start(t_data *data, char *line)
 	if (!result)
 		return (0);
 	// init_token
-	while (result[i])
-		printf("%s\n", result[i++]);
+	//while (result[i])
+	//	printf("%s\n", result[i++]);
 	i = 0;
 	while (result[i])
 	{
@@ -88,7 +88,7 @@ void	init_token(t_data *data, char **str)
 	int arr_len;
 	int i;
 
-	arr_len = ft_arrlen(str);
+	arr_len = ft_arr_len(str);
 	i = 0;
 	while (i < arr_len)
 		data->token[i].type = 0;

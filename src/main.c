@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 13:13:25 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/07 14:11:53 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,15 @@ void	exec_fork(t_data *data)
 		printf("forkerror"); //error
 	if (pid == 0)
 	{
-		printf("in child");
-		if (execve(path_cmd, data->line, data->envp) == -1)
-			printf("fail\n");
+		if (search_env(data, "PATH"))
+		{
+			data->path_cmd = find_path_cmd(data);
+			if (!data->path_cmd)
+				printf("mallocerror"); // error
+			env_to_arr(data);
+			execve(data->path_cmd, data->line, data->envi);
+		}
+		printf("environ error"); // error
 	}
 }
 
@@ -112,7 +118,10 @@ void	ft_minishell(t_data *data)
 	{
 		signal_setup(SIG_PARENT);
 		line = readline("minishell-8.8$ ");
-		parse(data, line);
+		if (ft_strcmp(line, end) == 0)
+			break ;
+		if (!parse_start(data, line))
+			break ;
 		execute(data);
 		free(line);
 		//line = readline("minishell-8.8$ ");
@@ -126,12 +135,11 @@ int main(int ac, char **ag, char **envp)
 	t_data	data;
 	
 	data = (t_data){0};
-	ag = NULL;
-	data.envp = envp;
-	data.paths = get_paths(envp);
+	(void)ac;
+	(void)ag;
 	if (ac != 1) // probably don't need
 		return (0);
-	signal_setup();
+	env_setup(&data, envp);
 	ft_minishell(&data);
 	// start the program
 	// free all the shit

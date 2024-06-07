@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/07 13:12:57 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/07 13:56:42 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,14 @@ LIBFT = ./libft/libft.a
 
 SRC = ./src/main.c \
 	  ./src/shell_util.c \
-	  ./src/init.c \
-	  .src/builtin.c \
+	  ./src/signal.c \
+	  .src/builtin_init.c \
+	  .src/builtin_echo.c \
+	  .src/builtin_cd.c \
 	  .src/utils.c \
+	  .src/envp.c \
+	  .src/parse.c \
+	  .src/parse_util.c \
 
 #BSRC =
 

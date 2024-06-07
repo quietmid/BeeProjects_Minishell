@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 18:27:38 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/07 13:14:41 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/07 13:51:38 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,44 @@ int	ft_arr_len(char **array)
 		x++;
 	}
 	return (x);
+}
+
+char	**ft_arr_copy(char **arr)
+{
+	char	**res;
+	int		x;
+
+	x = 0;
+	res = malloc(sizeof(char *) * (ft_arr_len(arr) + 1));
+	// if (!new_array)
+	// 	"malloc error"
+	while (arr[x])
+	{
+		res[x] = ft_strdup(arr[x]);
+		if (!res[x])
+		{
+			ft_free_arr(res);
+			// "malloc error"
+		}
+		x++;
+	}
+	res[x] = NULL;
+	return (res);
+}
+
+/*
+* print an array of strings + \n DEBUGG
+*/
+
+void	ft_arr_print(char **arr)
+{
+	int	x;
+
+	x = 0;
+	while (arr[x])
+	{
+		ft_putstr_fd(arr[x], 1);
+		ft_putchar_fd('\n', 1);
+		x++;
+	}
 }

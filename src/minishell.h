@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 13:16:05 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/07 13:50:41 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define TRUE 1
+# define FALSE 0
+
 //struct
+
 typedef enum e_metachar
 {
 	PIPE = 124,
@@ -63,6 +67,13 @@ typedef enum e_token_type
 	DELIM_TOKEN, // 11
 }	t_token_type;
 
+typedef struct s_env
+{
+	char			*name;
+	char			*content;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_parse
 {
 	int	cmd_n;
@@ -80,10 +91,13 @@ typedef struct s_token
 typedef struct s_data
 {
 	char	***argv;
-	char	**envp;
+	char	**envi;
 	char	**paths;
 	char	**line;
+	char	*path_cmd;
 	int		cmd_count;
+	int		status;
+	t_env	*env;
 	t_token token[100];
 	struct s_parse *par;
 }		t_data;
@@ -93,11 +107,20 @@ typedef struct s_data
 //builtin
 int		is_builtin(t_data *data);
 void	exec_builtin(t_data *data);
+void	run_echo(t_data *data);
+void	run_cd(t_data *data);
+
+//envp
+void	env_setup(t_data *data, char **envp);
+t_env	*search_env(t_data *data, char *str);
+void	env_to_arr(t_data *data);
+int		ft_envsize(t_env *lst);
 
 // signals
 void	heredoc_handler(int sig);
 void	signal_setup(int mode);
 void	sig_handler(int sig);
+void	rl_replace_line(const char *text, int clear_undo);
 
 // Parsing
 void	parse(t_data *data, const char *line);
@@ -112,10 +135,11 @@ t_token_type deter_token_type(char *input);
 //shell utils
 char	*find_path(char **envp);
 char	**get_paths(char **envp);
-void	rl_replace_line(const char *text, int clear_undo);
 
 //basic utils
-int		ft_arrlen(char **array);
-void	ft_free_arr(char **array);
+char	**ft_arr_copy(char **arr);
+int		ft_arr_len(char **array);
+void	ft_free_arr(char **arr);
+void	ft_arr_print(char **arr);
 
 #endif
