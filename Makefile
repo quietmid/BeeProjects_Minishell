@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/03 20:10:59 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/06/05 16:22:48 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,10 @@ SRC = ./src/main.c \
 	  ./src/shell_util.c \
 	  ./src/init.c \
 	  .src/builtin_init.c \
-	  .src/builtin_cmd.c \
+	  .src/builtin_echo.c \
+	  .src/builtin_cd.c \
 	  .src/utils.c \
+	  .src/envp.c \
 
 #BSRC =
 

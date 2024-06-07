@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_util.c                                       :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 15:36:15 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/05 16:12:50 by pbumidan         ###   ########.fr       */
+/*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
+/*   Updated: 2024/06/06 17:29:38 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//error handling functions
-
-
-// char	*find_cmd(char **ag, char **path)
-// {
-// 	char	*cmd;
-
-// 	cmd = NULL;
-// 	// if (ag[0] == NULL)
-// 	// 	error_msg(ERR_CMD, ag[0]);
-// 	if (ag[0][0] == '/' || ag[0][0] == '.')
-// 		cmd = ag[0];
-// 	else
-// 		cmd = exe_cmd(ag[0], path);
-// 	return (cmd);
-// }
-
-
+/*
+* execute builtin command run
+*/
+void	run_cd(t_data *data)
+{
+	char	*add;
+	
+	//pwd = data->pwd;
+	if (!data->line[1])
+	{
+		add = getenv("HOME");
+		// if (!add)
+		// 	error
+		chdir(add);
+	}
+	else
+	{
+		add = data->line[1];
+		chdir(add);
+		
+	}
+}
