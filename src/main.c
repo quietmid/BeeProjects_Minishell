@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/06 23:02:06 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:57:55 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**prepare_paths(t_env *env)
 		x++;
 	}
 	res[x] = NULL;
-	return(res);
+	return (res);
 }
 
 /*
@@ -82,11 +82,11 @@ void	exec_fork(t_data *data)
 		{
 			data->path_cmd = find_path_cmd(data);
 			if (!data->path_cmd)
-				printf("mallocerror"); // error
+				printf("mallocerror"); // fix error
 			env_to_arr(data);
 			execve(data->path_cmd, data->line, data->envi);
 		}
-		printf("environ error"); // error
+		printf("environ error"); // fix error
 	}
 }
 
