@@ -6,13 +6,34 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 18:27:38 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/06 18:13:02 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/07 13:14:41 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_arrlen(char **array)
+/*free array of strings*/
+
+void	ft_free_arr(char **arr)
+{
+	int	x;
+
+	x = 0;
+	if (!arr || !arr[x])
+		return ;
+	while (arr[x])
+	{
+		free(arr[x]);
+		x++;
+	}
+	free(arr);
+	return ;
+}
+
+/*
+* calculate len of array
+*/
+int	ft_arr_len(char **array)
 {
 	int	x;
 
@@ -23,14 +44,3 @@ int	ft_arrlen(char **array)
 	}
 	return (x);
 }
-
-void	ft_free_arr(char **array)
-{
-	int x;
-
-	x = 0;
-	while (array[x])
-		free(array[x++]);
-	free(array);
-}
-

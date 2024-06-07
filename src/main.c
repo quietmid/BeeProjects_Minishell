@@ -6,35 +6,64 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/06 16:28:47 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/07 13:13:25 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+char	**prepare_paths(t_env *env)
+{
+	char	**paths;
+	char	**res;
+	char	*tmp;
+	int		x;
+
+	paths = ft_split(env->content, ':');
+	// if (!paths)
+	// 	mallocerr
+	//ft_arr_print(paths);
+	res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
+	// if (!paths)
+	// 	mallocerr
+	x = 0;
+	while (paths[x])
+	{
+		tmp = ft_strjoin(paths[x], "/");
+		// if (!tmp)
+		// 	"malloc error"
+		res[x] = tmp;
+		x++;
+	}
+	res[x] = NULL;
+	return(res);
+}
+
 /*
 * look for the envp:path where the cmd belong 
 */
 char	*find_path_cmd(t_data *data)
 {
-	char	*path_slash;
-	char	*res;
+	char	**tmp;
+	char	*cmd;
 	int		x;
 
+	tmp = prepare_paths(search_env(data, "PATH"));
+	// if (!tmp)
+	// 	errormalloc
 	x = 0;
-	while (data->paths[x])
+	while (tmp[x])
 	{
-		path_slash = ft_strjoin(data->paths[x], "/");
+		cmd = ft_strjoin(tmp[x], data->line[0]);
+		// if (!cmd)
+		// 	"error malloc"
+		if (access(cmd, 0) == 0)
 		{
-			// if (!path_slash)
-			// 	"error malloc"
-			res = ft_strjoin(path_slash, data->line[0]);
-			// if (!path_slash_cmd)
-			// 	"error malloc"
-			free(path_slash);
+			ft_free_arr(tmp);
+			return (cmd);
 		}
-		if (access(res, 0) == 0)
-			return (res);
-		free(res);
+		free(cmd);
 		x++;
 	}
 	return (NULL);
@@ -42,26 +71,17 @@ char	*find_path_cmd(t_data *data)
 
 void	exec_fork(t_data *data)
 {
-	pid_t pid = fork();
-	char	*path_cmd;
+	pid_t	pid;
 
+	pid = fork();
 	if (pid == -1)
-        printf("fork");
-	//printf("%s", *line);
-	path_cmd = find_path_cmd(data);
-	// if (!p_c);
-	// 	"error command not found"
-	printf("%s\n", path_cmd);
+		printf("forkerror"); //error
 	if (pid == 0)
 	{
-		signal_setup(SIG_CHILD);
 		printf("in child");
 		if (execve(path_cmd, data->line, data->envp) == -1)
 			printf("fail\n");
 	}
-	else
-		wait(NULL);
-	printf("done\n");
 }
 
 //void	parse(t_data *data, const char *line)
@@ -75,11 +95,12 @@ void	exec_fork(t_data *data)
 
 void	execute(t_data	*data)
 {
-	if (is_builtin(data) == 1)
+	if (is_builtin(data) == TRUE)
 		exec_builtin(data);
 	else
 		exec_fork(data);
 }
+
 void	ft_minishell(t_data *data)
 {
 	char *line;
@@ -91,32 +112,26 @@ void	ft_minishell(t_data *data)
 	{
 		signal_setup(SIG_PARENT);
 		line = readline("minishell-8.8$ ");
-		if (ft_strcmp(line, end) == 0)
-			break;
-		if (line == NULL)
-		{
-			ft_putstr_fd("exit\n", 1);
-			line = "exit";
-		}
-		if (!parse_start(data, line))
-			break ;
-		//execute(data);
+		parse(data, line);
+		execute(data);
 		free(line);
+		//line = readline("minishell-8.8$ ");
 	}
 	free(line);
+	//unlink(".temp"); // unlink temp when all finished
 }
-
 
 int main(int ac, char **ag, char **envp)
 {
 	t_data	data;
 	
 	data = (t_data){0};
-	(void)ac;
-	(void)ag;
+	ag = NULL;
 	data.envp = envp;
 	data.paths = get_paths(envp);
-	//init_data(&data);
+	if (ac != 1) // probably don't need
+		return (0);
+	signal_setup();
 	ft_minishell(&data);
 	// start the program
 	// free all the shit

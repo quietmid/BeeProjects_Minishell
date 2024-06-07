@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/06 18:37:33 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/07 13:16:05 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_token
 
 typedef struct s_data
 {
+	char	***argv;
 	char	**envp;
 	char	**paths;
 	char	**line;
