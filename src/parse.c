@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 18:24:47 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/11 18:39:53 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	cmd_len(t_data *data, int i)
 	int count;
 	t_token	*token;
 
+	count = 0;
 	token = data->token;
 	while (i < data->arr_len)
 	{

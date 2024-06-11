@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 18:23:25 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/11 18:26:38 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ int		parse_start(t_data *data, char *line);
 //int		parse_start(char *line);
 int		pipe_scans(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-
 t_token_type deter_token_type(char *input);
 
 //shell utils
