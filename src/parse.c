@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 18:39:53 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/11 18:45:12 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,13 @@ int	parse_start(t_data *data, char *line)
 	init_token(data, result);
 	i = -1;
 	while (result[++i])
+	{
 		assign_token(result[i], data, i);
-		//printf("tokened:\n");
-		//printf("idx: %d\n", data->token[i].idx);
-		//printf("input: %s\n", data->token[i].input);
-		//printf("type: %u\n", data->token[i].type);
+		printf("tokened:\n");
+		printf("idx: %d\n", data->token[i].idx);
+		printf("input: %s\n", data->token[i].input);
+		printf("type: %u\n", data->token[i].type);
+	}
 	array_join(data, utils);
 	ft_free_arr(result);
 	// another function that separate these arrays of strings by its location. 
