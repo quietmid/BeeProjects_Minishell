@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 15:24:57 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/11 18:23:25 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ typedef struct s_env
 
 typedef struct s_parse
 {
-	int	cmd_n;
+	int	len; // for mallocing commands
+	int arg_idx;
+	int token_idx;
+	int i; //count
 }	t_parse;
 
 typedef struct s_token
@@ -101,6 +104,7 @@ typedef struct s_data
 	int				status;
 	t_env			*env;
 	t_token			token[100];
+	t_parse			*utils;
 	struct s_parse	*par;
 }		t_data;
 
@@ -129,11 +133,16 @@ void	rl_replace_line(const char *text, int clear_undo);
 // Parsing
 void	parse(t_data *data, const char *line);
 void	space_replace(char *str);
-void	assign_token(char *input, t_token *token, int idx);
+void	assign_token(char *input, t_data *data, int idx);
+void	array_join(t_data *data, t_parse *u);
+void	init_token(t_data *data, char **str);
+void	assign_token(char *input, t_data *data, int i);
+int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);
 //int		parse_start(char *line);
 int		pipe_scans(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+
 t_token_type deter_token_type(char *input);
 
 //shell utils
@@ -145,5 +154,9 @@ char	**ft_arr_copy(char **arr);
 int		ft_arr_len(char **array);
 void	ft_free_arr(char **arr);
 void	ft_arr_print(char **arr);
+int 	ft_isspace(char c);
+int 	empty_line(char *input);
+int 	ft_ismeta(char c);
+char 	*find_end(char *str);
 
 #endif
