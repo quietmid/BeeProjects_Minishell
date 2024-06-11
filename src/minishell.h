@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 21:45:23 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:18:13 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,12 @@ typedef struct s_data
 {
 	char			**line; //test input delete later
 	char			***argv;
-	char			**env_arr;
 	char			**paths;
 	char			*path_cmd;
 	int				cmd_count;
-	int				status;
+	char			*pwd;
+	char			*oldpwd;
+	char			**env_arr;
 	t_env			*env;
 	t_token			token[100];
 	struct s_parse	*par;
@@ -143,5 +144,6 @@ char	**ft_arr_copy(char **arr);
 int		ft_arr_len(char **array);
 void	ft_free_arr(char **arr);
 void	ft_arr_print(char **arr);
+int		ft_envsize(t_env *lst);
 
 #endif

@@ -6,27 +6,12 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:16:30 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/07 21:45:29 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:19:10 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-* calculate the size of the env ll
-*/
-int	ft_envsize(t_env *lst)
-{
-	int	count;
-
-	count = 0;
-	while (lst)
-	{
-		count++;
-		lst = lst->next;
-	}
-	return (count);
-}
 
 /*
 * iterate thru the env ll and check if key(str)exist
@@ -43,27 +28,6 @@ int	env_key_exist(t_data *data, char *str)
 		env = env->next;
 	}
 	return (FALSE);
-}
-
-/*
-* iterate thru the env ll and return key(str)node
-*/
-t_env	*search_env(t_data *data, char *str)
-{
-	t_env	*env;
-
-	env = data->env;
-	if (env->next != NULL)
-	{
-		while (env)
-		{
-			if (ft_strcmp(env->key, str) == 0)
-				return (env);
-			env = env->next;
-		}
-		return (NULL); // env exist but node doesnt
-	}
-	return (NULL); // env does not exist
 }
 
 /*
@@ -86,39 +50,9 @@ t_env	*create_envnode(char *envp)
 	return (node);
 }
 
-/*
-* malloc a copy of the envp
-*/
-// void	copy_envp(t_data *data, char **envp)
-// {
-// 	char	**res;
-
-// 	res = ft_arr_copy(envp);
-// 	// if (!res)
-// 	// 	"malloc error"
-// 	data->envi = res;
-// }
-
-// /*
-// * temp fxn to print LL; delete later
-// */
-// void	printlink(t_data *data)
-// {
-
-// 	if (data->env->next != NULL)
-// 	{
-// 		while (data->env)
-// 		{
-// 			printf("%s", data->env->name);
-// 			printf("=");
-// 			printf("%s\n", data->env->content);
-// 			data->env = data->env->next;
-// 		}
-// 	}
-// }
 
 /*
-* convert env ll into an array before execve
+* convert env linked list into an array before execve
 */
 void	env_to_arr(t_data *data)
 {
@@ -147,7 +81,20 @@ void	env_to_arr(t_data *data)
 }
 
 /* 
-*export the env variables and create a linked list from it.
+*set environmental variables pwd and oldpwd from **envp for the shell for monitoring
+*/
+void	set_wd(t_data *data)
+{
+	t_env	*tmp;
+
+	tmp = search_env(data, "PWD");
+	data->pwd = ft_strdup(tmp->value);
+	tmp = search_env(data, "OLDPWD");
+	data->oldpwd = ft_strdup(tmp->value);
+}
+
+/* 
+*Export the **envp and create a linked list from it.
 */
 void	env_setup(t_data *data, char **envp)
 {
@@ -173,4 +120,6 @@ void	env_setup(t_data *data, char **envp)
 		x++;
 	}
 	data->env = head;
+	printf("XXX");
+	set_wd(data);
 }

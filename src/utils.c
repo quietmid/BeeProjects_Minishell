@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 18:27:38 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/07 13:51:38 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/11 17:58:10 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,20 @@ void	ft_arr_print(char **arr)
 		ft_putchar_fd('\n', 1);
 		x++;
 	}
+}
+
+/*
+* calculate the size of the env ll
+*/
+int	ft_envsize(t_env *lst)
+{
+	int	count;
+
+	count = 0;
+	while (lst)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
 }

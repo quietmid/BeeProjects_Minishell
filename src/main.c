@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 17:28:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:20:05 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	ft_minishell(t_data *data)
 int main(int ac, char **ag, char **envp)
 {
 	t_data	data;
-	
+
 	(void)ac;
 	(void)ag;
 	data = (t_data){0};
