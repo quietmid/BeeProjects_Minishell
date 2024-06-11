@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 15:41:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:58:56 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,37 +49,33 @@ int	parse_start(t_data *data, char *line)
 	char **result;
 	int i = 0;
 	
-	if (!line || !*line || empty_line(line))
+	if (!line || !*line)
 		return (1);
 	data->cmd_count = pipe_scans(line);
-	//printf("%d\n", data->cmd_count);
 	space_replace(line);
 	result = ft_split(line, 31);
 	if (!result)
 		return (0);
-	// init_token
-	//while (result[i])
-	//	printf("%s\n", result[i++]);
-	i = 0;
-	while (result[i])
+	 init_token(data, result);
+	i = -1;
+	while (result[++i])
 	{
 		data->token[i].idx = i;
 		data->token[i].input = result[i];
 		if (data->token[i].type == 0)
 			data->token[i].type = deter_token_type(result[i]);
-		if (data->token[i].type == 2)
+		else if (data->token[i].type == 2)
 			data->token[i + 1].type = DELIM_TOKEN;
-		if (data->token[i].type == 3)
+		else if (data->token[i].type == 3)
 			data->token[i + 1].type = INFILE_TOKEN;
-		if (data->token[i].type == 4)
+		else if (data->token[i].type == 4)
 			data->token[i + 1].type = OUTFILE_TOKEN;
-		if (data->token[i].type == 5)
+		else if (data->token[i].type == 5)
 			data->token[i + 1].type = OUTFILE_TRUNC_TOKEN;
 		//printf("tokened:\n");
 		//printf("idx: %d\n", data->token[i].idx);
 		//printf("input: %s\n", data->token[i].input);
 		//printf("type: %u\n", data->token[i].type);
-		i++;
 	}
 	ft_free_arr(result);
 	// another function that separate these arrays of strings by its location. 
@@ -88,13 +84,13 @@ int	parse_start(t_data *data, char *line)
 
 void	init_token(t_data *data, char **str)
 {
-	int arr_len;
 	int i;
 
-	arr_len = ft_arr_len(str);
+	data->arr_len = ft_arr_len(str);
 	i = 0;
-	while (i < arr_len)
+	while (i < data->arr_len)
 		data->token[i].type = 0;
+	data->argv = (char ***)malloc((data->cmd_count + 1) * sizeof(char **));
 }
 
 t_token_type deter_token_type(char *input)
@@ -116,6 +112,56 @@ t_token_type deter_token_type(char *input)
 	else
 		return (STRING_TOKEN);
 	// do we need to check for input[0] == null?
+}
+int	cmd_len(t_data *data, int i)
+{
+	int count;
+	t_token	*token;
+
+	token = data->token;
+	while (i < data->arr_len)
+	{
+		if (token[i].type != PIPE_TOKEN)
+			count++;
+		else
+			break ;
+		i++;
+	}
+	return (count);
+}
+void	array_join(t_data *data)
+{
+	 int len;
+	 int x;
+	 int y;
+	 int i;
+
+	 i = -1;
+	 x = 0;
+	 y = 0;
+	 len = cmd_len(data, i + 1);
+	 data->argv[x] = (char **)malloc((len + 1) *sizeof(char *));
+	while (++i < data->arr_len)
+	{
+		if (data->token[i].type != PIPE_TOKEN)
+		{
+			data->argv[x][y] = data->token[i].input;
+			y++;
+		}
+		else
+		{
+			if (y > 0)
+				data->argv[x++][y] = NULL;
+			if (x < data->cmd_count)
+			{
+				len = cmd_len(data, i + 1);
+				data->argv[x] = (char **)malloc((len + 1) * sizeof(char *)); // need to find each group's length. is it just 2?
+				y = 0;
+			}
+		}
+	}
+	if (y > 0)
+		data->argv[x][y] = NULL; //setting the null for the last group
 }
 
 //void	parse(t_data *data, const char *line)

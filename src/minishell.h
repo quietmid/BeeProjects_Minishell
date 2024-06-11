@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/07 21:45:23 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:24:57 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_token
 	t_token_type	type;
 	//struct s_token	*next;
 	//struct s_token 	*prev;
+	struct s_data	*data;
 }					t_token;
 
 typedef struct s_data
@@ -96,6 +97,7 @@ typedef struct s_data
 	char			**paths;
 	char			*path_cmd;
 	int				cmd_count;
+	int				arr_len;
 	int				status;
 	t_env			*env;
 	t_token			token[100];
