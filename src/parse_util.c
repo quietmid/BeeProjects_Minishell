@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:32:36 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/05 22:49:31 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/11 18:41:31 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,25 @@ int	pipe_scans(char *line)
 		line++;
 	}
 	return (i);
+}
+
+t_token_type deter_token_type(char *input)
+{
+	if (input[0] == '$')
+		return (DOLLAR_TOKEN);
+	else if (input[0] == '|')
+		return (PIPE_TOKEN);
+	else if (input[0] == '<' && input[1] == '<')
+		return (HERE_DOC_TOKEN);
+	else if (input[0] == '>' && input[1] == '>')
+		return (REDIR_APP_OUT_TOKEN);
+	else if (input[0] == '<')
+		return (REDIR_IN_TOKEN);
+	else if (input[0] == '>')
+		return (REDIR_OUT_TOKEN);
+	else if (input[0] == '$')
+		return (DOLLAR_TOKEN);
+	else
+		return (STRING_TOKEN);
+	// do we need to check for input[0] == null?
 }

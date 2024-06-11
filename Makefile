@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/07 13:56:42 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/11 18:39:33 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC = ./src/main.c \
 	  .src/envp.c \
 	  .src/parse.c \
 	  .src/parse_util.c \
+	  .src/utils_helpers.c \
 
 #BSRC =
 
