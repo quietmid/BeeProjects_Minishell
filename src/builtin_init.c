@@ -6,13 +6,11 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/11 19:21:13 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:39:15 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 /*
 * execute builtin pwd
@@ -98,8 +96,8 @@ int	is_builtin(t_data *data)
 */
 void	exec_builtin(t_data *data)
 {
-	// if (ft_strcmp(data->line[0], "echo") == 0)
-	// 	run_echo(data);
+	if (ft_strcmp(data->line[0], "echo") == 0)
+		run_echo(data);
 	if (ft_strcmp(data->line[0], "cd") == 0)
 		run_cd(data);
 	else if (ft_strcmp(data->line[0], "pwd") == 0)

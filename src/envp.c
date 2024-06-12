@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:16:30 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/11 19:19:10 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:35:48 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,5 @@ void	env_setup(t_data *data, char **envp)
 		x++;
 	}
 	data->env = head;
-	printf("XXX");
 	set_wd(data);
 }
