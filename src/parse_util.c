@@ -6,13 +6,13 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:32:36 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 18:41:31 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/12 20:19:27 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	space_replace(char *str)
+void	pipe_replace(char *str)
 {
 	int		i;
 	int		count;
@@ -24,18 +24,14 @@ void	space_replace(char *str)
 	{
 		if (count == 2)
 			count = 0;
-		if ((str[i] == ' ') && (count % 2 == 0))
+		if ((str[i] == 124) && (count % 2 == 0))
 			str[i] = 31;
 		if (str[i] == c)
-		{
 			count += 1;
-			//str[i] = 31;
-		}
 		if ((str[i] == 39 || str[i] == 34) && count == 0)
 		{
 			c = str[i];
 			count += 1;
-			//str[i] = 31;
 		}
 		i++;
 	}
@@ -44,7 +40,7 @@ void	space_replace(char *str)
 int	pipe_scans(char *line)
 {
 	int	i;
-	int q_count;
+	int q_count; //quote count
 	char c;
 
 	i = 0;
@@ -64,6 +60,7 @@ int	pipe_scans(char *line)
 		}
 		line++;
 	}
+	i += 1;
 	return (i);
 }
 

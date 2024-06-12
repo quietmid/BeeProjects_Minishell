@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 19:18:13 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:37:18 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,25 @@ typedef struct s_parse
 	int i; //count
 }	t_parse;
 
+/*probably don't need anymore*/
+//typedef struct s_token
+//{
+//	int				idx;
+//	char			*input;
+//	t_token_type	type;
+//	//struct s_token	*next;
+//	//struct s_token 	*prev;
+//	struct s_data	*data;
+//}					t_token;
+
 typedef struct s_token
 {
 	int				idx;
-	char			*input;
+	char			**cmd;
+	char			**redir;
 	t_token_type	type;
-	//struct s_token	*next;
+	struct s_token	*next;
 	//struct s_token 	*prev;
-	struct s_data	*data;
 }					t_token;
 
 typedef struct s_data
@@ -105,7 +116,7 @@ typedef struct s_data
 	int				arr_len;
 	int				status;
 	t_env			*env;
-	t_token			token[100];
+	t_token			*token;
 	t_parse			*utils;
 	struct s_parse	*par;
 }		t_data;
@@ -134,17 +145,21 @@ void	rl_replace_line(const char *text, int clear_undo);
 
 // Parsing
 void	parse(t_data *data, const char *line);
-void	space_replace(char *str);
-void	assign_token(char *input, t_data *data, int idx);
-void	array_join(t_data *data, t_parse *u);
+//void	space_replace(char *str);
+void	pipe_replace(char *str);
+//void	assign_token(char *input, t_data *data, int idx);
+void	array_join(t_data *data);
+//void	array_join(t_data *data, t_parse *u);
 void	init_token(t_data *data, char **str);
-void	assign_token(char *input, t_data *data, int i);
+//void	assign_token(char *input, t_data *data, int i);
 int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);
 //int		parse_start(char *line);
 int		pipe_scans(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+char 	**prompt_prep(char *line);
 t_token_type deter_token_type(char *input);
+t_token assign_token(char *input);
 
 //shell utils
 char	*find_path(char **envp);
@@ -157,6 +172,7 @@ void	ft_free_arr(char **arr);
 void	ft_arr_print(char **arr);
 int		ft_envsize(t_env *lst);
 int 	ft_isspace(char c);
+int 	ft_isredir(char c);
 int 	empty_line(char *input);
 int 	ft_ismeta(char c);
 char 	*find_end(char *str);

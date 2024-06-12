@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 19:20:05 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:47:06 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,19 @@ void	execute(t_data	*data)
 void	ft_minishell(t_data *data)
 {
 	char *line;
+	char *end;
 
+	end = "exit";
 	while (1)
 	{
 		signal_setup(SIG_PARENT);
 		line = readline("minishell-8.8$ ");
-		parse(data, line);
-		execute(data);
+		if (ft_strcmp(line, end) == 0)
+			break ;
+		if (parse_start(data, line))
+			printf("parsed!\n");
+		//parse(data, line);
+		//execute(data);
 		free(line);
 	}
 	free(line);
