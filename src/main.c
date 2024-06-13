@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/12 14:22:00 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:43:30 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	execute(t_data	*data)
 /* TEST MINISHELL */ //delete later
 void	ft_minishell(t_data *data)
 {
-	char *line;
+	char	*line;
 
 	while (1)
 	{

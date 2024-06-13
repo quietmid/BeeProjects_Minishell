@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/11 19:21:04 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:28:47 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_env	*search_env(t_data *data, char *str)
 }
 
 /*
-* update env key to pwd;
+* update env after cd
 */
 void	update_env(t_data *data)
 {
@@ -51,7 +51,7 @@ void	update_env(t_data *data)
 }
 
 /*
-* update the env data in the main struct
+* update the env data in the main struct after cd
 */
 void	update_data(t_data *data)
 {

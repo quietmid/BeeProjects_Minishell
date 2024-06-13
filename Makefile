@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
+#    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/11 18:39:33 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/12 21:53:13 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,10 @@ SRC = ./src/main.c \
 	  .src/builtin_init.c \
 	  .src/builtin_echo.c \
 	  .src/builtin_cd.c \
+	  .src/builtin_env.c \
+	  .src/builtin.c \
+	  .src/envp_init.c \
 	  .src/utils.c \
-	  .src/envp.c \
 	  .src/parse.c \
 	  .src/parse_util.c \
 	  .src/utils_helpers.c \

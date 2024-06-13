@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 19:18:13 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/12 23:02:34 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,16 @@ void	exec_builtin(t_data *data);
 void	run_echo(t_data *data);
 void	run_cd(t_data *data);
 void	run_pwd(t_data *data);
+void	run_export(t_data *data);
+void	run_env(t_data *data);
+void	run_unset(t_data *data);
 
 //envp
 void	env_setup(t_data *data, char **envp);
 t_env	*search_env(t_data *data, char *str);
 void	env_to_arr(t_data *data);
 int		ft_envsize(t_env *lst);
-int		env_key_exist(t_data *data, char *str);
+t_env	*create_envnode(char *envp);
 
 // signals
 void	heredoc_handler(int sig);
