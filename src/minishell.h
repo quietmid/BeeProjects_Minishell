@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/12 20:37:18 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/13 18:39:53 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 
 // Parsing
 void	parse(t_data *data, const char *line);
-//void	space_replace(char *str);
+void	space_replace(char *str);
 void	pipe_replace(char *str);
 //void	assign_token(char *input, t_data *data, int idx);
 void	array_join(t_data *data);
@@ -159,7 +159,7 @@ int		pipe_scans(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line);
 t_token_type deter_token_type(char *input);
-t_token assign_token(char *input);
+t_token assign_token(char *input, int i);
 
 //shell utils
 char	*find_path(char **envp);
