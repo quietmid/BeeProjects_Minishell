@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/12 23:02:34 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:48:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ t_token_type deter_token_type(char *input);
 //shell utils
 char	*find_path(char **envp);
 char	**get_paths(char **envp);
+void	update_data(t_data *data);
 
 //basic utils
 char	**ft_arr_copy(char **arr);

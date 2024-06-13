@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/12 21:28:47 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:03:23 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,21 @@ void	update_env(t_data *data)
 */
 void	update_data(t_data *data)
 {
-	if (data->oldpwd)
-		free(data->oldpwd);
-	if (data->pwd)
-	{
-		data->oldpwd = ft_strdup(data->pwd);
-		// if (!data->oldpwd)
-		// 	errormalloc
-	}
-	if (data->pwd)
-		free(data->pwd);
+	data->oldpwd = ft_strdup(data->pwd);
+
+	// if (data->oldpwd)
+	// 	free(data->oldpwd);
+	// if (data->pwd)
+	// {
+	// 	data->oldpwd = ft_strdup(data->pwd);
+	// 	// if (!data->oldpwd)
+	// 	// 	errormalloc
+	// } 
+	// if (data->pwd)
+	// 	free(data->pwd);
 	data->pwd = getcwd(NULL, 0);
 	if (!data->pwd)
 		printf("error"); // error malloc
-	update_env(data);
 }
 
 /*
@@ -86,7 +87,7 @@ char	*check_address(t_data *data, char *add)
 		if (ft_strcmp(add, "HOME") == 0)
 			res = "~";
 		else if (ft_strcmp(add, "OLDPWD") == 0)
-			res = "~";
+			res = "-";
 	}
 	else
 		res = tmp->value;
@@ -109,7 +110,10 @@ void	run_cd(t_data *data)
 	else
 		add = ft_strjoin("./", data->line[1]);
 	if (chdir(add) == 0)
+	{
 		update_data(data);
+		update_env(data);
+	}
 	else
 		perror(""); // error
 }

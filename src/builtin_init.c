@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/12 23:01:43 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:23:23 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	is_builtin(t_data *data)
 	else
 		return (FALSE);
 }
+
 /*
 * execute builtin commands
 */
@@ -56,4 +57,3 @@ void	exec_builtin(t_data *data)
 	else if (ft_strcmp(data->line[0], "exit") == 0)
 		exit(0);
 }
-

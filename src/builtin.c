@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/13 16:31:55 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:15:21 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	run_pwd(t_data *data)
 			// if (!pwd)
 			// 	"getcwd fail"
 			ft_putendl_fd(pwd, 2);
+			data->pwd = pwd;
 	// 	}
 	// }
 // 	else
@@ -126,76 +127,32 @@ void	run_export(t_data *data)
 	}
 }
 
-void	del_node(t_data *data, t_env *node)
-{
-	(void)data; // until error handling done
-	free(node->key);
-	if (node->value)
-		free(node->value);
-}
-
-// /*
-// * iterate thru the env ll and return key(str)node
-// */
-// t_env	*search_env(t_data *data, t_env *node)
-// {
-// 	t_env	*tmp;
-
-// 	tmp = data->env;
-// 	if (tmp->next != NULL)
-// 	{
-// 		while (tmp)
-// 		{
-// 			if (ft_strcmp(tmp->next, node) == 0)
-// 			{
-// 				return (tmp);
-// 			}
-// 			tmp = tmp->next;
-// 		}
-// 		return (NULL); // env exist but node doesnt?
-// 	}
-// 	return (NULL); // env does not exist?
-// }
-
 /*
-* execute builtin wxport
+* execute builtin unset,
 */
 void	run_unset(t_data *data)
 {
-	t_env	*head;
-	//t_env	*next;
 	t_env	*tmp;
+	t_env	*prev;
 
 	if (ft_arr_len(data->line) == 2)
 	{
-		printf("%s", data->line[1]);
-		tmp = search_env(data, data->line[1]);
-		head = data->env;
-		while(head)
+		tmp = data->env;
+		prev = NULL;
+		while (tmp && ft_strcmp(tmp->key, data->line[1]) != 0)
 		{
-			if (head->next->key == tmp->key)
-				printf("found!\n");
+			prev = tmp;
+			tmp = tmp->next;
 		}
-		// next = index->next;
-		// del_node(data, index);
-		// free(index);
-		// tmp = data->env;
-		// while (tmp->next)
-		// 	tmp = tmp->next;
-		// tmp = next;
-		// else //maybe not needed if we can defend
-		// {
-		// 	node = data->env;
-		// 	new = create_envnode(data->line[1]);
-		// 	if (node == NULL)
-		// 		node = new;
-		// 	else
-		// 	{
-		// 		while (node->next != NULL)
-		// 			node = node->next;
-		// 		node->next = new;
-		// 	}
-		// }
+		if (!tmp)
+			return ;
+		if (prev == NULL)
+			data->env = tmp->next;
+		else
+			prev->next = tmp->next;
+		free(tmp->key);
+		free(tmp->value);
+		free (tmp);
 	}
 // 	else
 // 		"error invalid flag"
