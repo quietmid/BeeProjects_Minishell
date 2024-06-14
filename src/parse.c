@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/13 19:05:27 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/14 17:16:53 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	calcu_redir(char *str)
 			num_redir += 2;
 			i += 2;
 		}
-		else if (ft_isredir(str[i]) && !ft_isredir(str[i - 1]))
+		else if (ft_isredir(str[i]))
 		{
 			num_redir += 2;
 			i++;
@@ -62,13 +62,16 @@ char **redir_argv(char *str)
 	int len;
 
 	len = calcu_redir(str);
-	i = -1;
+	printf("how many redir: %d\n", len);
+	if (len == 0)
+		return (NULL);
+	i = 0;
 	x = 0;
-	redir = ft_calloc(len + 1, sizeof(char **));
+	redir = (char **)ft_calloc(len + 1, sizeof(char *));
 	if (!redir)
 		return (NULL); //error_msg
 	len = 0;
-	while (str[++i])
+	while (str[i])
 	{
 		if (ft_isredir(str[i]))
 		{
@@ -101,12 +104,46 @@ char **redir_argv(char *str)
 
 char **cmd_argv(char *str)
 {
+	char **temp;
 	char **cmd;
+	int len;
+	int i;
+	int j;
 
 	space_replace(str);
-	cmd = ft_split(str, 31);
+	temp = ft_split(str, 31);
+	if (!temp)
+		return (NULL);
+	len = ft_arr_len(temp);
+	cmd = (char **)ft_calloc((len + 1), sizeof(char *));
 	if (!cmd)
-		return (NULL); // error_msg
+	{
+		ft_free_arr(temp);
+		return (NULL);
+	}
+	i = 0;
+	j = 0;
+	while (temp[i])
+	{
+		if (ft_isredir(temp[i][0]))
+		{
+			i++;
+			if (temp[i])
+				i++;
+		}
+		else
+		{
+			cmd[j] = ft_strdup(temp[i]);
+			j++;
+			i++;
+		}
+	}
+	cmd[j] = NULL;
+	ft_free_arr(temp);
+	//cmd = ft_split(str, 31);
+	//if (!cmd)
+	//	return (NULL); // error_msg
+	// go through the arrays and remove all the redir and the array after it
 	return (cmd);
 }
 
@@ -138,7 +175,7 @@ static void print_redir_argv(char **redir)
 	int i;
 
 	i = 0;
-	if (!redir[i])
+	if (!redir)
 		return ;
 	while (redir[i])
 	{
@@ -178,11 +215,11 @@ int	parse_start(t_data *data, char *line)
 	{
 		printf("%s\n", input[i]);
 		data->token[i] = assign_token(input[i], i);
-		if (i < data->cmd_count)
-			data->token[i].next = &data->token[i + 1];
-		else
-			data->token[i].next = NULL;
-		printf("token idx: %d \n", data->token[i].idx);
+		//if (i < data->cmd_count)
+		//	data->token[i].next = &data->token[i + 1];
+		//else
+		//	data->token[i].next = NULL;
+		//printf("token idx: %d \n", data->token[i].idx);
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);
 		i++;
