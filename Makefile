@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/12 21:53:13 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/06/13 20:17:12 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,10 @@ NAME = minishell
 LIBFT = ./libft/libft.a	
 
 SRC = ./src/main.c \
-	  ./src/shell_util.c \
 	  ./src/signal.c \
 	  .src/builtin_init.c \
 	  .src/builtin_echo.c \
 	  .src/builtin_cd.c \
-	  .src/builtin_env.c \
 	  .src/builtin.c \
 	  .src/envp_init.c \
 	  .src/utils.c \

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/13 17:03:23 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:11:38 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ void	update_env(t_data *data)
 */
 void	update_data(t_data *data)
 {
+	// if (data->oldpwd)
+	// 	free(data->pwd);
 	data->oldpwd = ft_strdup(data->pwd);
+	if (!data->pwd)
+		printf("errormallod"); //erro
 
 	// if (data->oldpwd)
 	// 	free(data->oldpwd);
@@ -65,6 +69,8 @@ void	update_data(t_data *data)
 	// 	// if (!data->oldpwd)
 	// 	// 	errormalloc
 	// } 
+	// if (data->pwd)
+	// 	free(data->pwd);
 	// if (data->pwd)
 	// 	free(data->pwd);
 	data->pwd = getcwd(NULL, 0);
