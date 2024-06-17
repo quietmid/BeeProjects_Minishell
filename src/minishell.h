@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 15:54:12 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/17 21:09:28 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,35 +82,12 @@ typedef struct s_parse
 	int i; //count
 }	t_parse;
 
-/*probably don't need anymore*/
-//typedef struct s_token
-//{
-//	int				idx;
-//	char			*input;
-//	t_token_type	type;
-//	//struct s_token	*next;
-//	//struct s_token 	*prev;
-//	struct s_data	*data;
-//}					t_token;
-
-//typedef struct s_token
-//{
-//	int				idx;
-//	char			**cmd;
-//	char			**redir;
-//	t_token_type	type;
-//	struct s_token	*next;
-//	//struct s_token 	*prev;
-//}					t_token;
-/* linked list ver*/
 typedef struct s_token
 {
 	int				idx;
 	char			**cmd;
 	char			**redir;
 	t_token_type	type;
-	struct s_token	*next;
-	//struct s_token 	*prev;
 }					t_token;
 
 typedef struct s_data
@@ -169,8 +146,7 @@ int		pipe_scans(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line);
 t_token_type deter_token_type(char *input);
-//t_token assign_token(char *input, int i);
-void assign_token(t_token **token, char *input, int i); // linked list ver
+t_token assign_token(char *input, int i);
 
 //shell utils
 char	*find_path(char **envp);
