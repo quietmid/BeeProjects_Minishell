@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/14 14:48:57 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/17 21:24:40 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,17 @@ NAME = minishell
 LIBFT = ./libft/libft.a	
 
 SRC = ./src/main.c \
-	  ./src/shell_util.c \
 	  ./src/signal.c \
 	  .src/builtin_init.c \
 	  .src/builtin_echo.c \
 	  .src/builtin_cd.c \
+	  .src/builtin.c \
+	  .src/envp_init.c \
 	  .src/utils.c \
-	  .src/envp.c \
 	  .src/parse.c \
 	  .src/parse_util.c \
 	  .src/utils_helpers.c \
+	  .src/pipes.c \
 
 #BSRC =
 

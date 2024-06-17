@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 21:09:28 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/17 21:23:58 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,6 @@ typedef enum e_token_type
 	DELIM_TOKEN, // 11
 }	t_token_type;
 
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
 typedef struct s_parse
 {
 	int	len; // for mallocing commands
@@ -90,8 +83,17 @@ typedef struct s_token
 	t_token_type	type;
 }					t_token;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
 typedef struct s_data
 {
+	pid_t			*pid;
+	int				**pipe;
 	char			**line; //test input delete later
 	char			***argv;
 	char			**paths;
@@ -100,10 +102,11 @@ typedef struct s_data
 	char			*pwd;
 	char			*oldpwd;
 	char			**env_arr;
-	int				arr_len;
 	int				status;
 	t_env			*env;
 	t_token			*token;
+	int				arr_len;
+	t_token			token[100];
 	t_parse			*utils;
 	struct s_parse	*par;
 }		t_data;
@@ -116,13 +119,17 @@ void	exec_builtin(t_data *data);
 void	run_echo(t_data *data);
 void	run_cd(t_data *data);
 void	run_pwd(t_data *data);
+void	run_export(t_data *data);
+void	run_env(t_data *data);
+void	run_unset(t_data *data);
 
 //envp
 void	env_setup(t_data *data, char **envp);
 t_env	*search_env(t_data *data, char *str);
 void	env_to_arr(t_data *data);
 int		ft_envsize(t_env *lst);
-int		env_key_exist(t_data *data, char *str);
+void	update_data(t_data *data);
+t_env	*create_envnode(char *envp);
 
 // signals
 void	heredoc_handler(int sig);
@@ -148,9 +155,8 @@ char 	**prompt_prep(char *line);
 t_token_type deter_token_type(char *input);
 t_token assign_token(char *input, int i);
 
-//shell utils
-char	*find_path(char **envp);
-char	**get_paths(char **envp);
+//pipes
+void	allocate_pipes(t_data *data);
 
 //basic utils
 char	**ft_arr_copy(char **arr);

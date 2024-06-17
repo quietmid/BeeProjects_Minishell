@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/13 18:48:40 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/17 21:23:04 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	exec_fork(t_data *data)
 				printf("mallocerror "); // fix error
 			env_to_arr(data);
 			execve(data->path_cmd, data->line, data->env_arr);
-			// remember to check if execve fails to free all mallocs otherwise its fine.
+			// check if execve fails to free all mallocs otherwise its fine.
 		}
 		printf(" error *"); // fix error
 	}
@@ -105,15 +105,20 @@ void	execute(t_data	*data)
 {
 	if (is_builtin(data) == TRUE)
 		exec_builtin(data);
-	else
+	else //if (data->cmd_count == 1)
 		exec_fork(data);
+	// else
+	// {
+	// 	printf("to fork");
+	// 	pipes_creator(data);
+	// 	the_piper(data);
+	// }
 }
 
 /* TEST MINISHELL */ //delete later
 void	ft_minishell(t_data *data)
 {
 	char *line;
-	char *end;
 
 	end = "exit";
 	while (1)
