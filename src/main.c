@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 21:23:04 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/17 21:31:37 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	execute(t_data	*data)
 void	ft_minishell(t_data *data)
 {
 	char *line;
-
+	char *end;
 	end = "exit";
 	while (1)
 	{
