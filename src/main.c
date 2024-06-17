@@ -119,7 +119,6 @@ void	execute(t_data	*data)
 void	ft_minishell(t_data *data)
 {
 	char	*line;
-
 	while (1)
 	{
 		signal_setup(SIG_PARENT);
