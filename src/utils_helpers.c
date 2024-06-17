@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:00:15 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/11 18:00:29 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/12 20:36:47 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,19 @@ int empty_line(char *input)
 	return (0);
 }
 
+/*
+124 = | , 36 = $ , 60 = < , 62 = >
+*/
 int ft_ismeta(char c)
 {
 	if (c == 124 || c == 36 || c == 60 || c == 62)
+		return (1);
+	return (0);
+}
+
+int ft_isredir(char c)
+{
+	if (c == 60 || c == 62)
 		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/15 23:34:01 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/06/17 21:24:40 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC = ./src/main.c \
 #BSRC =
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
 
 RL_HEADER = ~/.brew/Cellar/readline/8.2.10/include
 RL_LIB = ~/.brew/Cellar/readline/8.2.10/lib
