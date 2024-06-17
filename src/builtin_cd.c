@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/15 23:06:40 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/17 21:41:01 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,14 @@ void	run_cd(t_data *data)
 {
 	char	*add;
 
-	if (!data->line[1] || data->line[1][0] == '~')
+	if (!data->token->cmd[1] || data->token->cmd[1][0] == '~')
 		add = check_address(data, "HOME");
-	else if (data->line[1][0] == '-')
+	else if (data->token->cmd[1][0] == '-')
 		add = check_address(data, "OLDPWD");
-	else if (data->line[1][0] == '/')
-		add = data->line[1];
+	else if (data->token->cmd[1][0] == '/')
+		add = data->token->cmd[1];
 	else
-		add = ft_strjoin("./", data->line[1]);
+		add = ft_strjoin("./", data->token->cmd[1]);
 	if (chdir(add) == 0)
 	{
 		update_data(data);

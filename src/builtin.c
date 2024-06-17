@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/15 23:07:09 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/17 21:42:49 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	run_env(t_data *data)
 {
 	t_env	*env;
 
-	if (!data->line[1])
+	if (!data->token->cmd[1])
 	{
 		env = data->env;
 		if (data->env->next != NULL)
@@ -50,7 +50,7 @@ void	run_pwd(t_data *data)
 	//t_env	*node;
 	char	*pwd;
 
-	if (!data->line[1])
+	if (!data->token->cmd[1])
 	{
 		// node = search_env(data, "PWD");
 		// if (node)
@@ -89,7 +89,7 @@ void	run_export2(t_data *data)
 	t_env	*new;
 
 	node = data->env;
-	new = create_envnode(data->line[1]);
+	new = create_envnode(data->token->cmd[1]);
 	if (node == NULL)
 		node = new;
 	else
@@ -108,13 +108,13 @@ void	run_export(t_data *data)
 	t_env	*node;
 	char	**str;
 
-	// if (ft_arr_len(data->line) > 2)
+	// if (ft_arr_len(data->token->cmd) > 2)
 	// {
 	// 	"error"
 	// }
-	if (ft_strchr(data->line[1], '='))
+	if (ft_strchr(data->token->cmd[1], '='))
 	{
-		str = ft_split(data->line[1], '=');
+		str = ft_split(data->token->cmd[1], '=');
 		// if (!str)
 		// 	"error malloc"
 		node = search_env(data, str[0]);
@@ -135,11 +135,11 @@ void	run_unset(t_data *data)
 	t_env	*tmp;
 	t_env	*prev;
 
-	if (ft_arr_len(data->line) == 2)
+	if (ft_arr_len(data->token->cmd) == 2)
 	{
 		tmp = data->env;
 		prev = NULL;
-		while (tmp && ft_strcmp(tmp->key, data->line[1]) != 0)
+		while (tmp && ft_strcmp(tmp->key, data->token->cmd[1]) != 0)
 		{
 			prev = tmp;
 			tmp = tmp->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 21:31:37 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/17 21:36:42 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*find_path_cmd(t_data *data)
 	x = 0;
 	while (tmp[x])
 	{
-		cmd = ft_strjoin(tmp[x], data->line[0]);
+		cmd = ft_strjoin(tmp[x], data->token->cmd[0]);
 		// if (!cmd)
 		// 	"error malloc"
 		if (access(cmd, 0) == 0)
@@ -86,7 +86,7 @@ void	exec_fork(t_data *data)
 			if (!data->path_cmd)
 				printf("mallocerror "); // fix error
 			env_to_arr(data);
-			execve(data->path_cmd, data->line, data->env_arr);
+			execve(data->path_cmd, data->token->cmd, data->env_arr);
 			// check if execve fails to free all mallocs otherwise its fine.
 		}
 		printf(" error *"); // fix error
@@ -94,11 +94,11 @@ void	exec_fork(t_data *data)
 	wait (NULL);
 }
 
-/* TEST PARSE */ //delete later
-void	parse(t_data *data, const char *line)
-{
-	data->line = ft_split(line, ' ');
-}
+// /* TEST PARSE */ //delete later
+// void	parse(t_data *data, const char *line)
+// {
+// 	data->line = ft_split(line, ' ');
+// }
 
 /* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
@@ -118,19 +118,13 @@ void	execute(t_data	*data)
 /* TEST MINISHELL */ //delete later
 void	ft_minishell(t_data *data)
 {
-	char *line;
-	char *end;
-	end = "exit";
+	char	*line;
 	while (1)
 	{
 		signal_setup(SIG_PARENT);
 		line = readline("minishell-8.8$ ");
-		if (ft_strcmp(line, end) == 0)
-			break ;
-		if (parse_start(data, line))
-			printf("parsed!\n");
-		//parse(data, line);
-		//execute(data);
+		parse_start(data, line);
+		execute(data);
 		free(line);
 	}
 	free(line);
@@ -161,26 +155,3 @@ int main(int ac, char **ag, char **envp)
 	// free all the shit
 	return (0);
 }
-
-// void	ft_minishell(t_data *data)
-// {
-// 	char *line;
-// 	char *end;
-
-// 	//(void)data;
-// 	end = "exit";
-// 	while (1)
-// 	{
-// 		signal_setup(SIG_PARENT);
-// 		line = readline("minishell-8.8$ ");
-// 		if (ft_strcmp(line, end) == 0)
-// 			break ;
-// 		if (!parse_start(data, line))
-// 			break ;
-// 		//execute(data);
-// 		free(line);
-// 		//line = readline("minishell-8.8$ ");
-// 	}
-// 	free(line);
-// 	//unlink(".temp"); // unlink temp when all finished
-// }
