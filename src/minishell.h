@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 21:23:58 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/17 21:31:57 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,6 @@ typedef enum e_token_type
 	DELIM_TOKEN, // 11
 }	t_token_type;
 
-typedef struct s_parse
-{
-	int	len; // for mallocing commands
-	int arg_idx;
-	int token_idx;
-	int i; //count
-}	t_parse;
-
 typedef struct s_token
 {
 	int				idx;
@@ -106,8 +98,6 @@ typedef struct s_data
 	t_env			*env;
 	t_token			*token;
 	int				arr_len;
-	t_token			token[100];
-	t_parse			*utils;
 	struct s_parse	*par;
 }		t_data;
 
