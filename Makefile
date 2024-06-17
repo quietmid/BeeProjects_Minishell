@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/13 20:17:12 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/06/15 23:34:01 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC = ./src/main.c \
 	  .src/parse.c \
 	  .src/parse_util.c \
 	  .src/utils_helpers.c \
+	  .src/pipes.c \
 
 #BSRC =
 
