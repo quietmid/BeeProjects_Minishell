@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 21:36:42 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/17 22:49:48 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,12 @@ void	ft_minishell(t_data *data)
 	{
 		signal_setup(SIG_PARENT);
 		line = readline("minishell-8.8$ ");
+		if (!line)
+		{
+			if (isatty(0))
+				write (2, "exit", 5);
+			exit (0);
+		}
 		parse_start(data, line);
 		execute(data);
 		free(line);
