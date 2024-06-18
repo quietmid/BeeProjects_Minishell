@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/18 15:56:19 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/18 20:30:50 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ typedef struct s_token
 {
 	int				idx;
 	char			**cmd;
-	char			**redir;
-	t_token_type	type;
+	char			***redir;
 }					t_token;
 
 typedef struct s_env
@@ -136,13 +135,13 @@ void	array_join(t_data *data);
 //void	array_join(t_data *data, t_parse *u);
 void	init_token(t_data *data, char **str);
 //void	assign_token(char *input, t_data *data, int i);
-int		cmd_len(t_data *data, int i);
+//int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);
 //int		parse_start(char *line);
 int		pipe_scans(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char 	**prompt_prep(char *line);
-t_token_type deter_token_type(char *input);
+char 	**prompt_prep(char *line, int opt);
+//t_token_type deter_token_type(char *input);
 t_token assign_token(char *input, int i);
 
 //pipes
@@ -160,7 +159,13 @@ int 	empty_line(char *input);
 int 	ft_ismeta(char c);
 char 	*find_end(char *str);
 
+//safe mem allocation
+void	*ft_safe_calloc(size_t count, size_t size);
+void	*ft_safe_malloc(size_t size);
+
 //errors
 void	error_msg(char *msg);
+void	error_arr_free(char *msg, char **str);
+char	*ft_safe_substr(const char *s, unsigned int start, size_t len);
 
 #endif
