@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 21:09:16 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/18 17:42:40 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char **redir_argv(char *str)
 	int len;
 
 	len = calcu_redir(str);
-	printf("how many redir: %d\n", len);
 	if (len == 0)
 		return (NULL);
 	i = 0;
@@ -118,7 +117,7 @@ char **cmd_argv(char *str)
 	cmd = (char **)ft_calloc((len + 1), sizeof(char *));
 	if (!cmd)
 	{
-		ft_free_arr(temp);
+		ft_free_arr(temp); // adds error and free
 		return (NULL);
 	}
 	i = 0;
@@ -165,7 +164,7 @@ char **prompt_prep(char *line)
 		return (NULL); //error_msg
 	return (result);
 }
-
+// debug
 static void print_redir_argv(char **redir)
 {
 	int i;
@@ -179,7 +178,7 @@ static void print_redir_argv(char **redir)
 		i++;
     }
 }
-
+// debug
 static void print_cmd_argv(char **redir)
 {
 	int i;
@@ -200,23 +199,31 @@ int	parse_start(t_data *data, char *line)
 		return (1);
 	i = 0;
 	data->cmd_count = pipe_scans(line);
+	//debug
 	//printf("cmd_count: %d\n", data->cmd_count);
+	//debug
 	input = prompt_prep(line);
+	//debug
 	while (input[i])
 		printf("%s\n", input[i++]);
+	//debug
 	data->token = ft_calloc(data->cmd_count, sizeof(t_token));
 	if (!(data->token))
 		return (0); //error_msg
 	i = 0;
 	while (input[i])
 	{
-		printf("%s\n", input[i]);
 		data->token[i] = assign_token(input[i], i);
-		printf("token idx: %d \n", data->token[i].idx); //debug
+		//debug
+		printf("%s\n", input[i]);
+		printf("token idx: %d \n", data->token[i].idx);
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);
+		//debug
 		i++;
 	}
 	ft_free_arr(input);
+	// now iterates through the token and check redir for here_doc
+	
 	return (1);
 }

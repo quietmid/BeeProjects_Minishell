@@ -6,7 +6,7 @@
 #    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 15:36:20 by jlu               #+#    #+#              #
-#    Updated: 2024/06/17 21:24:40 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/18 16:09:47 by jlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = ./src/main.c \
 	  .src/parse_util.c \
 	  .src/utils_helpers.c \
 	  .src/pipes.c \
+	  .src/errors.c \
 
 #BSRC =
 

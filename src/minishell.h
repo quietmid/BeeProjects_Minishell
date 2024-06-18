@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 21:31:57 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:56:19 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,8 @@ int 	ft_isredir(char c);
 int 	empty_line(char *input);
 int 	ft_ismeta(char c);
 char 	*find_end(char *str);
+
+//errors
+void	error_msg(char *msg);
 
 #endif
