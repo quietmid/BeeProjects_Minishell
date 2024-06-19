@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 21:31:57 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:11:07 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,6 @@ int 	ft_isredir(char c);
 int 	empty_line(char *input);
 int 	ft_ismeta(char c);
 char 	*find_end(char *str);
+int	ft_strcmp(char *s1, char *s2);
 
 #endif
