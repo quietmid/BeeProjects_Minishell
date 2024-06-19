@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/29 12:51:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/18 20:30:50 by jlu              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -158,6 +147,7 @@ int 	ft_isredir(char c);
 int 	empty_line(char *input);
 int 	ft_ismeta(char c);
 char 	*find_end(char *str);
+int	ft_strcmp(char *s1, char *s2);
 
 //safe mem allocation
 void	*ft_safe_calloc(size_t count, size_t size);

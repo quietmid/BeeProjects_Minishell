@@ -138,9 +138,7 @@ t_token assign_token(char *str, int i)
 char **prompt_prep(char *line, int opt)
 {
 	char	**result;
-	int		i;
 
-	i = 0;
 	if (opt == 1)
 		pipe_replace(line);
 	else

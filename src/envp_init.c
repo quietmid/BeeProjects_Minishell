@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/17 21:24:05 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/19 18:19:10 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void	env_to_arr(t_data *data)
 	char	*tmp;
 	int		x;
 
+	tmp = NULL;
+	env = data->env;
 	x = 0;
 	res = (char **)malloc((sizeof(char *)) * (ft_envsize(data->env) + 1));
-	env = data->env;
 	while (env)
 	{
 		tmp = ft_strjoin(env->key, "=");
@@ -67,11 +68,14 @@ void	env_to_arr(t_data *data)
 void	set_wd(t_data *data)
 {
 	t_env	*tmp;
-
+	
+	tmp = NULL;
 	tmp = search_env(data, "PWD");
-	data->pwd = ft_strdup(tmp->value);
+	if (tmp)
+		data->pwd = ft_strdup(tmp->value);
 	tmp = search_env(data, "OLDPWD");
-	data->oldpwd = ft_strdup(tmp->value);
+	if (tmp)
+		data->oldpwd = ft_strdup(tmp->value);
 }
 
 /* 
