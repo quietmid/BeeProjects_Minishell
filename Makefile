@@ -17,6 +17,8 @@ SRC = ./src/main.c \
 	  ./src/parse_util.c \
 	  ./src/utils_helpers.c \
 	  ./src/pipes.c \
+	  ./src/safe_malloc.c \
+	  ./src/errors.c \
 
 #BSRC =
 
