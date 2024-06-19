@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
@@ -79,33 +79,36 @@ char ***redir_argv(char *str, int len, char ***redir)
 	redir[len] = NULL;
 	return (redir);
 }
-
-char **cmd_argv(char *str)
+int		extract_cmd(char **temp, int i)
 {
-	char **temp;
+	i++;
+	if (temp[i])
+		i++;
+	return (i);
+}
+
+char **cmd_argv(char **temp, int len)
+{
 	char **cmd;
-	int len;
 	int i;
 	int j;
 
-	temp = prompt_prep(str, 0);
-	i = 0;
-	while (temp[i])
-		printf("%s\n", temp[i++]);
-	len = ft_arr_len(temp);
 	cmd = (char **)ft_safe_calloc((len + 1), sizeof(char *));
 	i = 0;
 	j = 0;
 	while (temp[i])
 	{
 		if (ft_isredir(temp[i][0]))
+			i = extract_cmd(temp, i);
+		else if (i > 0 && !(ft_isredir(temp[i - 1][0])) && temp[i])
+			cmd[j++] = ft_strdup(temp[i++]);
+		else if (i == 0 && !ft_isredir(temp[i][0]))
+			cmd[j++] = ft_strdup(temp[i++]);
+		else
 		{
 			i++;
-			if (temp[i])
-				i++;
+			j++;
 		}
-		else
-			cmd[j++] = ft_strdup(temp[i++]);
 	}
 	cmd[j] = NULL;
 	ft_free_arr(temp);
@@ -115,6 +118,7 @@ char **cmd_argv(char *str)
 t_token assign_token(char *str, int i)
 {
 	t_token token;
+	char **temp;
 	int len;
 	int x;
 
@@ -131,7 +135,9 @@ t_token assign_token(char *str, int i)
 		token.redir[0] = NULL; 
 	else
 		token.redir = redir_argv(str, len, token.redir);
-	token.cmd = cmd_argv(str);
+	temp = prompt_prep(str, 0);
+	len = ft_arr_len(temp);
+	token.cmd = cmd_argv(temp, len);
 	return (token);
 }
 
