@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+         #
+#    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/17 16:27:29 by jlu               #+#    #+#              #
-#    Updated: 2024/05/31 15:46:55 by jlu              ###   ########.fr        #
+#    Updated: 2024/06/19 18:48:28 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ BLUE   := \033[34;1m
 MAGENTA   := \033[35;1m
 CYAN      := \033[36;1m
 WHITE     := \033[37;1m
-RESET     := \x1b[0m #reseting the text formatting to default state
+RESET     := \033[0m  #reseting the text formatting to default state
 
 OBJECTS_DIR = obj
 OBJECTS = $(addprefix $(OBJECTS_DIR)/,$(notdir $(SRC:.c=.o)))

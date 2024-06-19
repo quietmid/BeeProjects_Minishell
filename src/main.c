@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/17 22:49:48 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/19 17:59:23 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int main(int ac, char **ag, char **envp)
 	data = (t_data){0};
 	if (ac != 1) // probably don't need
 		return (0);
+		
 	env_setup(&data, envp);
 	ft_minishell(&data);
 	//int i;

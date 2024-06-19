@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/17 21:41:01 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:55:31 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	update_data(t_data *data)
 	// 	free(data->pwd);
 	data->oldpwd = ft_strdup(data->pwd);
 	if (!data->pwd)
-		printf("errormallod"); //erro
+		printf("errormallod"); //error
 
 	// if (data->oldpwd)
 	// 	free(data->oldpwd);

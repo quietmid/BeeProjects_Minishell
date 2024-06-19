@@ -156,9 +156,9 @@ t_token assign_token(char *str, int i)
 char **prompt_prep(char *line)
 {
 	char	**result;
-	int		i;
+	//int		i;
 
-	i = 0;
+	//i = 0;
 	pipe_replace(line);
 	result = ft_split(line, 31);
 	if (!result)
