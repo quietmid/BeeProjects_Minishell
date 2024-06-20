@@ -74,18 +74,19 @@ typedef struct s_data
 {
 	pid_t			*pid;
 	int				**pipe;
-	char			**line; //test input delete later
-	char			***argv;
-	char			**paths;
-	char			*path_cmd;
+	int				status;
+	int				arr_len;
 	int				cmd_count;
+	int				hd; //here_doc
+	char			***argv;
+	char			**line; //test input delete later
+	char			**paths;
+	char			**env_arr;
+	char			*path_cmd;
 	char			*pwd;
 	char			*oldpwd;
-	char			**env_arr;
-	int				status;
 	t_env			*env;
 	t_token			*token;
-	int				arr_len;
 	struct s_parse	*par;
 }		t_data;
 
@@ -133,6 +134,9 @@ char 	**prompt_prep(char *line, int opt);
 //t_token_type deter_token_type(char *input);
 t_token assign_token(char *input, int i);
 
+//here_doc
+int    check_heredoc(t_data *data);
+
 //pipes
 void	allocate_pipes(t_data *data);
 
@@ -141,6 +145,7 @@ char	**ft_arr_copy(char **arr);
 int		ft_arr_len(char **array);
 void	ft_free_arr(char **arr);
 void	ft_arr_print(char **arr);
+void	ft_free_token(t_data *data);
 int		ft_envsize(t_env *lst);
 int 	ft_isspace(char c);
 int 	ft_isredir(char c);

@@ -187,13 +187,8 @@ int	parse_start(t_data *data, char *line)
 	char **input;
 	int i;
 	
-	if (!line || !*line)
-		return (1);
 	i = 0;
 	data->cmd_count = pipe_scans(line);
-	//debug
-	//printf("cmd_count: %d\n", data->cmd_count);
-	//debug
 	input = prompt_prep(line, 1);
 	//debug
 	while (input[i])
@@ -213,7 +208,31 @@ int	parse_start(t_data *data, char *line)
 		i++;
 	}
 	ft_free_arr(input);
+	data->hd = check_heredoc(data);
+	// debug
+	printf("here_doc in token[%d]\n", data->hd);
+	// debug
 	// now iterates through the token and check redir for here_doc
 	
 	return (1);
 }
+
+
+/* without debuggers*/
+// int	parse_start(t_data *data, char *line)
+// {
+// 	char **input;
+// 	int i;
+	
+// 	data->cmd_count = pipe_scans(line);
+// 	input = prompt_prep(line, 1);
+// 	data->token = ft_safe_calloc(data->cmd_count, sizeof(t_token));
+// 	i = 0;
+// 	while (input[i])
+// 		data->token[i] = assign_token(input[i++], i);
+// 	ft_free_arr(input);
+// 	data->hd = check_heredoc(data);
+// 	// now iterates through the token and check redir for here_doc
+// 	return (1);
+// }
+
