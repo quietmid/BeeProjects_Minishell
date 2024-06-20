@@ -116,13 +116,13 @@ void	sig_handler(int sig);
 void	rl_replace_line(const char *text, int clear_undo);
 
 // Parsing
-void	parse(t_data *data, const char *line);
+// void	parse(t_data *data, const char *line);
 void	space_replace(char *str);
 void	pipe_replace(char *str);
 //void	assign_token(char *input, t_data *data, int idx);
-void	array_join(t_data *data);
+// void	array_join(t_data *data);
 //void	array_join(t_data *data, t_parse *u);
-void	init_token(t_data *data, char **str);
+// void	init_token(t_data *data, char **str);
 //void	assign_token(char *input, t_data *data, int i);
 //int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);

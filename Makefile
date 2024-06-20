@@ -19,11 +19,14 @@ SRC = ./src/main.c \
 	  ./src/pipes.c \
 	  ./src/safe_malloc.c \
 	  ./src/errors.c \
+	  ./src/here_doc.c \
 
 #BSRC =
 
 CC = cc
 CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
+
+# -g -fsanitize=address
 
 RL_HEADER = ~/.brew/Cellar/readline/8.2.10/include
 RL_LIB = ~/.brew/Cellar/readline/8.2.10/lib
