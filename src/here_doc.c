@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/19 23:25:41 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/20 19:23:14 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,27 @@
 int    check_heredoc(t_data *data)
 {
     int i;
+    int j;
+    char *ag;
     t_token *t;
 
     t = data->token;
-    while (t->redir[i])
+    i = 0;
+    while (i < data->cmd_count)
     {
-        if (t->redir[i][0][0] == '>' && t->redir[i][0][1] == '>' )
+        j = 0;
+        while (t[i].redir[j])
         {
-            //here_doc = TRUE;
-            return (i);
+            ag = t[i].redir[j][0];
+            if (ag && !ft_strncmp("<<", ag, 2))
+            {
+                //here_doc = TRUE;
+                printf("here_doc found\n");
+                return (i);
+            }
+            j++;
         }
+        i++;
     }
     return (-1);
 }

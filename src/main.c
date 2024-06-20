@@ -128,5 +128,6 @@ int main(int ac, char **ag, char **envp)
 	//}
 	// start the program
 	// free all the shit
+	ft_free_token(&data);
 	return (0);
 }
