@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/19 21:04:13 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:54:46 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 void	check_redirects(t_data *d, int x)
 {
-	if (d->cmd_count > 1 && d->token->redir[x] == NULL)
+	if (!d->token->redir[x])
 	{
 		if (x == d->cmd_count -1)
 		{
+			dprintf(2, "to stdout\n");
 			dup2(d->pipe[x][1], STDOUT_FILENO);
 		}
 		else if (x < d->cmd_count -1)
 		{
-			dprintf(2, "skdfhlsflkh");
+			dprintf(2, "to pipe\n");
 			dup2(d->pipe[x][1], STDOUT_FILENO);
 			dup2(d->pipe[x - 1][0], STDIN_FILENO);
 		}
