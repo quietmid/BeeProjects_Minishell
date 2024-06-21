@@ -62,6 +62,8 @@ typedef struct s_token
 	int				idx;
 	char			**cmd;
 	char			***redir;
+	int				in;
+	int				out;
 }					t_token;
 
 typedef struct s_env
@@ -138,7 +140,9 @@ t_token assign_token(char *input, int i);
 int    check_heredoc(t_data *data);
 
 //pipes
-void	allocate_pipes(t_data *data);
+void	create_pipes(t_data *data);
+void	create_forks(t_data *data);
+char	*find_path_cmd(t_data *data);
 
 //basic utils
 char	**ft_arr_copy(char **arr);
