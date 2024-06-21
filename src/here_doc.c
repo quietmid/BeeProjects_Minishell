@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
 /*   Updated: 2024/06/20 19:23:14 by jlu              ###   ########.fr       */
@@ -13,7 +13,6 @@
 #include "minishell.h"
 
 /* check for here_doc if it returns -1, no here_doc if its >= 0 then it means here doc found*/
-
 int    check_heredoc(t_data *data)
 {
     int i;

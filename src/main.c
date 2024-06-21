@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/19 21:24:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/21 18:21:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ char	**prepare_paths(t_env *env)
 /*
 * look for the envp:path where the cmd belong  before execve (1/2)
 */
-char	*find_path_cmd(t_data *data)
+char	*find_path_cmd(t_data *data, int i)
 {
 	char	**tmp;
 	char	*cmd;
-	int		x;
+	int 	x;
 
 	tmp = prepare_paths(search_env(data, "PATH"));
 	// if (!tmp)
@@ -56,7 +56,7 @@ char	*find_path_cmd(t_data *data)
 	x = 0;
 	while (tmp[x])
 	{
-		cmd = ft_strjoin(tmp[x], data->token->cmd[0]);
+		cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
 		// if (!cmd)
 		// 	"error malloc"
 		if (access(cmd, 0) == 0)
@@ -81,6 +81,22 @@ void	execute(t_data	*data)
 		create_pipes(data);
 		create_forks(data);
 	}
+	//dprintf(2, "before  fork\n");
+	int x = 0;
+	while(x < data->cmd_count)
+	{
+		dprintf(2, "pid %d : %d\n", x, data->pid[x]);
+		x++;
+	}
+	while (x < data->cmd_count)
+	{
+		//dprintf(2,"went to waiting");
+		dprintf(2, "%d\n", data->cmd_count);
+		waitpid(data->pid[x], &data->status, 0);
+		x++;
+	}
+	dprintf(2, "after WAIT\n");
+	return ;
 }
 /* we can use this one if we want improve user experience*/
 

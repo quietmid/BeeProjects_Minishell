@@ -75,7 +75,7 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	pid_t			*pid;
+	int				*pid;
 	int				**pipe;
 	int				status;
 	int				arr_len;
@@ -86,6 +86,8 @@ typedef struct s_data
 	char			**paths;
 	char			**env_arr;
 	char			*path_cmd;
+	int				cmd_count;
+	int				pipe_count;
 	char			*pwd;
 	char			*oldpwd;
 	t_env			*env;
@@ -142,7 +144,7 @@ int    check_heredoc(t_data *data);
 //pipes
 void	create_pipes(t_data *data);
 void	create_forks(t_data *data);
-char	*find_path_cmd(t_data *data);
+char	*find_path_cmd(t_data *data, int i);
 
 //basic utils
 char	**ft_arr_copy(char **arr);
