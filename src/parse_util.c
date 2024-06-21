@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:32:36 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/13 17:39:45 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/21 18:10:01 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,23 +91,21 @@ int	pipe_scans(char *line)
 	return (i);
 }
 
-t_token_type deter_token_type(char *input)
+int	quotes_check(char *line)
 {
-	if (input[0] == '$')
-		return (DOLLAR_TOKEN);
-	else if (input[0] == '|')
-		return (PIPE_TOKEN);
-	else if (input[0] == '<' && input[1] == '<')
-		return (HERE_DOC_TOKEN);
-	else if (input[0] == '>' && input[1] == '>')
-		return (REDIR_APP_OUT_TOKEN);
-	else if (input[0] == '<')
-		return (REDIR_IN_TOKEN);
-	else if (input[0] == '>')
-		return (REDIR_OUT_TOKEN);
-	else if (input[0] == '$')
-		return (DOLLAR_TOKEN);
-	else
-		return (STRING_TOKEN);
-	// do we need to check for input[0] == null?
+	char q;
+
+	q = 0;
+	while (*line)
+	{
+		if (!q && ft_isquote(*line))
+			q = *line;
+		else if (*line == q)
+			q = 0;
+		line++;
+	}
+	if (q == 0)
+		return (1);
+	print_errors(ERR_QUOTES);
+	return (0);
 }
