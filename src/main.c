@@ -82,24 +82,46 @@ void	execute(t_data	*data)
 		create_forks(data);
 	}
 }
+/* we can use this one if we want improve user experience*/
 
+// static void	line_history(char *line)
+// {
+// 	static char	*last = NULL;
+
+// 	if (*line && (!last || ft_strcmp(last, line)))
+// 	{
+// 		add_history(line);
+// 		free(last);
+// 		last = ft_strdup(line);
+// 	}
+// }
+void	signal_d()
+{
+	if (isatty(0))
+		write (2, "exit", 5);
+	exit (0);
+}
 /* TEST MINISHELL */ //delete later
 void	ft_minishell(t_data *data)
 {
 	char	*line;
+	int		status;
+
 
 	while (1)
 	{
 		signal_setup(SIG_PARENT);
+		status = 1;
 		line = readline("minishell-8.8$ ");
 		if (!line)
-		{
-			if (isatty(0))
-				write (2, "exit", 5);
-			exit (0);
-		}
-		parse_start(data, line);
-		execute(data);
+			signal_d();
+		add_history(line);
+		if (!quotes_check(line))
+			status = 0;
+		if (status)
+			status = parse_start(data, line);
+		if (status)
+			execute(data);
 		free(line);
 	}
 	free(line);
