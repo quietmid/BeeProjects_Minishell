@@ -103,11 +103,23 @@ void	execute(t_data	*data)
 	// 	the_piper(data);
 	// }
 }
+static void	line_history(char *line)
+{
+	static char	*last = NULL;
+
+	if (*line && (!last || ft_strcmp(last, line)))
+	{
+		add_history(line);
+		free(last);
+		last = ft_strdup(line);
+	}
+}
 
 /* TEST MINISHELL */ //delete later
 void	ft_minishell(t_data *data)
 {
 	char	*line;
+
 	while (1)
 	{
 		signal_setup(SIG_PARENT);
@@ -118,6 +130,7 @@ void	ft_minishell(t_data *data)
 				write (2, "exit", 5);
 			exit (0);
 		}
+		line_history(line);
 		parse_start(data, line);
 		//execute(data);
 		free(line);
