@@ -2,8 +2,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//libft library
+//libft library & h.files
 # include "../libft/libft.h"
+# include "./errors.h"
 
 //library headers
 # include <unistd.h> // write dup fork
@@ -76,19 +77,21 @@ typedef struct s_data
 {
 	int				*pid;
 	int				**pipe;
-	char			**line; //test input delete later
+	int				status;
+	int				arr_len;
+	int				cmd_count;
+	int				hd; //here_doc
 	char			***argv;
+	char			**line; //test input delete later
 	char			**paths;
+	char			**env_arr;
 	char			*path_cmd;
 	int				cmd_count;
 	int				pipe_count;
 	char			*pwd;
 	char			*oldpwd;
-	char			**env_arr;
-	int				status;
 	t_env			*env;
 	t_token			*token;
-	int				arr_len;
 	struct s_parse	*par;
 }		t_data;
 
@@ -129,12 +132,14 @@ void	pipe_replace(char *str);
 //void	assign_token(char *input, t_data *data, int i);
 //int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);
-//int		parse_start(char *line);
 int		pipe_scans(char *line);
+int		quotes_check(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
-//t_token_type deter_token_type(char *input);
 t_token assign_token(char *input, int i);
+
+//here_doc
+int    check_heredoc(t_data *data);
 
 //pipes
 void	create_pipes(t_data *data);
@@ -146,11 +151,13 @@ char	**ft_arr_copy(char **arr);
 int		ft_arr_len(char **array);
 void	ft_free_arr(char **arr);
 void	ft_arr_print(char **arr);
+void	ft_free_token(t_data *data);
 int		ft_envsize(t_env *lst);
 int 	ft_isspace(char c);
 int 	ft_isredir(char c);
-int 	empty_line(char *input);
 int 	ft_ismeta(char c);
+int		ft_isquote(char c);
+int 	empty_line(char *input);
 char 	*find_end(char *str);
 int	ft_strcmp(char *s1, char *s2);
 
@@ -161,6 +168,7 @@ void	*ft_safe_malloc(size_t size);
 //errors
 void	error_msg(char *msg);
 void	error_arr_free(char *msg, char **str);
+void	print_errors(char *errmsg);
 char	*ft_safe_substr(const char *s, unsigned int start, size_t len);
 
 #endif

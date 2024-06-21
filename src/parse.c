@@ -155,30 +155,30 @@ char **prompt_prep(char *line, int opt)
 	return (result);
 }
 // debug
-static void print_redir_argv(char ***redir)
-{
-	int i;
+// static void print_redir_argv(char ***redir)
+// {
+// 	int i;
 
-	i = 0;
-	if (!redir)
-		return ;
-	while (redir[i])
-	{
-		printf("redir [%d] \n", i);
-        printf("redir dir: %s\n", redir[i][0]);
-        printf("redir fd: %s\n", redir[i][1]);
-		i++;
-    }
-}
-// debug
-static void print_cmd_argv(char **redir)
-{
-	int i;
-    for (i = 0; redir[i] != NULL; i++)
-    {
-        printf("cmd: %s\n", redir[i]);
-    }
-}
+// 	i = 0;
+// 	if (!redir)
+// 		return ;
+// 	while (redir[i])
+// 	{
+// 		printf("redir [%d] \n", i);
+//         printf("redir dir: %s\n", redir[i][0]);
+//         printf("redir fd: %s\n", redir[i][1]);
+// 		i++;
+//     }
+// }
+// // debug
+// static void print_cmd_argv(char **redir)
+// {
+// 	int i;
+//     for (i = 0; redir[i] != NULL; i++)
+//     {
+//         printf("cmd: %s\n", redir[i]);
+//     }
+// }
 /* 
 Starts parsing the input and store them as redir and/or cmd. Each token represent the prompt in between the pipes
 */
@@ -187,33 +187,56 @@ int	parse_start(t_data *data, char *line)
 	char **input;
 	int i;
 	
-	if (!line || !*line)
-		return (1);
 	i = 0;
 	data->cmd_count = pipe_scans(line);
-	//debug
-	//printf("cmd_count: %d\n", data->cmd_count);
-	//debug
 	input = prompt_prep(line, 1);
 	//debug
-	while (input[i])
-		printf("%s\n", input[i++]);
+	// while (input[i])
+	// 	printf("%s\n", input[i++]);
 	//debug
-	data->token = ft_safe_calloc(data->cmd_count, sizeof(t_token));
+	data->token = ft_calloc(data->cmd_count, sizeof(t_token));
+	if (!data->token)
+		return (0);
 	i = 0;
 	while (input[i])
 	{
 		data->token[i] = assign_token(input[i], i);
 		//debug
-		printf("%s\n", input[i]);
-		printf("token idx: %d \n", data->token[i].idx);
-		print_redir_argv(data->token[i].redir);
-		print_cmd_argv(data->token[i].cmd);
+		// printf("%s\n", input[i]);
+		// printf("token idx: %d \n", data->token[i].idx);
+		// print_redir_argv(data->token[i].redir);
+		// print_cmd_argv(data->token[i].cmd);
 		//debug
 		i++;
 	}
 	ft_free_arr(input);
+	data->hd = check_heredoc(data);
+	// debug
+	// printf("here_doc in token[%d]\n", data->hd);
+	// debug
 	// now iterates through the token and check redir for here_doc
 	
 	return (1);
 }
+
+
+/* without debuggers*/
+// int	parse_start(t_data *data, char *line)
+// {
+// 	char **input;
+// 	int i;
+	
+// 	data->cmd_count = pipe_scans(line);
+// 	input = prompt_prep(line, 1);
+	// data->token = ft_calloc(data->cmd_count, sizeof(t_token));
+	// if (!data->token)
+	// 	return (0);
+// 	i = 0;
+// 	while (input[i])
+// 		data->token[i] = assign_token(input[i++], i);
+// 	ft_free_arr(input);
+// 	data->hd = check_heredoc(data);
+// 	// now iterates through the token and check redir for here_doc
+// 	return (1);
+// }
+

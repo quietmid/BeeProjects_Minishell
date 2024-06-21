@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_helpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:00:15 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/12 20:36:47 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/21 17:40:45 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,11 @@ char *find_end(char *str)
 	while (*str != '\0' && !ft_ismeta(*str) && !ft_isspace(*str))
 		str++;
 	return (str);
+}
+
+int	ft_isquote(char c)
+{
+	if (c == 34 || c == 39)
+		return (1);
+	return (0);
 }
