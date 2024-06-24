@@ -21,6 +21,7 @@
 # define TRUE 1
 # define FALSE 0
 
+
 //struct
 
 typedef enum e_metachar
@@ -79,10 +80,8 @@ typedef struct s_data
 	int				**pipe;
 	int				status;
 	int				arr_len;
-	int				cmd_count;
 	int				hd; //here_doc
 	char			***argv;
-	char			**line; //test input delete later
 	char			**paths;
 	char			**env_arr;
 	char			*path_cmd;

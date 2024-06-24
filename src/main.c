@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/21 18:21:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:43:18 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,18 @@ char	*find_path_cmd(t_data *data, int i)
 	return (NULL);
 }
 
+void	close_pipes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->cmd_count - 1)
+	{
+		close(data->pipe[i][0]);
+		close(data->pipe[i][1]);
+		i++;
+	}
+}
 
 /* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
@@ -80,22 +92,27 @@ void	execute(t_data	*data)
 	{
 		create_pipes(data);
 		create_forks(data);
+		close_pipes(data);
+		int x;
+		x = 0;
+		if (data->cmd_count > 1)
+		{
+			while(x < data->pipe_count)
+			{
+				printf("index: %d", x);
+				close(data->pipe[x][0]);
+				close(data->pipe[x][1]);
+				x++;
+			}
+		}
+		x = 0;
+		while (x < data->cmd_count)
+		{
+			waitpid(data->pid[x], &data->status, 0);
+			x++;
+		}
+		dprintf(2, "after WAIT\n");
 	}
-	//dprintf(2, "before  fork\n");
-	int x = 0;
-	while(x < data->cmd_count)
-	{
-		dprintf(2, "pid %d : %d\n", x, data->pid[x]);
-		x++;
-	}
-	while (x < data->cmd_count)
-	{
-		//dprintf(2,"went to waiting");
-		dprintf(2, "%d\n", data->cmd_count);
-		waitpid(data->pid[x], &data->status, 0);
-		x++;
-	}
-	dprintf(2, "after WAIT\n");
 	return ;
 }
 /* we can use this one if we want improve user experience*/
@@ -111,6 +128,7 @@ void	execute(t_data	*data)
 // 		last = ft_strdup(line);
 // 	}
 // }
+
 void	signal_d()
 {
 	if (isatty(0))
@@ -123,22 +141,25 @@ void	ft_minishell(t_data *data)
 	char	*line;
 	int		status;
 
-
+	signal_setup(SIG_PARENT);
 	while (1)
 	{
-		signal_setup(SIG_PARENT);
 		status = 1;
-		line = readline("minishell-8.8$ ");
+		line = readline("\033[0;31mminishell-8.8$ \033[0m");
 		if (!line)
 			signal_d();
-		add_history(line);
-		if (!quotes_check(line))
-			status = 0;
-		if (status)
-			status = parse_start(data, line);
-		if (status)
-			execute(data);
-		free(line);
+		if (line)
+		{
+			add_history(line);
+			if (!quotes_check(line))
+				status = 0;
+			if (status)
+				status = parse_start(data, line);
+			if (status)
+				execute(data);
+		}
+		else
+			free(line);
 	}
 	free(line);
 }
@@ -166,6 +187,6 @@ int main(int ac, char **ag, char **envp)
 	//}
 	// start the program
 	// free all the shit
-	ft_free_token(&data);
+	//ft_free_token(&data);
 	return (0);
 }
