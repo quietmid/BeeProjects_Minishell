@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
+/*   Updated: 2024/06/19 21:24:28 by pbumidan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -59,49 +70,17 @@ char	*find_path_cmd(t_data *data)
 	return (NULL);
 }
 
-/* TEST FORKING */ //delete later
-void	exec_fork(t_data *data)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		printf("forkerror"); //error
-	if (pid == 0)
-	{
-		if (search_env(data, "PATH"))
-		{
-			data->path_cmd = find_path_cmd(data);
-			if (!data->path_cmd)
-				printf("mallocerror "); // fix error
-			env_to_arr(data);
-			execve(data->path_cmd, data->token->cmd, data->env_arr);
-			// check if execve fails to free all mallocs otherwise its fine.
-		}
-		printf(" error *"); // fix error
-	}
-	wait (NULL);
-}
-
-// /* TEST PARSE */ //delete later
-// void	parse(t_data *data, const char *line)
-// {
-// 	data->line = ft_split(line, ' ');
-// }
 
 /* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
 {
-	if (is_builtin(data) == TRUE)
+	if (data->cmd_count == 1 && is_builtin(data) == TRUE)
 		exec_builtin(data);
-	else //if (data->cmd_count == 1)
-		exec_fork(data);
-	// else
-	// {
-	// 	printf("to fork");
-	// 	pipes_creator(data);
-	// 	the_piper(data);
-	// }
+	else
+	{
+		create_pipes(data);
+		create_forks(data);
+	}
 }
 /* we can use this one if we want improve user experience*/
 
@@ -127,6 +106,7 @@ void	ft_minishell(t_data *data)
 {
 	char	*line;
 	int		status;
+
 
 	while (1)
 	{
@@ -156,7 +136,6 @@ int main(int ac, char **ag, char **envp)
 	data = (t_data){0};
 	if (ac != 1) // probably don't need
 		return (0);
-		
 	env_setup(&data, envp);
 	ft_minishell(&data);
 	//int i;
