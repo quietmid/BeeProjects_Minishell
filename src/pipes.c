@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/24 19:08:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:36:40 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ void	redirect_to_pipe(t_data *data, int x)
 		}
 		else
 		{
-			dprintf(2, "cmd % d IN from PIPE %d OUT to PIPE %d\n", x, x - 1, x);
 			dup2(data->pipe[x - 1][0], STDIN_FILENO);
 			dup2(data->pipe[x][1], STDOUT_FILENO);
+			dprintf(2, "cmd % d IN from PIPE %d OUT to PIPE %d\n", x, x - 1, x);
 			close(data->pipe[x - 1][1]);
 			close(data->pipe[x][0]);
 		}
