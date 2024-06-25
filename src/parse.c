@@ -208,10 +208,10 @@ int	parse_start(t_data *data, char *line)
 
 		data->token[i] = assign_token(input[i], i);
 		//debug
-		// printf("%s\n", input[i]);
-		// printf("token idx: %d \n", data->token[i].idx);
-		// print_redir_argv(data->token[i].redir);
-		// print_cmd_argv(data->token[i].cmd);
+		printf("%s\n", input[i]);
+		printf("token idx: %d \n", data->token[i].idx);
+		print_redir_argv(data->token[i].redir);
+		print_cmd_argv(data->token[i].cmd);
 		//debug
 		i++;
 	}
