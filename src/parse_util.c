@@ -90,22 +90,3 @@ int	pipe_scans(char *line)
 	i += 1;
 	return (i);
 }
-
-int	quotes_check(char *line)
-{
-	char q;
-
-	q = 0;
-	while (*line)
-	{
-		if (!q && ft_isquote(*line))
-			q = *line;
-		else if (*line == q)
-			q = 0;
-		line++;
-	}
-	if (q == 0)
-		return (1);
-	print_errors(ERR_QUOTES);
-	return (0);
-}

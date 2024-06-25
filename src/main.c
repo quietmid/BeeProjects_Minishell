@@ -151,8 +151,7 @@ void	ft_minishell(t_data *data)
 		if (line)
 		{
 			add_history(line);
-			if (!quotes_check(line))
-				status = 0;
+			status = prompt_check(line);
 			if (status)
 				status = parse_start(data, line);
 			// if (status)
