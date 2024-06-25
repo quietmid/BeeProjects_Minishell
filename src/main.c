@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/25 14:50:49 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/25 17:37:49 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	ft_minishell(t_data *data)
 		if (line)
 		{
 			add_history(line);
-			// status = prompt_check(line);
+			status = prompt_check(line);
 			if (status)
 				status = parse_start(data, line);
 			// if (status)

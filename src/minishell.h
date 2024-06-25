@@ -120,6 +120,11 @@ void	signal_setup(int mode);
 void	sig_handler(int sig);
 void	rl_replace_line(const char *text, int clear_undo);
 
+//Input checking
+int 	prompt_check(char *line);
+char 	syntax_check(char *line);
+int		quotes_check(char *line);
+
 // Parsing
 // void	parse(t_data *data, const char *line);
 void	space_replace(char *str);
@@ -132,7 +137,6 @@ void	pipe_replace(char *str);
 //int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);
 int		pipe_scans(char *line);
-int		quotes_check(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
 t_token assign_token(char *input, int i);
