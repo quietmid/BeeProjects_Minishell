@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/26 19:40:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/26 22:13:07 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,83 @@ void	close_pipes(t_data *data)
 	}
 }
 
+void redir_in_fd(t_data *data, int x)
+{
+	int i;
+	
+	i = 0;
+	while (data->token[x].redir[i])
+	{
+		if (ft_strcmp(data->token[x].redir[i][0], "<") ==  0)
+		{
+			data->token->in = open(data->token[x].redir[i][1], O_RDONLY);
+			if (data->token->in < 0)
+				printf("error, permission");
+			if (dup2(data->token->in, STDIN_FILENO) < 0)
+				printf("duperror");
+			close(data->token->in);
+			dprintf(2, "cmd %d redir IN from %s\n",x, data->token[x].redir[i][1]);
+		}
+		i++;
+	}
+}
+
+void redir_out_fd(t_data *data, int x)
+{
+	int i;
+	
+	i = 0;
+	while (data->token[x].redir[i])
+	{
+		if (ft_strcmp(data->token[x].redir[i][0], ">") == 0)
+		{
+			data->token->out = open(data->token[x].redir[i][1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+			if (data->token->out < 0)
+				printf("error, permission");
+			if (dup2(data->token->out, STDOUT_FILENO) < 0)
+				printf("duperror");
+			close(data->token->out);
+			dprintf(2, "cmd %d redir OUT to %s\n",x, data->token[x].redir[i][1]);
+		}
+		i++;
+	}
+}
+
+void redir_append_fd(t_data *data, int x)
+{
+	int i;
+	
+	i = 0;
+	while (data->token[x].redir[i])
+	{
+		if (ft_strcmp(data->token[x].redir[i][0], ">>") == 0)
+		{
+			data->token->out = open(data->token[x].redir[i][1], O_CREAT | O_RDWR | O_APPEND, 0644);
+			if (data->token->out < 0)
+				printf("error, permission");
+			if (dup2(data->token->out, STDOUT_FILENO) < 0)
+				printf("duperror");
+			close(data->token->out);
+			dprintf(2, "cmd %d redir OUT to %s\n", x, data->token[x].redir[i][1]);
+		}
+		i++;
+	}
+}
+int is_redir(t_data *data, int x, char *str)
+{
+	int i;
+	
+	i = 0;
+	while (data->token[x].redir[i])
+	{
+		if (ft_strcmp(data->token[x].redir[i][0], str) ==  0)
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+	
+}
+
 void	redirect_to_redir(t_data *data, int x)
 {
 	int i;
@@ -95,8 +172,6 @@ void	redirect_to_redir(t_data *data, int x)
 					printf("duperror");
 				close(data->token->in);
 				dprintf(2, "cmd %d redir IN from %s\n",x, data->token[x].redir[i][1]);
-
-				
 			}
 			else if (ft_strcmp(data->token[x].redir[i][0], ">") == 0)
 			{
@@ -129,23 +204,56 @@ void	redirect_to_pipe(t_data *data, int x)
 	{
 		if (x == 0)
 		{
-			dprintf(2, "cmd %d OUT to pipe %d\n", x, x);
-			dup2(data->pipe[x][1], STDOUT_FILENO);
+			redir_in_fd(data, x);
+			if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
+			{
+				redir_out_fd(data, x);
+				redir_append_fd(data, x);
+			}
+			else
+			{
+				dprintf(2, "cmd %d OUT to pipe %d\n", x, x);
+				dup2(data->pipe[x][1], STDOUT_FILENO);
+			}
 			close_pipes(data);
-			//close(data->pipe[x][0]);
+
 		}
 		else if (x == (data->cmd_count - 1))
 		{
-			dprintf(2, "cmd %d IN from pipe %d\n", x ,x - 1);
-			dup2(data->pipe[x - 1][0], STDIN_FILENO);
-			close_pipes(data);
+			if (is_redir(data, x, "<") == TRUE)
+			{
+				redir_in_fd(data, x);
+			}
+			else
+			{
+				dprintf(2, "cmd %d IN from pipe %d\n", x ,x - 1);
+				dup2(data->pipe[x - 1][0], STDIN_FILENO);
+			}
 			//close(data->pipe[x - 1][1]);
+			redir_out_fd(data, x);
+			redir_append_fd(data, x);
+			close_pipes(data);
 		}
 		else
 		{
-			dprintf(2, "cmd % d IN from PIPE %d OUT to PIPE %d\n", x, x - 1, x);
-			dup2(data->pipe[x - 1][0], STDIN_FILENO);
-			dup2(data->pipe[x][1], STDOUT_FILENO);
+			if (is_redir(data, x, "<") == TRUE)
+			{
+				redir_in_fd(data, x);
+			}
+			else
+			{
+				dprintf(2, "cmd % d IN from PIPE %d OUT to PIPE %d\n", x, x - 1, x);
+				dup2(data->pipe[x - 1][0], STDIN_FILENO);
+			}
+			if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
+			{
+				redir_out_fd(data, x);
+				redir_append_fd(data, x);
+			}
+			else
+			{
+				dup2(data->pipe[x][1], STDOUT_FILENO);	
+			}
 			close_pipes(data);
 			//close(data->pipe[x - 1][1]);
 			//close(data->pipe[x][0]);
@@ -159,12 +267,11 @@ void child_process(t_data *data, int x)
 	// data->token->in = dup(STDIN_FILENO);
 	// data->token->out = dup(STDOUT_FILENO);
 	//if (data->cmd_count > 1 && data->token[x].redir[0] == NULL)
-	if (data->token[x].redir[0] == NULL)
-	{
-		redirect_to_pipe(data, x);
-	}
-	else
-		redirect_to_redir(data, x);
+	// if (data->token[x].redir[0] != NULL)
+	// {
+	// 	redirect_to_redir(data, x);
+	// }
+	redirect_to_pipe(data, x);
 	if (search_env(data, "PATH"))
 	{
 		data->path_cmd = find_path_cmd(data, x);
