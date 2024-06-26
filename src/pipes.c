@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/24 19:08:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/26 19:40:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,20 @@
 // 		}
 // 	}
 // }
+
+void	close_pipes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->cmd_count - 1)
+	{
+		close(data->pipe[i][0]);
+		close(data->pipe[i][1]);
+		i++;
+	}
+}
+
 void	redirect_to_redir(t_data *data, int x)
 {
 	int i;
@@ -69,6 +83,7 @@ void	redirect_to_redir(t_data *data, int x)
 	i = 0;
 	if (data->token[x].redir[i] != NULL)
 	{
+		dprintf(2, "GGGGGGGGGGGGGGGGGGGGGGGGGGGG\n");
 		while (data->token[x].redir[i])
 		{
 			if (ft_strcmp(data->token[x].redir[i][0], "<") ==  0)
@@ -110,27 +125,30 @@ void	redirect_to_redir(t_data *data, int x)
 
 void	redirect_to_pipe(t_data *data, int x)
 {
-	if (data->cmd_count > 1)
+	if (x < data->cmd_count)
 	{
 		if (x == 0)
 		{
 			dprintf(2, "cmd %d OUT to pipe %d\n", x, x);
 			dup2(data->pipe[x][1], STDOUT_FILENO);
-			close(data->pipe[x][0]);
+			close_pipes(data);
+			//close(data->pipe[x][0]);
 		}
 		else if (x == (data->cmd_count - 1))
 		{
 			dprintf(2, "cmd %d IN from pipe %d\n", x ,x - 1);
 			dup2(data->pipe[x - 1][0], STDIN_FILENO);
-			close(data->pipe[x - 1][1]);
+			close_pipes(data);
+			//close(data->pipe[x - 1][1]);
 		}
 		else
 		{
 			dprintf(2, "cmd % d IN from PIPE %d OUT to PIPE %d\n", x, x - 1, x);
 			dup2(data->pipe[x - 1][0], STDIN_FILENO);
 			dup2(data->pipe[x][1], STDOUT_FILENO);
-			close(data->pipe[x - 1][1]);
-			close(data->pipe[x][0]);
+			close_pipes(data);
+			//close(data->pipe[x - 1][1]);
+			//close(data->pipe[x][0]);
 		}
 	}
 }
@@ -140,8 +158,11 @@ void child_process(t_data *data, int x)
 	//ft_putstr_fd("went to child", 2);
 	// data->token->in = dup(STDIN_FILENO);
 	// data->token->out = dup(STDOUT_FILENO);
-	if (data->cmd_count > 1 && data->token[x].redir[0] == NULL)
+	//if (data->cmd_count > 1 && data->token[x].redir[0] == NULL)
+	if (data->token[x].redir[0] == NULL)
+	{
 		redirect_to_pipe(data, x);
+	}
 	else
 		redirect_to_redir(data, x);
 	if (search_env(data, "PATH"))

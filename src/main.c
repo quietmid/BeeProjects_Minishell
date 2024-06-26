@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/24 18:43:18 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/26 19:39:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,7 @@ char	*find_path_cmd(t_data *data, int i)
 	return (NULL);
 }
 
-void	close_pipes(t_data *data)
-{
-	int	i;
 
-	i = 0;
-	while (i < data->cmd_count - 1)
-	{
-		close(data->pipe[i][0]);
-		close(data->pipe[i][1]);
-		i++;
-	}
-}
 
 /* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
