@@ -171,7 +171,7 @@ void	*ft_safe_malloc(size_t size);
 //errors
 void	error_msg(char *msg);
 void	error_arr_free(char *msg, char **str);
-void	print_errors(char *errmsg);
+void	print_errors(char *errmsg, char *syntax);
 char	*ft_safe_substr(const char *s, unsigned int start, size_t len);
 
 #endif

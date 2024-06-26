@@ -226,7 +226,6 @@ int	parse_start(t_data *data, char *line)
 	return (1);
 }
 
-
 /* without debuggers*/
 // int	parse_start(t_data *data, char *line)
 // {

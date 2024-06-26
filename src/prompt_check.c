@@ -15,11 +15,13 @@ int	quotes_check(char *line)
 	}
 	if (q == 0)
 		return (1);
-	print_errors(ERR_QUOTES);
+	print_errors(ERR_QUOTES, &q); // should print out the correct error msg plus the quote that's missing
 	return (0);
 }
 
 // add the error function that prints the char that's the syntax issue
+
+/* if i return an int here, maybe I can use that find the symbols to return in the error msg?*/
 char syntax_check(char *line)
 {
     int i;
