@@ -19,6 +19,7 @@ SRC = ./src/main.c \
 	  ./src/pipes.c \
 	  ./src/safe_malloc.c \
 	  ./src/errors.c \
+	  .src/redirect.c \
 	  ./src/here_doc.c \
 	
 

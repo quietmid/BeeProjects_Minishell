@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/24 18:43:18 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:37:32 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,16 @@ void	execute(t_data	*data)
 		exec_builtin(data);
 	else
 	{
+		data->token->in = dup(STDIN_FILENO);
+		data->token->out = dup(STDOUT_FILENO);
 		create_pipes(data);
-		create_forks(data);
 		close_pipes(data);
+		create_forks(data);
 		int x;
-		x = 0;
+		// x = 0;
 		if (data->cmd_count > 1)
 		{
-			while(x < data->pipe_count)
-			{
-				printf("index: %d", x);
-				close(data->pipe[x][0]);
-				close(data->pipe[x][1]);
-				x++;
-			}
+			close_pipes(data);
 		}
 		x = 0;
 		while (x < data->cmd_count)
@@ -111,7 +107,7 @@ void	execute(t_data	*data)
 			waitpid(data->pid[x], &data->status, 0);
 			x++;
 		}
-		dprintf(2, "after WAIT\n");
+		dprintf(2, "WAITPID done\n");
 	}
 	return ;
 }

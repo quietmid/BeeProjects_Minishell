@@ -142,8 +142,11 @@ int    check_heredoc(t_data *data);
 
 //pipes
 void	create_pipes(t_data *data);
+void	close_pipes(t_data *data);
 void	create_forks(t_data *data);
 char	*find_path_cmd(t_data *data, int i);
+void	redirect_to_pipe(t_data *data, int x);
+void	redirect_to_redir(t_data *data, int x);
 
 //basic utils
 char	**ft_arr_copy(char **arr);
