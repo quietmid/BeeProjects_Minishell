@@ -144,6 +144,7 @@ int    check_heredoc(t_data *data);
 void	create_pipes(t_data *data);
 void	create_forks(t_data *data);
 char	*find_path_cmd(t_data *data, int i);
+void	close_pipes(t_data *data);
 
 //basic utils
 char	**ft_arr_copy(char **arr);
