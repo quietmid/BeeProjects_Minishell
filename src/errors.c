@@ -15,9 +15,14 @@ void	error_arr_free(char *msg, char **str)
 	exit (EXIT_FAILURE);
 }
 
-void	print_errors(char *errmsg)
+void	print_errors(char *errmsg, char *syntax)
 {
 	ft_putstr_fd("minishell-8.8$ ", 2);
 	ft_putstr_fd(errmsg, 2);
-	ft_putchar_fd('\n', 2);
+	if (syntax)
+	{
+		ft_putstr_fd(syntax, 2);
+		ft_putstr_fd("'", 2);
+	}
+	ft_putstr_fd("\n", 2);
 }

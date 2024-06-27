@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
 /*   Updated: 2024/06/27 17:16:01 by pbumidan         ###   ########.fr       */
@@ -133,12 +133,13 @@ void	ft_minishell(t_data *data)
 		if (line)
 		{
 			add_history(line);
-			if (!quotes_check(line))
-				status = 0;
+			status = prompt_check(line);
 			if (status)
 				status = parse_start(data, line);
-			if (status)
-				execute(data);
+			// if (status)
+			// 	execute(data);
+			if (status == 0)
+				printf("you have triggered my trap card!\n");
 		}
 		else
 			free(line);
