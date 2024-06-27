@@ -45,7 +45,7 @@ char syntax_check(char *line)
                 i++;
             if (line[i] == '\0')
                 return (c);
-            else if (ft_isredir(line[i]) || line[i] == '|')
+            else if (line[i] == '|')
                 return (line[i]);
         }
         i++;

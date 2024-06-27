@@ -6,44 +6,37 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:09:54 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/27 17:01:52 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/27 19:17:38 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-will we ever have the siutation were there will be two pairs of double quotes
-void    check_expand(char *input)
-    {
-        int = s_quote;
-        char *str;
-
-        str = input;
-        s_quote = 0;
-        while (*str)
-        {
-            if (*str == 39)
-                s_quote += 1;
-            if (*str == 36 && s_quote % 2 == 0)
-                
-        }
-    }
-*/
-
-char *expanding(char *str, int start)
+// takes in the string and s for the location of the $ in the string
+char *expanding(char *str, int s)
 {
     char *result;
     char *temp;
     int exp_len; //the len of the expansion
     int t_len; // the total len of expansion plus the remaining of the str
+    int i;
     /*
+    maybe I should split it by space
     from the start + 1 all the way to the space we find what the variable is named after
     we search the env for the same
     if there is, we save that in temp and find the length of the temp and the current str
     together that's the t_len
     now from the start, we need to insert the temp.
     */
+    i = 0;
+    if (str[s + 1] == '_' || ft_isalpha(str[s + 1])) //check the next char
+    {
+        while (!ft_isspace(str[s]))
+        {
+            s++;
+            i++;
+        }
+    }
+        
 
     return (result);
 }
@@ -91,5 +84,4 @@ void check_expand(t_token *token)
         }
         i++;
     }
-
 }
