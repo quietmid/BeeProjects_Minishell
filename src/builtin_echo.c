@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:55:45 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/17 21:43:38 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:28:26 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,25 @@ void	run_echo(t_data *data)
 	int	start;
 
 	n = 0;
-	if (ft_arr_len(data->token->cmd) > 1)
+	if (ft_arr_len(data->token[0].cmd) > 1)
 	{
 		x = 1;
 		start = 1;
-		while (data->token->cmd[x] && is_nflag(data->token->cmd[x]) == TRUE)
+		while (data->token[0].cmd[x] && is_nflag(data->token[0].cmd[x]) == TRUE)
 		{
 			n = 1;
 			x++;
 			start = x;
 		}
-		while (data->token->cmd[start])
+		while (data->token[0].cmd[start])
 		{
-			ft_putstr_fd(data->token->cmd[start], 2);
-			if (start < (ft_arr_len(data->token->cmd) - 1))
-				ft_putstr_fd(" ", 2);
+			ft_putstr_fd(data->token[0].cmd[start], 1);
+			if (start < (ft_arr_len(data->token[0].cmd) - 1))
+				ft_putstr_fd(" ", 1);
 			start++;
 		}
 	}
-	if (n == 0 || (n == 1 && ft_arr_len(data->token->cmd) == 2))
-		ft_putstr_fd("\n", 2);
+	if (n == 0 || (n == 1 && ft_arr_len(data->token[0].cmd) == 2))
+		ft_putstr_fd("\n", 1);
 }
 
