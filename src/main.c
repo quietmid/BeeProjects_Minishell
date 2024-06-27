@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/24 18:43:18 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:37:49 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	execute(t_data	*data)
 		{
 			while(x < data->pipe_count)
 			{
-				printf("index: %d", x);
+				printf("pipe index: %d\n", x);
 				close(data->pipe[x][0]);
 				close(data->pipe[x][1]);
 				x++;
@@ -151,12 +151,13 @@ void	ft_minishell(t_data *data)
 		if (line)
 		{
 			add_history(line);
-			if (!quotes_check(line))
-				status = 0;
+			status = prompt_check(line);
 			if (status)
 				status = parse_start(data, line);
-			if (status)
-				execute(data);
+			// if (status)
+			// 	execute(data);
+			if (status == 0)
+				printf("you have triggered my trap card!\n");
 		}
 		else
 			free(line);

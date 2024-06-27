@@ -13,6 +13,9 @@
 #ifndef ERRORS_H
 # define ERRORS_H
 
-# define ERR_QUOTES "syntax error, quotes not completed"
+// need to check the right error_msg
+# define ERR_QUOTES "syntax error unexpected EOF while look for matching ` "
+# define ERR_SYNTAX "syntax error parse error near "
+# define ERR_NL "syntax error near unexpected token `newline'"
 
 #endif

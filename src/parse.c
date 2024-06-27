@@ -126,18 +126,23 @@ t_token assign_token(char *str, int i)
 	len = calcu_redir(str);
 	token.redir = (char ***)ft_safe_malloc((len + 1) * sizeof(char **));
 	x = 0;
-	while (x < len)
+	if (str)
 	{
-		token.redir[x] = (char **)ft_safe_calloc(3, sizeof(char *)); //need a final safe way to free everything tho
-		x++;
-	} 
-	if (len == 0)
-		token.redir[0] = NULL; 
+		while (x < len)
+		{
+			token.redir[x] = (char **)ft_safe_calloc(3, sizeof(char *)); //need a final safe way to free everything tho
+			x++;
+		} 
+		if (len == 0)
+			token.redir = NULL; 
+		else
+			token.redir = redir_argv(str, len, token.redir);
+		temp = prompt_prep(str, 0);
+		len = ft_arr_len(temp);
+		token.cmd = cmd_argv(temp, len);
+	}
 	else
-		token.redir = redir_argv(str, len, token.redir);
-	temp = prompt_prep(str, 0);
-	len = ft_arr_len(temp);
-	token.cmd = cmd_argv(temp, len);
+		(void)token ;
 	return (token);
 }
 
@@ -155,30 +160,30 @@ char **prompt_prep(char *line, int opt)
 	return (result);
 }
 // debug
-// static void print_redir_argv(char ***redir)
-// {
-// 	int i;
+static void print_redir_argv(char ***redir)
+{
+	int i;
 
-// 	i = 0;
-// 	if (!redir)
-// 		return ;
-// 	while (redir[i])
-// 	{
-// 		printf("redir [%d] \n", i);
-//         printf("redir dir: %s\n", redir[i][0]);
-//         printf("redir fd: %s\n", redir[i][1]);
-// 		i++;
-//     }
-// }
+	i = 0;
+	if (!redir)
+		return ;
+	while (redir[i])
+	{
+		printf("redir [%d] \n", i);
+        printf("redir dir: %s\n", redir[i][0]);
+        printf("redir fd: %s\n", redir[i][1]);
+		i++;
+    }
+}
 // // debug
-// static void print_cmd_argv(char **redir)
-// {
-// 	int i;
-//     for (i = 0; redir[i] != NULL; i++)
-//     {
-//         printf("cmd: %s\n", redir[i]);
-//     }
-// }
+static void print_cmd_argv(char **redir)
+{
+	int i;
+    for (i = 0; redir[i] != NULL; i++)
+    {
+        printf("cmd: %s\n", redir[i]);
+    }
+}
 /* 
 Starts parsing the input and store them as redir and/or cmd. Each token represent the prompt in between the pipes
 */
@@ -200,17 +205,20 @@ int	parse_start(t_data *data, char *line)
 	i = 0;
 	while (input[i])
 	{
+
 		data->token[i] = assign_token(input[i], i);
 		//debug
-		// printf("%s\n", input[i]);
-		// printf("token idx: %d \n", data->token[i].idx);
-		// print_redir_argv(data->token[i].redir);
-		// print_cmd_argv(data->token[i].cmd);
+		printf("%s\n", input[i]);
+		printf("token idx: %d \n", data->token[i].idx);
+		print_redir_argv(data->token[i].redir);
+		print_cmd_argv(data->token[i].cmd);
 		//debug
+		//check_expand(&data->token[i]);
 		i++;
 	}
 	ft_free_arr(input);
-	data->hd = check_heredoc(data);
+	// if (data->token != NULL)
+	// 	data->hd = check_heredoc(data);
 	// debug
 	// printf("here_doc in token[%d]\n", data->hd);
 	// debug
@@ -218,7 +226,6 @@ int	parse_start(t_data *data, char *line)
 	
 	return (1);
 }
-
 
 /* without debuggers*/
 // int	parse_start(t_data *data, char *line)
