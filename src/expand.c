@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:09:54 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/24 15:43:35 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/27 17:01:52 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,35 +48,46 @@ char *expanding(char *str, int start)
     return (result);
 }
 // takes in the token and check if there is a $ and if there are quotes
-t_token check_expand(t_token token)
+/*
+    if the first quote is d_q, then even if the $ is in s_q, it WILL expand
+    if the first quote is s_q, then it won't expand 
+*/
+void check_expand(t_token *token)
 {
     int i;
     int x;
+    char q; // " = 34 & ' = 39
 
+    q = 0;
     i = 0;
-    while (token.redir[i])
+    while (token->redir[i])
     {
         x = 0;
-        while (token.redir[i][1][x])
+        while (token->redir[i][1][x])
         {
-            if (token.redir[i][1][x] == 39) // need to check if its just the first quotes that matters
-                break ;
-            if (token.redir[i][1][x] == 36)
+            if (!q && ft_isquote(token->redir[i][1][x]))
+                q = token->redir[i][1][x];
+            else if (token->redir[i][1][x] == q)
+                q = 0;
+            if (token->redir[i][1][x] == 36 && q == 34)
                 //expanding
             x++;
         }
         i++;
     }
     i = 0;
-    while (token.cmd[i])
+    while (token->cmd[i])
     {
         x = 0;
-        while (token.cmd[i][x])
+        while (token->cmd[i][x])
         {
-            if (token.cmd[i][x] == 39) // need to check if its just the first quotes that matters
-                break ;
-            if (token.cmd[i][x] == 36)
+            if (!q && ft_isquote(token->cmd[i][x]))
+                q = token->cmd[i][x];
+            else if (token->cmd[i][x] == q)
+                q = 0;
+            if (token->cmd[i][x] == 36 && q == 34)
                 //expanding
+            x++;
         }
         i++;
     }

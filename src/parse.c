@@ -213,6 +213,7 @@ int	parse_start(t_data *data, char *line)
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);
 		//debug
+		//check_expand(&data->token[i]);
 		i++;
 	}
 	ft_free_arr(input);
