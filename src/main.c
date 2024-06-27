@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/26 19:39:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:08:38 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,17 @@ char	*find_path_cmd(t_data *data, int i)
 	return (NULL);
 }
 
-
-
 /* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
 {
 	if (data->cmd_count == 1 && is_builtin(data) == TRUE)
+	{
+		if (data->token[0].redir[0] != NULL)
+			redirect_builtin(data, 0);	
 		exec_builtin(data);
+		if (data->token[0].redir[0] != NULL)
+			restore_stdio(data, 0);	
+	}
 	else
 	{
 		create_pipes(data);

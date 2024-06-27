@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/21 20:08:12 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:25:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ int	is_builtin(t_data *data)
 {
 	// if (data->token->cmd[0] == NULL)
 	// 	return (FALSE);
-	if (ft_strcmp(data->token->cmd[0], "echo") == 0)
+	if (ft_strcmp(data->token[0].cmd[0], "echo") == 0)
 		return (TRUE);
-	else if (ft_strcmp(data->token->cmd[0], "cd") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "cd") == 0)
 		return (TRUE);
-	else if (ft_strcmp(data->token->cmd[0], "pwd") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "pwd") == 0)
 		return (TRUE);
-	else if (ft_strcmp(data->token->cmd[0], "export") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "export") == 0)
 		return (TRUE);
-	else if (ft_strcmp(data->token->cmd[0], "unset") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "unset") == 0)
 		return (TRUE);
-	else if (ft_strcmp(data->token->cmd[0], "env") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "env") == 0)
 		return (TRUE);
-	else if (ft_strcmp(data->token->cmd[0], "exit") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "exit") == 0)
 		return (TRUE);
 	else
 		return (FALSE);
@@ -42,18 +42,18 @@ int	is_builtin(t_data *data)
 */
 void	exec_builtin(t_data *data)
 {
-	if (ft_strcmp(data->token->cmd[0], "echo") == 0)
+	if (ft_strcmp(data->token[0].cmd[0], "echo") == 0)
 		run_echo(data);
-	if (ft_strcmp(data->token->cmd[0], "cd") == 0)
+	if (ft_strcmp(data->token[0].cmd[0], "cd") == 0)
 		run_cd(data);
-	else if (ft_strcmp(data->token->cmd[0], "pwd") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "pwd") == 0)
 		run_pwd(data);
-	else if (ft_strcmp(data->token->cmd[0], "export") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "export") == 0)
 		run_export(data);
-	else if (ft_strcmp(data->token->cmd[0], "unset") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "unset") == 0)
 		run_unset(data);
-	else if (ft_strcmp(data->token->cmd[0], "env") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "env") == 0)
 		run_env(data);
-	else if (ft_strcmp(data->token->cmd[0], "exit") == 0)
+	else if (ft_strcmp(data->token[0].cmd[0], "exit") == 0)
 		exit(0);
 }

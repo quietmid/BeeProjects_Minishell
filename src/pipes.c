@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/26 22:56:53 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:06:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void redir_append_fd(t_data *data, int x)
 		i++;
 	}
 }
+
 int is_redir(t_data *data, int x, char *str)
 {
 	int i;
@@ -203,6 +204,45 @@ void	redirect_middle(t_data *data, int x)
 	close_pipes(data);
 }
 
+void	redirect_builtin(t_data *data, int x)
+{
+	if (is_redir(data, x, "<") == TRUE)
+	{
+		data->parent_in = dup(STDIN_FILENO);
+		redir_in_fd(data, x);	
+	}
+	if (is_redir(data, x, ">") == TRUE)	
+	{
+		data->parent_out = dup(STDOUT_FILENO);
+		redir_out_fd(data, x);	
+	}
+	if (is_redir(data, x, ">>") == TRUE)
+	{
+		data->parent_out = dup(STDOUT_FILENO);
+		redir_append_fd(data, x);	
+	}	
+	return ;
+}
+
+void	restore_stdio(t_data *data, int x)
+{
+	if (is_redir(data, x, "<") == TRUE)
+	{
+		dup2(data->parent_in, STDIN_FILENO);
+		close(data->parent_in);
+	}
+	if (is_redir(data, x, ">") == TRUE)	
+	{
+		dup2(data->parent_out, STDOUT_FILENO);
+		close(data->parent_out);
+	}
+	if (is_redir(data, x, ">>") == TRUE)
+	{
+		dup2(data->parent_out, STDOUT_FILENO);
+		close(data->parent_out);
+	}	
+	return ;
+}
 
 void	redirect(t_data *data, int x)
 {

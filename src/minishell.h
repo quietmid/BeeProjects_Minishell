@@ -76,6 +76,8 @@ typedef struct s_env
 
 typedef struct s_data
 {
+	int				parent_in;
+	int				parent_out;
 	int				*pid;
 	int				**pipe;
 	int				status;
@@ -145,6 +147,9 @@ void	create_pipes(t_data *data);
 void	create_forks(t_data *data);
 char	*find_path_cmd(t_data *data, int i);
 void	close_pipes(t_data *data);
+void	redirect(t_data *data, int x);
+void	redirect_builtin(t_data *data, int x);
+void	restore_stdio(t_data *data, int x);
 
 //basic utils
 char	**ft_arr_copy(char **arr);

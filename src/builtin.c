@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/17 21:42:49 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:16:21 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	run_env(t_data *data)
 		{
 			while (env)
 			{
-				ft_putstr_fd(env->key, 2);
-				ft_putstr_fd("=", 2);
+				ft_putstr_fd(env->key, 1);
+				ft_putstr_fd("=", 1);
 				if (env->value)
 				{
-					ft_putstr_fd(env->value, 2);
+					ft_putstr_fd(env->value, 1);
 				}
-				ft_putstr_fd("\n", 2);
+				ft_putstr_fd("\n", 1);
 				env = env->next;
 			}
 		}
@@ -71,7 +71,7 @@ void	run_pwd(t_data *data)
 			pwd = getcwd(NULL, 0);
 			// if (!pwd)
 			// 	"getcwd fail"
-			ft_putendl_fd(pwd, 2);
+			ft_putendl_fd(pwd, 1);
 			data->pwd = pwd;
 	// 	}
 	// }
