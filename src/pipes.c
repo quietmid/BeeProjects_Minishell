@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/27 17:06:33 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:21:58 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ void	redirect(t_data *data, int x)
 		else if (x == (data->cmd_count - 1))
 			redirect_last(data, x);
 		else
-			redirect_last(data, x);
+			redirect_middle(data, x);
 	}
 }
 

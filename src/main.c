@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/27 17:08:38 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:16:01 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,6 @@ void	execute(t_data	*data)
 		create_forks(data);
 		close_pipes(data);
 		int x;
-		x = 0;
-		if (data->cmd_count > 1)
-		{
-			while(x < data->pipe_count)
-			{
-				printf("index: %d", x);
-				close(data->pipe[x][0]);
-				close(data->pipe[x][1]);
-				x++;
-			}
-		}
 		x = 0;
 		while (x < data->cmd_count)
 		{
