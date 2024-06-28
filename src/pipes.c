@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/27 17:21:58 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:03:11 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	close_pipes(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->cmd_count - 1)
+	while (i < (data->cmd_count - 1))
 	{
 		close(data->pipe[i][0]);
 		close(data->pipe[i][1]);
 		i++;
 	}
+	return;
 }
 
 void redir_in_fd(t_data *data, int x)
@@ -94,14 +95,16 @@ int is_redir(t_data *data, int x, char *str)
 	int i;
 	
 	i = 0;
-	while (data->token[x].redir[i])
+	if (data->token[x].redir)
 	{
-		if (ft_strcmp(data->token[x].redir[i][0], str) ==  0)
-			return (TRUE);
-		i++;
+		while (data->token[x].redir[i])
+		{
+			if (ft_strcmp(data->token[x].redir[i][0], str) ==  0)
+				return (TRUE);
+			i++;
+		}
 	}
 	return (FALSE);
-	
 }
 
 // void	redirect_to_redir(t_data *data, int x)
@@ -151,53 +154,72 @@ int is_redir(t_data *data, int x, char *str)
 
 void	redirect_first(t_data *data, int x)
 {
-	redir_in_fd(data, x);
+	dprintf(1, "went to FIRST\n");
+	//redir_in_fd(data, x);
+	if (is_redir(data, x, "<") == TRUE)
+	{
+		redir_in_fd(data, x);
+	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
-		redir_out_fd(data, x);
-		redir_append_fd(data, x);
+		if (is_redir(data, x, ">") == TRUE )
+			redir_out_fd(data, x);
+		if (is_redir(data, x, ">>") == TRUE) 
+			redir_append_fd(data, x);
 	}
-	else
+	else if (is_redir(data, x, ">") == FALSE || is_redir(data, x, ">>") == FALSE)
 	{
 		dprintf(2, "cmd %d OUT to pipe %d\n", x, x);
 		dup2(data->pipe[x][1], STDOUT_FILENO);
+		close_pipes(data);
 	}
 	close_pipes(data);
 }
 
 void	redirect_last(t_data *data, int x)
 {
+	dprintf(1, "went to LAST\n");
 	if (is_redir(data, x, "<") == TRUE)
 	{
 		redir_in_fd(data, x);
 	}
-	else
+	else if (is_redir(data, x, "<") == FALSE)
 	{
 		dprintf(2, "cmd %d IN from pipe %d\n", x ,x - 1);
 		dup2(data->pipe[x - 1][0], STDIN_FILENO);
+		close_pipes(data);
 	}
-	redir_out_fd(data, x);
-	redir_append_fd(data, x);
+	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
+	{
+		if (is_redir(data, x, ">") == TRUE )
+			redir_out_fd(data, x);
+		if (is_redir(data, x, ">>") == TRUE) 
+			redir_append_fd(data, x);
+	}
 	close_pipes(data);
 }
 
 void	redirect_middle(t_data *data, int x)
 {
+	dprintf(1, "went to MIDDlE\n");
 	if (is_redir(data, x, "<") == TRUE)
 	{
 		redir_in_fd(data, x);
 	}
-	else
+	else if (is_redir(data, x, "<") == FALSE)
 	{
 		dprintf(2, "cmd % d IN from PIPE %d OUT to PIPE %d\n", x, x - 1, x);
 		dup2(data->pipe[x - 1][0], STDIN_FILENO);
+		close_pipes(data);
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
-		redir_out_fd(data, x);
-		redir_append_fd(data, x);
+		if (is_redir(data, x, ">") == TRUE )
+			redir_out_fd(data, x);
+		if (is_redir(data, x, ">>") == TRUE) 
+			redir_append_fd(data, x);
 	}
-	else
+	else if (is_redir(data, x, ">") == FALSE || is_redir(data, x, ">>") == FALSE)
 	{
 		dup2(data->pipe[x][1], STDOUT_FILENO);	
 	}
@@ -249,12 +271,20 @@ void	redirect(t_data *data, int x)
 	if (x < data->cmd_count)
 	{
 		if (x == 0)
+		{
 			redirect_first(data, x);
+		}
 		else if (x == (data->cmd_count - 1))
+		{
 			redirect_last(data, x);
+		}
 		else
+		{
 			redirect_middle(data, x);
+		}
 	}
+	close_pipes(data);
+	return ;
 }
 
 void child_process(t_data *data, int x)
@@ -262,7 +292,7 @@ void child_process(t_data *data, int x)
 	//ft_putstr_fd("went to child", 2);
 	// data->token->in = dup(STDIN_FILENO);
 	// data->token->out = dup(STDOUT_FILENO);
-	if (data->cmd_count > 1 || data->token[x].redir[0] != NULL)
+	if (data->cmd_count > 1 || data->token[x].redir)
 		redirect(data, x);
 	if (search_env(data, "PATH"))
 	{
@@ -270,9 +300,10 @@ void child_process(t_data *data, int x)
 		if (!data->path_cmd)
 			ft_putstr_fd("FFFcommand not found", 2);
 		env_to_arr(data);
-		execve(data->path_cmd, &data->token[x].cmd[0], data->env_arr);
+		execve(data->path_cmd, data->token[x].cmd, data->env_arr);
 		// check if execve fails to free all mallocs otherwise its fine.
 	}
+	return ;
 }
 
 
@@ -297,15 +328,17 @@ void	create_forks(t_data *data)
 			}
 			printf("forkerror"); //error
 		}
-		if (data->pid[x] == 0)
+		else if (data->pid[x] == 0)
 		{
+			//dprintf(1, "pid: %d\n", data->pid[x]);
 			child_process(data, x);
 		}
 		x++;
 	}
+	return ;
 	// x = 0;
 	// dprintf(2, "PIPES: %d\n", data->pipe_count);
-	// while(x < data->cmd_count)
+	// while(x < data->cmd_count - 1)
 	// {
 	// 	dprintf(2,"went to closing");
 	// 	close(data->pipe[x][1]);

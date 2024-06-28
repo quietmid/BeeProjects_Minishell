@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/27 17:16:01 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:06:57 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,19 @@ char	*find_path_cmd(t_data *data, int i)
 	x = 0;
 	while (tmp[x])
 	{
-		cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
-		// if (!cmd)
-		// 	"error malloc"
-		if (access(cmd, 0) == 0)
+		if (data->token[i].cmd[0])
 		{
-			ft_free_arr(tmp);
-			return (cmd);
+			cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
+			// if (!cmd)
+			// 	"error malloc"
+			if (access(cmd, 0) == 0)
+			{
+				ft_free_arr(tmp);
+				return (cmd);
+			}
+			free(cmd);
+			x++;
 		}
-		free(cmd);
-		x++;
 	}
 	return (NULL);
 }
@@ -75,15 +78,16 @@ void	execute(t_data	*data)
 {
 	if (data->cmd_count == 1 && is_builtin(data) == TRUE)
 	{
-		if (data->token[0].redir[0] != NULL)
+		if (data->token[0].redir != NULL)
 			redirect_builtin(data, 0);	
 		exec_builtin(data);
-		if (data->token[0].redir[0] != NULL)
+		if (data->token[0].redir != NULL)
 			restore_stdio(data, 0);	
 	}
 	else
 	{
 		create_pipes(data);
+		//dprintf(1, "XX: %d\n", data->pipe_count);
 		create_forks(data);
 		close_pipes(data);
 		int x;
@@ -133,13 +137,13 @@ void	ft_minishell(t_data *data)
 		if (line)
 		{
 			add_history(line);
-			status = prompt_check(line);
+			//status = prompt_check(line);
 			if (status)
 				status = parse_start(data, line);
-			// if (status)
-			// 	execute(data);
-			if (status == 0)
-				printf("you have triggered my trap card!\n");
+			if (status)
+			 	execute(data);
+			//if (status == 0)
+				//printf("you have triggered my trap card!\n");
 		}
 		else
 			free(line);

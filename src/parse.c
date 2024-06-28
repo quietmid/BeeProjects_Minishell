@@ -175,7 +175,7 @@ static void print_redir_argv(char ***redir)
 		i++;
     }
 }
-// // debug
+// debug
 static void print_cmd_argv(char **redir)
 {
 	int i;
@@ -207,13 +207,13 @@ int	parse_start(t_data *data, char *line)
 	{
 
 		data->token[i] = assign_token(input[i], i);
-		//debug
+		// //debug
 		printf("%s\n", input[i]);
 		printf("token idx: %d \n", data->token[i].idx);
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);
-		//debug
-		//check_expand(&data->token[i]);
+		// //debug
+		// //check_expand(&data->token[i]);
 		i++;
 	}
 	ft_free_arr(input);
