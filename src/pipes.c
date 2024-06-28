@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/28 19:03:11 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:53:02 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,12 @@ void	redirect_first(t_data *data, int x)
 	}
 	else if (is_redir(data, x, ">") == FALSE || is_redir(data, x, ">>") == FALSE)
 	{
-		dprintf(2, "cmd %d OUT to pipe %d\n", x, x);
-		dup2(data->pipe[x][1], STDOUT_FILENO);
-		close_pipes(data);
+		if (data->cmd_count > 1)
+		{
+			dprintf(2, "cmd %d OUT to pipe %d\n", x, x);
+			dup2(data->pipe[x][1], STDOUT_FILENO);
+			close_pipes(data);
+		}
 	}
 	close_pipes(data);
 }
