@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/28 18:19:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/28 20:35:57 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	env_to_arr(t_data *data)
 	env = data->env;
 	x = 0;
 	res = (char **)malloc((sizeof(char *)) * (ft_envsize(data->env) + 1));
-	while (env)
+	while (env != NULL)
 	{
 		tmp = ft_strjoin(env->key, "=");
 		// if (!tmp)

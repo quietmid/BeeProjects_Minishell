@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/28 18:06:57 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/28 20:20:57 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*find_path_cmd(t_data *data, int i)
 			// 	"error malloc"
 			if (access(cmd, 0) == 0)
 			{
+				dprintf(2, "NO PATH\n");	
 				ft_free_arr(tmp);
 				return (cmd);
 			}

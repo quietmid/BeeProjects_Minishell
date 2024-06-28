@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/28 19:53:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/06/28 20:20:51 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,6 +295,7 @@ void child_process(t_data *data, int x)
 	//ft_putstr_fd("went to child", 2);
 	// data->token->in = dup(STDIN_FILENO);
 	// data->token->out = dup(STDOUT_FILENO);
+	dprintf(2, "went to child\n");
 	if (data->cmd_count > 1 || data->token[x].redir)
 		redirect(data, x);
 	if (search_env(data, "PATH"))
@@ -306,6 +307,8 @@ void child_process(t_data *data, int x)
 		execve(data->path_cmd, data->token[x].cmd, data->env_arr);
 		// check if execve fails to free all mallocs otherwise its fine.
 	}
+	else
+		dprintf(2, "error path not set" );
 	return ;
 }
 
@@ -338,16 +341,6 @@ void	create_forks(t_data *data)
 		}
 		x++;
 	}
-	return ;
-	// x = 0;
-	// dprintf(2, "PIPES: %d\n", data->pipe_count);
-	// while(x < data->cmd_count - 1)
-	// {
-	// 	dprintf(2,"went to closing");
-	// 	close(data->pipe[x][1]);
-	// 	close(data->pipe[x][0]);
-	// 	x++;
-	// }
 
 }
 
