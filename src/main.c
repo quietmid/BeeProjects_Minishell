@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/25 17:37:49 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/28 20:20:57 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,55 +56,42 @@ char	*find_path_cmd(t_data *data, int i)
 	x = 0;
 	while (tmp[x])
 	{
-		cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
-		// if (!cmd)
-		// 	"error malloc"
-		if (access(cmd, 0) == 0)
+		if (data->token[i].cmd[0])
 		{
-			ft_free_arr(tmp);
-			return (cmd);
+			cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
+			// if (!cmd)
+			// 	"error malloc"
+			if (access(cmd, 0) == 0)
+			{
+				dprintf(2, "NO PATH\n");	
+				ft_free_arr(tmp);
+				return (cmd);
+			}
+			free(cmd);
+			x++;
 		}
-		free(cmd);
-		x++;
 	}
 	return (NULL);
-}
-
-void	close_pipes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->cmd_count - 1)
-	{
-		close(data->pipe[i][0]);
-		close(data->pipe[i][1]);
-		i++;
-	}
 }
 
 /* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
 {
 	if (data->cmd_count == 1 && is_builtin(data) == TRUE)
+	{
+		if (data->token[0].redir != NULL)
+			redirect_builtin(data, 0);	
 		exec_builtin(data);
+		if (data->token[0].redir != NULL)
+			restore_stdio(data, 0);	
+	}
 	else
 	{
 		create_pipes(data);
+		//dprintf(1, "XX: %d\n", data->pipe_count);
 		create_forks(data);
 		close_pipes(data);
 		int x;
-		x = 0;
-		if (data->cmd_count > 1)
-		{
-			while(x < data->pipe_count)
-			{
-				printf("pipe index: %d\n", x);
-				close(data->pipe[x][0]);
-				close(data->pipe[x][1]);
-				x++;
-			}
-		}
 		x = 0;
 		while (x < data->cmd_count)
 		{
@@ -151,13 +138,13 @@ void	ft_minishell(t_data *data)
 		if (line)
 		{
 			add_history(line);
-			status = prompt_check(line);
+			//status = prompt_check(line);
 			if (status)
 				status = parse_start(data, line);
-			// if (status)
-			// 	execute(data);
-			if (status == 0)
-				printf("you have triggered my trap card!\n");
+			if (status)
+			 	execute(data);
+			//if (status == 0)
+				//printf("you have triggered my trap card!\n");
 		}
 		else
 			free(line);

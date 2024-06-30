@@ -171,31 +171,31 @@ char **prompt_prep(char *line, int opt)
 		error_msg("prompt split failed");
 	return (result);
 }
-// debug
-static void print_redir_argv(char ***redir)
-{
-	int i;
-
-	i = 0;
-	if (!redir)
-		return ;
-	while (redir[i])
-	{
-		printf("redir [%d] \n", i);
-        printf("redir dir: %s\n", redir[i][0]);
-        printf("redir fd: %s\n", redir[i][1]);
-		i++;
-    }
-}
 // // debug
-static void print_cmd_argv(char **redir)
-{
-	int i;
-    for (i = 0; redir[i] != NULL; i++)
-    {
-        printf("cmd: %s\n", redir[i]);
-    }
-}
+// static void print_redir_argv(char ***redir)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	if (!redir)
+// 		return ;
+// 	while (redir[i])
+// 	{
+// 		printf("redir [%d] \n", i);
+//         printf("redir dir: %s\n", redir[i][0]);
+//         printf("redir fd: %s\n", redir[i][1]);
+// 		i++;
+//     }
+// }
+// // debug
+// static void print_cmd_argv(char **redir)
+// {
+// 	int i;
+//     for (i = 0; redir[i] != NULL; i++)
+//     {
+//         printf("cmd: %s\n", redir[i]);
+//     }
+// }
 /* 
 Starts parsing the input and store them as redir and/or cmd. Each token represent the prompt in between the pipes
 */
@@ -220,12 +220,13 @@ int	parse_start(t_data *data, char *line)
 
 		printf("%s\n", input[i]);
 		data->token[i] = assign_token(input[i], i);
-		//debug
-		printf("token idx: %d \n", data->token[i].idx);
-		print_redir_argv(data->token[i].redir);
-		print_cmd_argv(data->token[i].cmd);
-		//debug
-		//check_expand(&data->token[i]);
+		// //debug
+		// printf("%s\n", input[i]);
+		// printf("token idx: %d \n", data->token[i].idx);
+		// print_redir_argv(data->token[i].redir);
+		// print_cmd_argv(data->token[i].cmd);
+		// //debug
+		// //check_expand(&data->token[i]);
 		i++;
 	}
 	ft_free_arr(input);
