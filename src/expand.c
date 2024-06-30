@@ -6,45 +6,45 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:09:54 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/27 17:01:52 by jlu              ###   ########.fr       */
+/*   Updated: 2024/06/27 19:17:38 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-will we ever have the siutation were there will be two pairs of double quotes
-void    check_expand(char *input)
-    {
-        int = s_quote;
-        char *str;
-
-        str = input;
-        s_quote = 0;
-        while (*str)
-        {
-            if (*str == 39)
-                s_quote += 1;
-            if (*str == 36 && s_quote % 2 == 0)
-                
-        }
-    }
-*/
-
-char *expanding(char *str, int start)
+// takes in the string and s for the location of the $ in the string
+char *expanding(t_data *data, char *str, int s)
 {
     char *result;
     char *temp;
     int exp_len; //the len of the expansion
     int t_len; // the total len of expansion plus the remaining of the str
-    /*
-    from the start + 1 all the way to the space we find what the variable is named after
-    we search the env for the same
-    if there is, we save that in temp and find the length of the temp and the current str
-    together that's the t_len
-    now from the start, we need to insert the temp.
-    */
+    int i;
+    int found;
 
+    i = s;
+    found = 0;
+    if (str[s + 1] == '_' || ft_isalpha(str[s + 1])) //check the next char
+    {
+        while (!ft_isspace(str[i]))
+            i++;
+        temp = ft_safe_substr(str, s, i - s);
+        while (data->env)
+        {
+            if (ft_strcmp(temp, data->env->key) == 0)
+            {
+                temp = data->env->value;
+                found = 1;
+            }
+            data->env = data->env->next;
+        }
+    }
+    if (found == 0)
+        temp = ft_strdup("");
+    result = malloc(sizeof(char) * (ft_strlen(str) - i + ft_strlen(temp)));
+    ft_strlcpy(result, str, s);
+    result = ft_strjoin(result, temp);
+    str = ft_safe_substr(str, s + 1, ft_strlen(str) - s);
+    result = ft_strjoin(result, str);
     return (result);
 }
 // takes in the token and check if there is a $ and if there are quotes
@@ -52,7 +52,7 @@ char *expanding(char *str, int start)
     if the first quote is d_q, then even if the $ is in s_q, it WILL expand
     if the first quote is s_q, then it won't expand 
 */
-void check_expand(t_token *token)
+void check_expand(t_token *token, t_data *data)
 {
     int i;
     int x;
@@ -69,8 +69,8 @@ void check_expand(t_token *token)
                 q = token->redir[i][1][x];
             else if (token->redir[i][1][x] == q)
                 q = 0;
-            if (token->redir[i][1][x] == 36 && q == 34)
-                //expanding
+            if (token->redir[i][1][x] == 36 && (q == 34 || q == 0))
+                token->redir[i][1] = expand(token->redir[i][1], data);
             x++;
         }
         i++;
@@ -85,11 +85,10 @@ void check_expand(t_token *token)
                 q = token->cmd[i][x];
             else if (token->cmd[i][x] == q)
                 q = 0;
-            if (token->cmd[i][x] == 36 && q == 34)
-                //expanding
+            if (token->cmd[i][x] == 36 && (q == 34 || q == 0))
+                token->cmd[i] = expand(token->cmd[i], data);
             x++;
         }
         i++;
     }
-
 }

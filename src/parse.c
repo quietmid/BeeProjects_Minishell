@@ -81,11 +81,18 @@ char ***redir_argv(char *str, int len, char ***redir)
 }
 int		extract_cmd(char **temp, int i)
 {
-	i++;
-	if (temp[i])
+	printf("DEBUG: %d\n", i);
+	if ((ft_isredir(temp[i][1]) && !temp[i][2]) || !temp[i][1])
+	{
 		i++;
+		if (temp[i])
+			i++;
+	}
+	else if (!ft_isredir(temp[i][ft_strlen(temp[i])]))
+		i += 1;
 	return (i);
 }
+
 
 char **cmd_argv(char **temp, int len)
 {
@@ -100,7 +107,7 @@ char **cmd_argv(char **temp, int len)
 	{
 		if (ft_isredir(temp[i][0]))
 			i = extract_cmd(temp, i);
-		else if (i > 0 && !(ft_isredir(temp[i - 1][0])) && temp[i])
+		else if (i > 0 && ((!(ft_isredir(temp[i - 1][0])) && temp[i]) || (!ft_isredir(temp[i - 1][ft_strlen(temp[i - 1])]))))
 			cmd[j++] = ft_strdup(temp[i++]);
 		else if (i == 0 && !ft_isredir(temp[i][0]))
 			cmd[j++] = ft_strdup(temp[i++]);
@@ -109,6 +116,7 @@ char **cmd_argv(char **temp, int len)
 			i++;
 			j++;
 		}
+		printf("debug: %d\n", i);
 	}
 	cmd[j] = NULL;
 	ft_free_arr(temp);
@@ -137,7 +145,11 @@ t_token assign_token(char *str, int i)
 			token.redir = NULL; 
 		else
 			token.redir = redir_argv(str, len, token.redir);
+		printf("string: %s\n", str);
 		temp = prompt_prep(str, 0);
+		int i = 0;
+		while (temp[i])
+			printf("temp: %s\n", temp[i++]);
 		len = ft_arr_len(temp);
 		token.cmd = cmd_argv(temp, len);
 	}
@@ -195,10 +207,10 @@ int	parse_start(t_data *data, char *line)
 	i = 0;
 	data->cmd_count = pipe_scans(line);
 	input = prompt_prep(line, 1);
-	//debug
-	// while (input[i])
-	// 	printf("%s\n", input[i++]);
-	//debug
+	// debug
+	while (input[i])
+		printf("input after prompt prep: %s\n", input[i++]);
+	// debug
 	data->token = ft_calloc(data->cmd_count, sizeof(t_token));
 	if (!data->token)
 		return (0);
@@ -206,6 +218,7 @@ int	parse_start(t_data *data, char *line)
 	while (input[i])
 	{
 
+		printf("%s\n", input[i]);
 		data->token[i] = assign_token(input[i], i);
 		// //debug
 		// printf("%s\n", input[i]);
