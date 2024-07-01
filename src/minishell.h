@@ -61,6 +61,8 @@ typedef enum e_token_type
 typedef struct s_token
 {
 	int				idx;
+	int				redir_len;
+	int				cmd_len;
 	char			**cmd;
 	char			***redir;
 	int				in;

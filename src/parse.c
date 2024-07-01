@@ -129,31 +129,30 @@ t_token assign_token(char *str, int i)
 {
 	t_token token;
 	char **temp;
-	int len;
 	int x;
 
 	token.idx = i;
-	len = calcu_redir(str);
-	token.redir = (char ***)ft_safe_malloc((len + 1) * sizeof(char **));
+	token.redir_len = calcu_redir(str);
+	token.redir = (char ***)ft_safe_malloc((token.redir_len + 1) * sizeof(char **));
 	x = 0;
 	if (str)
 	{
-		while (x < len)
+		while (x < token.redir_len)
 		{
 			token.redir[x] = (char **)ft_safe_calloc(3, sizeof(char *)); //need a final safe way to free everything tho
 			x++;
-		} 
-		if (len == 0)
+		}
+		if (token.redir_len == 0)
 			token.redir = NULL; 
 		else
-			token.redir = redir_argv(str, len, token.redir);
-		printf("string: %s\n", str);
+			token.redir = redir_argv(str, token.redir_len, token.redir);
+		// printf("string: %s\n", str);
 		temp = prompt_prep(str, 0);
-		int i = 0;
-		while (temp[i])
-			printf("temp: %s\n", temp[i++]);
-		len = ft_arr_len(temp);
-		token.cmd = cmd_argv(temp, len);
+		// int i = 0;
+		// while (temp[i])
+		// 	printf("temp: %s\n", temp[i++]);
+		token.cmd_len = ft_arr_len(temp);
+		token.cmd = cmd_argv(temp, token.cmd_len);
 	}
 	else
 		(void)token ;
