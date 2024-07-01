@@ -183,5 +183,6 @@ void	error_msg(char *msg);
 void	error_arr_free(char *msg, char **str);
 void	print_errors(char *errmsg, char *syntax);
 char	*ft_safe_substr(const char *s, unsigned int start, size_t len);
+void	error(t_data *data, t_error code, int e);
 
 #endif

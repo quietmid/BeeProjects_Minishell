@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/28 20:20:57 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/01 20:06:36 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	execute(t_data	*data)
 	else
 	{
 		create_pipes(data);
-		//dprintf(1, "XX: %d\n", data->pipe_count);
 		create_forks(data);
 		close_pipes(data);
 		int x;
@@ -98,7 +97,6 @@ void	execute(t_data	*data)
 			waitpid(data->pid[x], &data->status, 0);
 			x++;
 		}
-		dprintf(2, "after WAIT\n");
 	}
 	return ;
 }
