@@ -143,6 +143,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
 t_token assign_token(char *input, int i);
 
+//expand
+void check_expand(t_token *token, t_data *data);
+char *expanding(t_data *data, char *str, int s);
+
 //here_doc
 int    check_heredoc(t_data *data);
 
