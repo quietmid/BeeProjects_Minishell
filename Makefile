@@ -21,6 +21,7 @@ SRC = ./src/main.c \
 	  ./src/errors.c \
 	  ./src/here_doc.c \
 	  ./src/prompt_check.c \
+	  ./src/expand.c \
 	
 
 #BSRC =

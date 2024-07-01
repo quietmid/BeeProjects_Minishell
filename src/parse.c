@@ -81,7 +81,7 @@ char ***redir_argv(char *str, int len, char ***redir)
 }
 int		extract_cmd(char **temp, int i)
 {
-	printf("DEBUG: %d\n", i);
+	// printf("DEBUG: %d\n", i);
 	if ((ft_isredir(temp[i][1]) && !temp[i][2]) || !temp[i][1])
 	{
 		i++;
@@ -116,7 +116,9 @@ char **cmd_argv(char **temp, int len)
 			i++;
 			j++;
 		}
-		printf("debug: %d\n", i);
+		//debug
+		//printf("debug: %d\n", i);
+		//debug
 	}
 	cmd[j] = NULL;
 	ft_free_arr(temp);
@@ -172,30 +174,30 @@ char **prompt_prep(char *line, int opt)
 	return (result);
 }
 // // debug
-// static void print_redir_argv(char ***redir)
-// {
-// 	int i;
+static void print_redir_argv(char ***redir)
+{
+	int i;
 
-// 	i = 0;
-// 	if (!redir)
-// 		return ;
-// 	while (redir[i])
-// 	{
-// 		printf("redir [%d] \n", i);
-//         printf("redir dir: %s\n", redir[i][0]);
-//         printf("redir fd: %s\n", redir[i][1]);
-// 		i++;
-//     }
-// }
+	i = 0;
+	if (!redir)
+		return ;
+	while (redir[i])
+	{
+		printf("redir [%d] \n", i);
+        printf("redir dir: %s\n", redir[i][0]);
+        printf("redir fd: %s\n", redir[i][1]);
+		i++;
+    }
+}
 // // debug
-// static void print_cmd_argv(char **redir)
-// {
-// 	int i;
-//     for (i = 0; redir[i] != NULL; i++)
-//     {
-//         printf("cmd: %s\n", redir[i]);
-//     }
-// }
+static void print_cmd_argv(char **redir)
+{
+	int i;
+    for (i = 0; redir[i] != NULL; i++)
+    {
+        printf("cmd: %s\n", redir[i]);
+    }
+}
 /* 
 Starts parsing the input and store them as redir and/or cmd. Each token represent the prompt in between the pipes
 */
@@ -208,8 +210,8 @@ int	parse_start(t_data *data, char *line)
 	data->cmd_count = pipe_scans(line);
 	input = prompt_prep(line, 1);
 	// debug
-	while (input[i])
-		printf("input after prompt prep: %s\n", input[i++]);
+	// while (input[i])
+	// 	printf("input after prompt prep: %s\n", input[i++]);
 	// debug
 	data->token = ft_calloc(data->cmd_count, sizeof(t_token));
 	if (!data->token)
@@ -217,15 +219,14 @@ int	parse_start(t_data *data, char *line)
 	i = 0;
 	while (input[i])
 	{
-
-		printf("%s\n", input[i]);
 		data->token[i] = assign_token(input[i], i);
-		// //debug
-		// printf("%s\n", input[i]);
-		// printf("token idx: %d \n", data->token[i].idx);
-		// print_redir_argv(data->token[i].redir);
-		// print_cmd_argv(data->token[i].cmd);
-		// //debug
+		check_expand(&data->token[i], data);
+		//debug
+		printf("%s\n", input[i]);
+		printf("token idx: %d \n", data->token[i].idx);
+		print_redir_argv(data->token[i].redir);
+		print_cmd_argv(data->token[i].cmd);
+		//debug
 		// //check_expand(&data->token[i]);
 		i++;
 	}
