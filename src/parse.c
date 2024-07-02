@@ -216,6 +216,10 @@ int	parse_start(t_data *data, char *line)
 	if (!data->token)
 		return (0);
 	i = 0;
+	/*
+	NEED to re sequence my parser. Split by pipe, expand, and the split by space
+	second, I need to make sure I expand properly when there is just one $ 
+	*/
 	while (input[i])
 	{
 		data->token[i] = assign_token(input[i], i);
