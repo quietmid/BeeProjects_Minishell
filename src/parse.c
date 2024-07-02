@@ -220,6 +220,7 @@ int	parse_start(t_data *data, char *line)
 	{
 		data->token[i] = assign_token(input[i], i);
 		check_expand(&data->token[i], data);
+		ft_unquotes(&data->token[i]);
 		//debug
 		printf("%s\n", input[i]);
 		printf("token idx: %d \n", data->token[i].idx);

@@ -149,6 +149,10 @@ t_token assign_token(char *input, int i);
 void check_expand(t_token *token, t_data *data);
 char *expanding(t_data *data, char *str, int s);
 
+// Remove Quotes
+void    ft_removequotes(char *str);
+void    ft_unquotes(t_token *token);
+
 //here_doc
 int    check_heredoc(t_data *data);
 
