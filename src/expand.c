@@ -41,7 +41,7 @@ char *expanding(t_data *data, char *str, int s)
     }
     if (s == 0 && found == 1)
         return (temp);
-    if (found == 0)
+    if (found == 0 || ft_strlen(str) == 1)
         temp = ft_strdup("");
     printf("i is %ld\n", i);
     printf("strlen is %ld\n", ft_strlen(str));
