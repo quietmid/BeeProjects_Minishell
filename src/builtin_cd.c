@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/03 19:10:25 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:20:25 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_env	*search_env(t_data *data, char *str)
 	t_env	*tmp;
 
 	tmp = data->env;
-	if (tmp->next != NULL)
-	{
+	//if (tmp->next != NULL)
+	//{
 		while (tmp)
 		{
 			if (ft_strcmp(tmp->key, str) == 0)
@@ -30,9 +30,9 @@ t_env	*search_env(t_data *data, char *str)
 			}
 			tmp = tmp->next;
 		}
-		return (NULL); // env exist but node doesnt?
-	}
-	return (NULL); // env does not exist?
+		return (NULL);
+//	}
+	//return (NULL);
 }
 
 /*
@@ -95,9 +95,9 @@ char	*check_address(t_data *data, char *add)
 	else if (tmp == NULL)
 	{
 		if (strcmp(add,"HOME") == 0)
-			error_var(data, XCDHOME, NULL, EXIT_FAILURE);
+			error_cd(data, XCDHOME, NULL);
 		if (strcmp(add,"OLDPWD") == 0)
-			error_var(data, XCDOLDPWD, NULL, EXIT_FAILURE);
+			error_cd(data, XCDOLDPWD, NULL);
 	}
 	return (res);
 }
@@ -114,11 +114,15 @@ void	run_cd(t_data *data)
 	if (!data->token->cmd[1] || data->token->cmd[1][0] == '~')
 	{
 		add = check_address(data, "HOME");
+		if (add == NULL)
+			return ;
 	}
 	else if (data->token->cmd[1][0] == '-')
 	{
 		dash = 1;
-		add = check_address(data, "OLDPWD");
+		add =check_address(data, "OLDPWD");
+		if (add == NULL)
+			return ;
 	}
 	else if (data->token->cmd[1][0] == '/')
 		add = data->token->cmd[1];
@@ -132,5 +136,8 @@ void	run_cd(t_data *data)
 			ft_putendl_fd(add, 1);
 	}
 	else
-		error_var(data, XCD, data->token->cmd[1], EXIT_FAILURE);
+	{
+		error_cd(data, XCD, data->token->cmd[1]);
+		return ;	
+	}
 }

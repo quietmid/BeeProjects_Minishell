@@ -185,4 +185,5 @@ void	print_errors(char *errmsg, char *syntax);
 char	*ft_safe_substr(const char *s, unsigned int start, size_t len);
 void	error(t_data *data, t_error code, int e);
 void	error_var(t_data *data, t_error code, char *var, int e);
+void 	error_cd(t_data *data, t_error code, char *var);
 #endif

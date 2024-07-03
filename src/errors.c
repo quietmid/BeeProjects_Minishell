@@ -39,11 +39,15 @@ void	error(t_data *data, t_error code, int e)
 		ft_putstr_fd(ERR_FORK, 2);
 	exit (e);
 }
-void error_var2(t_error code, char *var)
+
+void error_cd(t_data *data, t_error code, char *var)
 {
+	(void)data;
+	ft_putstr_fd("minishell-8.8$", 2);
+	ft_putstr_fd(": ", 2);
 	if (code == XCD)
 	{
-		ft_putstr_fd("cd:", 2);
+		ft_putstr_fd("cd: ", 2);
 		perror(var);
 	}
 	else if (code == XCDHOME)
@@ -66,7 +70,6 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 	{
 		ft_putstr_fd("minishell-8.8$", 2);
 		ft_putstr_fd(": ", 2);
-		error_var2(code, var);
 		if (code == XNOFILE)
 		{
 			ft_putstr_fd(var, 2);

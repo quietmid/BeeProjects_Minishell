@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/03 18:49:40 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:22:00 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@
 # define ERR_SYNTAX "syntax error parse error near "
 # define ERR_NL "syntax error near unexpected token 'newline'"
 
-# define ERR_MALLOC "malloc unexpeectedly failed"
+# define ERR_MALLOC "malloc unexpectedly failed"
 # define ERR_PIPE "unexpected error while opening pipe"
 # define ERR_FORK "unexpected error while creating fork"
 # define ERR_CMD "command not found"
 # define ERR_NOFILE "No such file or directory"
 # define ERR_HOME "cd: HOME not set"
 # define ERR_OLDPWD "cd: OLDPWD not set"
-
-
 
 typedef enum error
 {
