@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/27 15:16:21 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/03 22:56:24 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	run_env(t_data *data)
 		{
 			while (env)
 			{
-				ft_putstr_fd(env->key, 1);
-				ft_putstr_fd("=", 1);
 				if (env->value)
 				{
+					ft_putstr_fd(env->key, 1);
+					ft_putstr_fd("=", 1);
 					ft_putstr_fd(env->value, 1);
+					ft_putstr_fd("\n", 1);
 				}
-				ft_putstr_fd("\n", 1);
 				env = env->next;
 			}
 		}
@@ -80,6 +80,28 @@ void	run_pwd(t_data *data)
 	}
 }
 
+void	run_export3(t_data *data)
+{
+	t_env	*node;
+	
+	node = data->env;
+	while (node)
+	{
+		ft_putstr_fd("declare -x ", 1);
+		if (node->value)
+		{
+			ft_putstr_fd(node->key, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(node->value, 1);
+			ft_putstr_fd("\n", 1);
+		}
+		else
+		{
+			ft_putendl_fd(node->key, 1);	
+		}
+		node = node->next;
+	}
+}
 /*
 * execute builtin export (2/2)
 */
@@ -107,23 +129,30 @@ void	run_export(t_data *data)
 {
 	t_env	*node;
 	char	**str;
-
-	// if (ft_arr_len(data->token->cmd) > 2)
-	// {
-	// 	"error"
-	// }
-	if (ft_strchr(data->token->cmd[1], '='))
+	int 	x;
+	
+	x = 1;
+	if (ft_arr_len(data->token->cmd) == 1)
+		run_export3(data);
+	else
 	{
-		str = ft_split(data->token->cmd[1], '=');
-		// if (!str)
-		// 	"error malloc"
-		node = search_env(data, str[0]);
-		if (node && ft_arr_len(str) == 1)
-			node->value = ft_strdup("");
-		else if (node && ft_arr_len(str) == 2)
-			node->value = str[1];
-		else
-			run_export2(data);
+		while (data->token->cmd[x])
+		{
+			printf("x : %s\n", data->token->cmd[x]);
+			str = ft_split(data->token[0].cmd[x], '=');
+				// if (!str)
+				// 	"error malloc"
+			node = search_env(data, str[0]);
+			// if (node && ft_arr_len(str) == 1)
+			// 	node->value = NULL;
+			if (node && ft_arr_len(str) == 2)
+				node->value = str[1];
+			else
+			{
+				run_export2(data);
+			}
+			x++;
+		}
 	}
 }
 
@@ -157,4 +186,3 @@ void	run_unset(t_data *data)
 // 	else
 // 		"error invalid flag"
 }
-
