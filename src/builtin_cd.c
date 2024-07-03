@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/19 18:55:31 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:10:25 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	update_data(t_data *data)
 	// 	free(data->pwd);
 	data->oldpwd = ft_strdup(data->pwd);
 	if (!data->pwd)
-		printf("errormallod"); //error
+		error(data, XMALLOC, EXIT_FAILURE);
 
 	// if (data->oldpwd)
 	// 	free(data->oldpwd);
@@ -75,7 +75,7 @@ void	update_data(t_data *data)
 	// 	free(data->pwd);
 	data->pwd = getcwd(NULL, 0);
 	if (!data->pwd)
-		printf("error"); // error malloc
+		error(data, XMALLOC, EXIT_FAILURE);
 }
 
 /*
@@ -88,15 +88,17 @@ char	*check_address(t_data *data, char *add)
 
 	res = NULL;
 	tmp = search_env(data, add);
-	if (!tmp)
+	if (tmp != NULL)
 	{
-		if (ft_strcmp(add, "HOME") == 0)
-			res = "~";
-		else if (ft_strcmp(add, "OLDPWD") == 0)
-			res = "-";
-	}
-	else
 		res = tmp->value;
+	}
+	else if (tmp == NULL)
+	{
+		if (strcmp(add,"HOME") == 0)
+			error_var(data, XCDHOME, NULL, EXIT_FAILURE);
+		if (strcmp(add,"OLDPWD") == 0)
+			error_var(data, XCDOLDPWD, NULL, EXIT_FAILURE);
+	}
 	return (res);
 }
 
@@ -106,11 +108,18 @@ char	*check_address(t_data *data, char *add)
 void	run_cd(t_data *data)
 {
 	char	*add;
+	int		dash;
 
+	dash = 0;
 	if (!data->token->cmd[1] || data->token->cmd[1][0] == '~')
+	{
 		add = check_address(data, "HOME");
+	}
 	else if (data->token->cmd[1][0] == '-')
+	{
+		dash = 1;
 		add = check_address(data, "OLDPWD");
+	}
 	else if (data->token->cmd[1][0] == '/')
 		add = data->token->cmd[1];
 	else
@@ -119,7 +128,9 @@ void	run_cd(t_data *data)
 	{
 		update_data(data);
 		update_env(data);
+		if (dash == 1)
+			ft_putendl_fd(add, 1);
 	}
 	else
-		perror(""); // error
+		error_var(data, XCD, data->token->cmd[1], EXIT_FAILURE);
 }

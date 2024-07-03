@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/01 20:33:15 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:49:40 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,25 @@
 # define ERR_MALLOC "malloc unexpeectedly failed"
 # define ERR_PIPE "unexpected error while opening pipe"
 # define ERR_FORK "unexpected error while creating fork"
+# define ERR_CMD "command not found"
+# define ERR_NOFILE "No such file or directory"
+# define ERR_HOME "cd: HOME not set"
+# define ERR_OLDPWD "cd: OLDPWD not set"
+
 
 
 typedef enum error
 {
-    e_malloc,
-    e_pipe,
-    e_fork,
+    XMALLOC,
+    XPIPE,
+    XFORK,
+    XCMD,
+    XNOFILE,
+    XFD,
+    XDUP,
+    XCD,
+    XCDHOME,
+    XCDOLDPWD,
 }   t_error;
 
 #endif

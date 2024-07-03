@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/28 20:35:57 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:51:12 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,6 @@ void	env_setup(t_data *data, char **envp)
 	}
 	data->env = head;
 	set_wd(data);
+	printf("pwd: %s\n", data->pwd);
+	printf("oldpwd: %s\n", data->oldpwd);
 }

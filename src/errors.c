@@ -29,23 +29,52 @@ void	print_errors(char *errmsg, char *syntax)
 
 void	error(t_data *data, t_error code, int e)
 {
-	(void)data;
-	if (code == e_malloc)
-	{
-		// free all function
+	(void)data; //uncomment when free all function is done
+	// free all function
+	if (code == XMALLOC)
 		ft_putstr_fd(ERR_MALLOC, 2);
-	}
-	if (code == e_pipe)
-	{
-		// free all function
+	if (code == XPIPE)
 		ft_putstr_fd(ERR_PIPE, 2);
-	}
-	if (code == e_fork)
-	{
-		// free all function
+	if (code == XFORK)
 		ft_putstr_fd(ERR_FORK, 2);
+	exit (e);
+}
+void error_var2(t_error code, char *var)
+{
+	if (code == XCD)
+	{
+		ft_putstr_fd("cd:", 2);
+		perror(var);
+	}
+	else if (code == XCDHOME)
+		ft_putendl_fd(ERR_HOME, 2);
+	else if (code == XCDOLDPWD)
+		ft_putendl_fd(ERR_OLDPWD, 2);
+}
+
+void	error_var(t_data *data, t_error code, char *var, int e)
+{
+	(void)data; //uncomment when free all function is done
+	// free all function
+	if (code == XCMD)
+	{
+		ft_putstr_fd(var, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(ERR_CMD, 2);
+	}
+	else
+	{
+		ft_putstr_fd("minishell-8.8$", 2);
+		ft_putstr_fd(": ", 2);
+		error_var2(code, var);
+		if (code == XNOFILE)
+		{
+			ft_putstr_fd(var, 2);
+			ft_putstr_fd(": ", 2);
+			ft_putendl_fd(ERR_NOFILE, 2);
+		}
+		else if (code == XFD)
+			perror(var);
 	}
 	exit (e);
-
-	
 }
