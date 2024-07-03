@@ -16,17 +16,23 @@ int	calcu_redir(char *str)
 {
 	int i;
 	int num_redir;
+	char q;
 
+	q = 0;
 	i = 0;
 	num_redir = 0;
 	while (str[i])
 	{
-		if (ft_isredir(str[i]) && str[i + 1] == str[i])
+	    if (!q && ft_isquote(str[i]))
+             q = str[i];
+        else if (str[i] == q)
+            q = 0;
+		if (ft_isredir(str[i]) && str[i + 1] == str[i] && !q)
 		{
 			num_redir += 1;
 			i += 2;
 		}
-		else if (ft_isredir(str[i]))
+		else if (ft_isredir(str[i]) && !q)
 		{
 			num_redir += 1;
 			i++;
@@ -55,13 +61,19 @@ char ***redir_argv(char *str, int len, char ***redir)
 {
 	int i;
 	int x;
+	char q;
 
 	i = 0;
 	x = 0;
 	len = 0;
+	q = 0;
 	while (str[i])
 	{
-		if (ft_isredir(str[i]))
+		if (!q && ft_isquote(str[i]))
+			q = str[i];
+		else if (str[i] == q)
+			q = 0;
+		if (ft_isredir(str[i]) && !q)
 		{
 			i = extract_redir(str, redir[len], i);
 			while (ft_isspace(str[i]))
@@ -231,10 +243,10 @@ int	parse_start(t_data *data, char *line)
 			return (0);
 		data->token[i] = init_token(input[i], i);
 		input[i] = check_expand(input[i], data);
+		printf("%s\n", input[i]);
 		assign_token(input[i], &data->token[i]);
 		ft_unquotes(&data->token[i]);
 		//debug
-		printf("%s\n", input[i]);
 		printf("token idx: %d \n", data->token[i].idx);
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);
