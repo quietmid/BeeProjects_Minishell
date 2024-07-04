@@ -143,13 +143,13 @@ void	assign_token(char *str, t_token *t)
 
 	if (str)
 	{
-		if (t->redir)
+		if (t->redir_len != 0) 
 			t->redir = redir_argv(str, t->redir_len, t->redir);
 		// printf("string: %s\n", str);
 		temp = prompt_prep(str, 0);
-		// int i = 0;
-		// while (temp[i])
-		// 	printf("temp: %s\n", temp[i++]);
+		int i = 0;
+		while (temp[i])
+			printf("temp: %s\n", temp[i++]);
 		t->cmd_len = ft_arr_len(temp);
 		t->cmd = cmd_argv(temp, t->cmd_len);
 		t->cmd_len = ft_arr_len(t->cmd);
@@ -245,12 +245,12 @@ int	parse_start(t_data *data, char *line)
 		input[i] = check_expand(input[i], data);
 		printf("%s\n", input[i]);
 		assign_token(input[i], &data->token[i]);
-		ft_unquotes(&data->token[i]);
 		//debug
 		printf("token idx: %d \n", data->token[i].idx);
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);
 		//debug
+		ft_unquotes(&data->token[i]);
 		// //check_expand(&data->token[i]);
 		i++;
 	}

@@ -152,6 +152,8 @@ t_token	init_token(char *str, int i);
 // void check_expand(char *s, t_data *d);
 char *check_expand(char *s, t_data *d);
 char *expanding(t_data *data, char *str, int s);
+char *check_meta(char *s);
+char *add_quotes(char *s);
 
 // Remove Quotes
 void    ft_removequotes(char *str);
