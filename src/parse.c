@@ -171,11 +171,10 @@ char **prompt_prep(char *line, int opt)
 		error_msg("prompt split failed");
 	return (result);
 }
-// // debug
-static void print_redir_argv(char ***redir)
-{
-	int i;
-
+// // // debug
+// static void print_redir_argv(char ***redir)
+// {
+// 	int i;
 	i = 0;
 	if (!redir)
 		return ;
@@ -212,7 +211,6 @@ t_token	init_token(char *str, int i)
 		t.redir = NULL;
 	return (t);
 }
-
 
 /* 
 Starts parsing the input and store them as redir and/or cmd. Each token represent the prompt in between the pipes

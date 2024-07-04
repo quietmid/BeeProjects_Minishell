@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/01 21:00:00 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/03 15:54:12 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 * support find_path_cmd fxn (2/2)
 */
-char	**prepare_paths(t_env *env)
+char	**prepare_paths(t_data *data, t_env *env)
 {
 	char	**paths;
 	char	**res;
@@ -23,17 +23,17 @@ char	**prepare_paths(t_env *env)
 	int		x;
 
 	paths = ft_split(env->value, ':');
-	// if (!paths)
-	// 	mallocerr
+	if (!paths)
+		error(data, XMALLOC, EXIT_FAILURE);
 	res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
-	// if (!paths)
-	// 	mallocerr
+	if (!paths)
+		error(data, XMALLOC, EXIT_FAILURE);
 	x = 0;
 	while (paths[x])
 	{
 		tmp = ft_strjoin(paths[x], "/");
-		// if (!tmp)
-		// 	"malloc error"
+		if (!tmp)
+			error(data, XMALLOC, EXIT_FAILURE);
 		res[x] = tmp;
 		x++;
 	}
@@ -50,20 +50,19 @@ char	*find_path_cmd(t_data *data, int i)
 	char	*cmd;
 	int 	x;
 
-	tmp = prepare_paths(search_env(data, "PATH"));
-	// if (!tmp)
-	// 	errormalloc
+	tmp = prepare_paths(data, search_env(data, "PATH"));
+	if (!tmp)
+	 	error(data, XMALLOC, EXIT_FAILURE);
 	x = 0;
 	while (tmp[x])
 	{
 		if (data->token[i].cmd[0])
 		{
 			cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
-			// if (!cmd)
-			// 	"error malloc"
+			if (!cmd)
+			 	error(data, XMALLOC, EXIT_FAILURE);
 			if (access(cmd, 0) == 0)
 			{
-				dprintf(2, "NO PATH\n");	
 				ft_free_arr(tmp);
 				return (cmd);
 			}
@@ -88,7 +87,6 @@ void	execute(t_data	*data)
 	else
 	{
 		create_pipes(data);
-		//dprintf(1, "XX: %d\n", data->pipe_count);
 		create_forks(data);
 		close_pipes(data);
 		int x;
@@ -98,7 +96,6 @@ void	execute(t_data	*data)
 			waitpid(data->pid[x], &data->status, 0);
 			x++;
 		}
-		dprintf(2, "after WAIT\n");
 	}
 	return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/21 18:28:30 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/03 19:22:00 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,28 @@
 // need to check the right error_msg
 # define ERR_QUOTES "syntax error unexpected EOF while look for matching ` "
 # define ERR_SYNTAX "syntax error parse error near "
-# define ERR_NL "syntax error near unexpected token `newline'"
+# define ERR_NL "syntax error near unexpected token 'newline'"
+
+# define ERR_MALLOC "malloc unexpectedly failed"
+# define ERR_PIPE "unexpected error while opening pipe"
+# define ERR_FORK "unexpected error while creating fork"
+# define ERR_CMD "command not found"
+# define ERR_NOFILE "No such file or directory"
+# define ERR_HOME "cd: HOME not set"
+# define ERR_OLDPWD "cd: OLDPWD not set"
+
+typedef enum error
+{
+    XMALLOC,
+    XPIPE,
+    XFORK,
+    XCMD,
+    XNOFILE,
+    XFD,
+    XDUP,
+    XCD,
+    XCDHOME,
+    XCDOLDPWD,
+}   t_error;
 
 #endif
