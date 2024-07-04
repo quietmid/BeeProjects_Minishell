@@ -22,6 +22,7 @@ SRC = ./src/main.c \
 	  ./src/here_doc.c \
 	  ./src/prompt_check.c \
 	  ./src/expand.c \
+	  ./src/unquotes.c \
 	
 
 #BSRC =
