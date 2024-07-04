@@ -143,11 +143,17 @@ int		parse_start(t_data *data, char *line);
 int		pipe_scans(char *line);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
-t_token assign_token(char *input, int i);
+// t_token assign_token(char *input, int i);
+void	assign_token(char *input, t_token *token);
+t_token	init_token(char *str, int i);
 
 //expand
-void check_expand(t_token *token, t_data *data);
+// void check_expand(t_token *token, t_data *data);
+// void check_expand(char *s, t_data *d);
+char *check_expand(char *s, t_data *d);
 char *expanding(t_data *data, char *str, int s);
+char *check_meta(char *s);
+char *add_quotes(char *s);
 
 // Remove Quotes
 void    ft_removequotes(char *str);

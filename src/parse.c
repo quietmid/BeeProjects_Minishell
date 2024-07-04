@@ -16,17 +16,23 @@ int	calcu_redir(char *str)
 {
 	int i;
 	int num_redir;
+	char q;
 
+	q = 0;
 	i = 0;
 	num_redir = 0;
 	while (str[i])
 	{
-		if (ft_isredir(str[i]) && str[i + 1] == str[i])
+	    if (!q && ft_isquote(str[i]))
+             q = str[i];
+        else if (str[i] == q)
+            q = 0;
+		if (ft_isredir(str[i]) && str[i + 1] == str[i] && !q)
 		{
 			num_redir += 1;
 			i += 2;
 		}
-		else if (ft_isredir(str[i]))
+		else if (ft_isredir(str[i]) && !q)
 		{
 			num_redir += 1;
 			i++;
@@ -55,13 +61,19 @@ char ***redir_argv(char *str, int len, char ***redir)
 {
 	int i;
 	int x;
+	char q;
 
 	i = 0;
 	x = 0;
 	len = 0;
+	q = 0;
 	while (str[i])
 	{
-		if (ft_isredir(str[i]))
+		if (!q && ft_isquote(str[i]))
+			q = str[i];
+		else if (str[i] == q)
+			q = 0;
+		if (ft_isredir(str[i]) && !q)
 		{
 			i = extract_redir(str, redir[len], i);
 			while (ft_isspace(str[i]))
@@ -125,38 +137,25 @@ char **cmd_argv(char **temp, int len)
 	return (cmd);
 }
 
-t_token assign_token(char *str, int i)
+void	assign_token(char *str, t_token *t)
 {
-	t_token token;
 	char **temp;
-	int x;
 
-	token.idx = i;
-	token.redir_len = calcu_redir(str);
-	token.redir = (char ***)ft_safe_malloc((token.redir_len + 1) * sizeof(char **));
-	x = 0;
 	if (str)
 	{
-		while (x < token.redir_len)
-		{
-			token.redir[x] = (char **)ft_safe_calloc(3, sizeof(char *)); //need a final safe way to free everything tho
-			x++;
-		}
-		if (token.redir_len == 0)
-			token.redir = NULL; 
-		else
-			token.redir = redir_argv(str, token.redir_len, token.redir);
+		if (t->redir_len != 0) 
+			t->redir = redir_argv(str, t->redir_len, t->redir);
 		// printf("string: %s\n", str);
 		temp = prompt_prep(str, 0);
-		// int i = 0;
-		// while (temp[i])
-		// 	printf("temp: %s\n", temp[i++]);
-		token.cmd_len = ft_arr_len(temp);
-		token.cmd = cmd_argv(temp, token.cmd_len);
+		int i = 0;
+		while (temp[i])
+			printf("temp: %s\n", temp[i++]);
+		t->cmd_len = ft_arr_len(temp);
+		t->cmd = cmd_argv(temp, t->cmd_len);
+		t->cmd_len = ft_arr_len(t->cmd);
 	}
 	else
-		(void)token ;
-	return (token);
+		(void)t ;
 }
 
 char **prompt_prep(char *line, int opt)
@@ -197,9 +196,31 @@ static void print_cmd_argv(char **redir)
         printf("cmd: %s\n", redir[i]);
     }
 }
+
+t_token	init_token(char *str, int i) // should I init the in and out?
+{
+	t_token t;
+	int	x;
+
+	t.idx = i;
+	t.redir_len = calcu_redir(str);
+	t.redir = (char ***)ft_safe_malloc((t.redir_len + 1) * sizeof(char **));
+	x = -1;
+	while (++x < t.redir_len)
+		t.redir[x] = (char **)ft_safe_calloc(3, sizeof(char *));
+	if (t.redir_len == 0)
+		t.redir = NULL;
+	return (t);
+}
+
+
 /* 
 Starts parsing the input and store them as redir and/or cmd. Each token represent the prompt in between the pipes
 */
+	/*
+	NEED to re sequence my parser. Split by pipe, expand, and the split by space
+	second, I need to make sure I expand properly when there is just one $ 
+	*/
 int	parse_start(t_data *data, char *line)
 {
 	char **input;
@@ -218,15 +239,18 @@ int	parse_start(t_data *data, char *line)
 	i = 0;
 	while (input[i])
 	{
-		data->token[i] = assign_token(input[i], i);
-		check_expand(&data->token[i], data);
-		ft_unquotes(&data->token[i]);
-		//debug
+		if (prompt_check(input[i]) == 0)
+			return (0);
+		data->token[i] = init_token(input[i], i);
+		input[i] = check_expand(input[i], data);
 		printf("%s\n", input[i]);
+		assign_token(input[i], &data->token[i]);
+		//debug
 		printf("token idx: %d \n", data->token[i].idx);
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);
 		//debug
+		ft_unquotes(&data->token[i]);
 		// //check_expand(&data->token[i]);
 		i++;
 	}
@@ -237,7 +261,6 @@ int	parse_start(t_data *data, char *line)
 	// printf("here_doc in token[%d]\n", data->hd);
 	// debug
 	// now iterates through the token and check redir for here_doc
-	
 	return (1);
 }
 

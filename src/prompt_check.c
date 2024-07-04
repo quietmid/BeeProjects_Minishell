@@ -32,7 +32,7 @@ char syntax_check(char *line)
     i = 0;
     if (line[0] == '|')
         return (line[0]);
-    if (ft_ismeta(line[len]))
+    if (ft_ismeta(line[len]) && line[len] != 36)
         return (line[len]);
     while (line[i])
     {

@@ -46,6 +46,7 @@ void    ft_unquotes(t_token *t)
     int x;
 
     i = 0;
+    printf("redir len: %d\n", t->redir_len);
     while (i < t->redir_len)
     {
         if (ft_isquote(t->redir[i][0][0]))
