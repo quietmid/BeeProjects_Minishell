@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/20 19:23:14 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/04 17:29:19 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int    check_heredoc(t_data *data)
     char *ag;
     t_token *t;
 
+    data->hd = 0;
     t = data->token;
     i = 0;
     while (i < data->cmd_count)
@@ -30,13 +31,13 @@ int    check_heredoc(t_data *data)
             ag = t[i].redir[j][0];
             if (ag && !ft_strncmp("<<", ag, 2))
             {
-                //here_doc = TRUE;
+                data->hd = 1;
                 printf("here_doc found\n");
-                return (i);
+                return (1);
             }
             j++;
         }
         i++;
     }
-    return (-1);
+    return (0);
 }

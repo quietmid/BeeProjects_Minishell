@@ -197,7 +197,7 @@ static void print_cmd_argv(char **redir)
     }
 }
 
-t_token	init_token(char *str, int i) // should I init the in and out?
+t_token	init_token(char *str, int i)
 {
 	t_token t;
 	int	x;
@@ -243,9 +243,9 @@ int	parse_start(t_data *data, char *line)
 			return (0);
 		data->token[i] = init_token(input[i], i);
 		input[i] = check_expand(input[i], data);
-		printf("%s\n", input[i]);
 		assign_token(input[i], &data->token[i]);
 		//debug
+		printf("%s\n", input[i]);
 		printf("token idx: %d \n", data->token[i].idx);
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);

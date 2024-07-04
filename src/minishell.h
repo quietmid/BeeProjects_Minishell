@@ -63,10 +63,10 @@ typedef struct s_token
 	int				idx;
 	int				redir_len;
 	int				cmd_len;
-	char			**cmd;
-	char			***redir;
 	int				in;
 	int				out;
+	char			**cmd;
+	char			***redir;
 }					t_token;
 
 typedef struct s_env
