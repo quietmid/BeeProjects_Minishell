@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/03 22:56:24 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:26:48 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ void	run_export3(t_data *data)
 		{
 			ft_putstr_fd(node->key, 1);
 			ft_putstr_fd("=", 1);
+			ft_putstr_fd("\"", 1);
 			ft_putstr_fd(node->value, 1);
+			ft_putstr_fd("\"", 1);
 			ft_putstr_fd("\n", 1);
 		}
 		else
@@ -105,13 +107,13 @@ void	run_export3(t_data *data)
 /*
 * execute builtin export (2/2)
 */
-void	run_export2(t_data *data)
+void	run_export2(t_data *data, int x)
 {
 	t_env	*node;
 	t_env	*new;
 
 	node = data->env;
-	new = create_envnode(data->token->cmd[1]);
+	new = create_envnode(data->token->cmd[x]);
 	if (node == NULL)
 		node = new;
 	else
@@ -132,24 +134,22 @@ void	run_export(t_data *data)
 	int 	x;
 	
 	x = 1;
-	if (ft_arr_len(data->token->cmd) == 1)
+	if (ft_arr_len(data->token[0].cmd) == 1)
 		run_export3(data);
 	else
 	{
-		while (data->token->cmd[x])
+		while (x < ft_arr_len(data->token[0].cmd))
 		{
-			printf("x : %s\n", data->token->cmd[x]);
 			str = ft_split(data->token[0].cmd[x], '=');
-				// if (!str)
-				// 	"error malloc"
+			if (!str)
+				error(data, XMALLOC, EXIT_FAILURE);
 			node = search_env(data, str[0]);
-			// if (node && ft_arr_len(str) == 1)
-			// 	node->value = NULL;
-			if (node && ft_arr_len(str) == 2)
-				node->value = str[1];
+			if (!node)
+				run_export2(data, x);
 			else
 			{
-				run_export2(data);
+				if (str[1])
+					node->value = str[1];
 			}
 			x++;
 		}
