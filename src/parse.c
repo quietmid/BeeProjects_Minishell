@@ -172,9 +172,9 @@ char **prompt_prep(char *line, int opt)
 	return (result);
 }
 // // // debug
-// static void print_redir_argv(char ***redir)
-// {
-// 	int i;
+static void print_redir_argv(char ***redir)
+{
+	int i;
 	i = 0;
 	if (!redir)
 		return ;
