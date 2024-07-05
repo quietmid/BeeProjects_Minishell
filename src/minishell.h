@@ -65,6 +65,7 @@ typedef struct s_token
 	int				cmd_len;
 	int				in;
 	int				out;
+	int				hd;
 	char			**cmd; // free
 	char			***redir; // free 
 }					t_token;
@@ -160,7 +161,7 @@ void    ft_removequotes(char *str);
 void    ft_unquotes(t_token *token);
 
 //here_doc
-int    check_heredoc(t_data *data);
+int    check_heredoc(t_token *t);
 
 //pipes
 void	create_pipes(t_data *data);
@@ -174,9 +175,7 @@ void	restore_stdio(t_data *data, int x);
 //basic utils
 char	**ft_arr_copy(char **arr);
 int		ft_arr_len(char **array);
-void	ft_free_arr(char **arr);
 void	ft_arr_print(char **arr);
-void	ft_free_token(t_data *data);
 int		ft_envsize(t_env *lst);
 int 	ft_isspace(char c);
 int 	ft_isredir(char c);
@@ -189,13 +188,21 @@ int	ft_strcmp(char *s1, char *s2);
 //safe mem allocation
 void	*ft_safe_calloc(size_t count, size_t size);
 void	*ft_safe_malloc(size_t size);
+char	*ft_safe_substr(const char *s, unsigned int start, size_t len);
 
 //errors
 void	error_msg(char *msg);
 void	error_arr_free(char *msg, char **str);
 void	print_errors(char *errmsg, char *syntax);
-char	*ft_safe_substr(const char *s, unsigned int start, size_t len);
 void	error(t_data *data, t_error code, int e);
 void	error_var(t_data *data, t_error code, char *var, int e);
 void 	error_cd(t_data *data, t_error code, char *var);
+
+//memory cleaning
+void 	free_data_all(t_data *data);
+void	ft_free_arr(char **arr);
+void	ft_free_tri(char ***tri);
+void	ft_free_token(t_data *s_data);
+void	ft_free_env(t_env *env);
+
 #endif

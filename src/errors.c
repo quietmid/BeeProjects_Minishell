@@ -43,8 +43,7 @@ void	error(t_data *data, t_error code, int e)
 void error_cd(t_data *data, t_error code, char *var)
 {
 	(void)data;
-	ft_putstr_fd("minishell-8.8$", 2);
-	ft_putstr_fd(": ", 2);
+	ft_putstr_fd("minishell-8.8$: ", 2);
 	if (code == XCD)
 	{
 		ft_putstr_fd("cd: ", 2);

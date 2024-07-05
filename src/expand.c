@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:09:54 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/05 15:02:40 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/05 22:55:52 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char *expanding(t_data *data, char *str, int s)
         printf("value len: %ld\n", ft_strlen(temp));
         temp = check_meta(temp);
     }
-    // IF found! need to check if temp has a special char
     if (found == 0)
         temp = ft_strdup("");
     if (s == 0 && found == 1)
@@ -124,7 +123,8 @@ char  *check_expand(char *s, t_data *d)
             q = 0;
         // if (s[i] == 36 && s[i + 1] =='?' && (q == 34 || q == 0))
         //     s = expand_errcode();
-        if ((s[i] == 36 && ((s[i + 1] == '_') || ft_isalpha(s[i + 1]) || ft_isalnum(s[i + 1])) && (q == 34 || q == 0)))
+        // if after $ is not _ or alpha, it just skip that and print the first alpha and after
+        if ((s[i] == 36 && ((s[i + 1] == '_') || ft_isalpha(s[i + 1])) && (q == 34 || q == 0)))
         {
             s = expanding(d, s, i);
             printf("new string is: %s\n", s);

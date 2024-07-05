@@ -23,6 +23,7 @@ SRC = ./src/main.c \
 	  ./src/prompt_check.c \
 	  ./src/expand.c \
 	  ./src/unquotes.c \
+	  ./src/free_all.c \
 	
 
 #BSRC =
