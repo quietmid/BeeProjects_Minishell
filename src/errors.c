@@ -37,6 +37,8 @@ void	error(t_data *data, t_error code, int e)
 		ft_putstr_fd(ERR_PIPE, 2);
 	if (code == XFORK)
 		ft_putstr_fd(ERR_FORK, 2);
+	if (code == XEXEC)
+		ft_putstr_fd(ERR_EXEC, 2);
 	exit (e);
 }
 
@@ -76,7 +78,7 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 			ft_putstr_fd(": ", 2);
 			ft_putendl_fd(ERR_NOFILE, 2);
 		}
-		else if (code == XFD)
+		else
 			perror(var);
 	}
 	exit (e);

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/04 17:26:48 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/04 21:16:16 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ void	run_pwd(t_data *data)
 // 		"error invalid flag"
 	}
 }
-
+/*
+* execute builtin export (3/3)
+*/
 void	run_export3(t_data *data)
 {
 	t_env	*node;
@@ -105,7 +107,7 @@ void	run_export3(t_data *data)
 	}
 }
 /*
-* execute builtin export (2/2)
+* execute builtin export (2/3)
 */
 void	run_export2(t_data *data, int x)
 {
@@ -125,7 +127,7 @@ void	run_export2(t_data *data, int x)
 }
 
 /*
-* execute builtin export (1/2)
+* execute builtin export (1/3)
 */
 void	run_export(t_data *data)
 {

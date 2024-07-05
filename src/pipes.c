@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/03 15:56:34 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/04 22:30:16 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int is_redir(t_data *data, int x, char *str)
 
 void	redirect_first(t_data *data, int x)
 {
-	dprintf(1, "went to FIRST\n");
 	if (is_redir(data, x, "<") == TRUE)
 	{
 		redir_in_fd(data, x);
@@ -128,7 +127,7 @@ void	redirect_first(t_data *data, int x)
 			dprintf(2, "cmd %d OUT to pipe %d\n", x, x);
 			if (dup2(data->pipe[x][1], STDOUT_FILENO) < 0)
 				error(data, XDUP, 0);
-			close_pipes(data);
+			//close_pipes(data);
 		}
 	}
 	close_pipes(data);
@@ -136,7 +135,6 @@ void	redirect_first(t_data *data, int x)
 
 void	redirect_last(t_data *data, int x)
 {
-	dprintf(1, "went to LAST\n");
 	if (is_redir(data, x, "<") == TRUE)
 	{
 		redir_in_fd(data, x);
@@ -146,7 +144,7 @@ void	redirect_last(t_data *data, int x)
 		dprintf(2, "cmd %d IN from pipe %d\n", x ,x - 1);
 		if (dup2(data->pipe[x - 1][0], STDIN_FILENO) < 0)
 			error(data, XDUP, 0);
-		close_pipes(data);
+		//close_pipes(data);
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
@@ -160,7 +158,6 @@ void	redirect_last(t_data *data, int x)
 
 void	redirect_middle(t_data *data, int x)
 {
-	dprintf(1, "went to MIDDlE\n");
 	if (is_redir(data, x, "<") == TRUE)
 	{
 		redir_in_fd(data, x);
@@ -170,7 +167,7 @@ void	redirect_middle(t_data *data, int x)
 		dprintf(2, "cmd % d IN from PIPE %d OUT to PIPE %d\n", x, x - 1, x);
 		if (dup2(data->pipe[x - 1][0], STDIN_FILENO) < 0)
 			error(data, XDUP, 0);
-		close_pipes(data);
+		//close_pipes(data);
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
@@ -239,9 +236,7 @@ void	redirect(t_data *data, int x)
 		else if (x == (data->cmd_count - 1))
 			redirect_last(data, x);
 		else
-		{
 			redirect_middle(data, x);
-		}
 	}
 	close_pipes(data);
 	return ;
@@ -249,18 +244,27 @@ void	redirect(t_data *data, int x)
 
 void child_process(t_data *data, int x)
 {
+	char *path;
+	
 	if (data->cmd_count > 1 || data->token[x].redir)
 		redirect(data, x);
-	if (search_env(data, "PATH"))
-	{
-		data->path_cmd = find_path_cmd(data, x);
-		if (!data->path_cmd)
-			error_var(data, XCMD, data->token[x].cmd[0], 127);
-		env_to_arr(data);
-		execve(data->path_cmd, data->token[x].cmd, data->env_arr);
-	}
+	env_to_arr(data);
+	if (data->token[x].cmd[0][0] == '/')
+		path = data->token[x].cmd[0];
 	else
-		error_var(data, XNOFILE, data->token[x].cmd[0], 127);
+	{
+		if (search_env(data, "PATH"))
+		{
+			data->path_cmd = find_path_cmd(data, x);
+			if (!data->path_cmd)
+				error_var(data, XCMD, data->token[x].cmd[0], 127);
+			path = data->path_cmd;
+		}
+		else
+			error_var(data, XNOFILE, data->token[x].cmd[0], 127);
+	}
+	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
+		error(data, XEXEC, EXIT_FAILURE);
 	return ;
 }
 
