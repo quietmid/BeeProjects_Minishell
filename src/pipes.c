@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/04 22:30:16 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:17:40 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,41 @@ void	redirect(t_data *data, int x)
 	close_pipes(data);
 	return ;
 }
+// void check_cmd(t_data *data, int x)
+// {
+// 	// if (data->token[x].cmd[0] == NULL || data->token[x].cmd[0][0] == '\0')
+// 	// {
+// 	// 	error_var(data, XCMD, data->token[x].cmd[0], 127);
+// 	// }
+// 	// if (cmds[0][0] == '/')
+// 	// {
+// 	// 	if (access(cmds[0], X_OK) != 0)
+// 	// 	{
+// 	// 		error_var(data, XCMD, data->token[x].cmd[0], 127);
+// 	// 	}
+// 	// }
+// 	if (cmds[0][0] == '.')
+// 	{
+// 		if (access(cmds[0], X_OK) != 0)
+// 		{
+// 			error(pipex, cmd_err, cmds[0], 126);
+// 		}
+// 		if (open(cmds[0], O_RDONLY | O_DIRECTORY))
+// 			error(pipex, dir_err, cmds[0], 126);
+// 	}
+// }
+
+int	is_directory(char *cmd)
+{
+	struct stat	filestat;
+
+	if (stat(cmd, &filestat) == 0)
+	{
+		if (S_ISDIR(filestat.st_mode))
+			return (TRUE);
+	}
+	return (FALSE);
+}
 
 void child_process(t_data *data, int x)
 {
@@ -249,8 +284,20 @@ void child_process(t_data *data, int x)
 	if (data->cmd_count > 1 || data->token[x].redir)
 		redirect(data, x);
 	env_to_arr(data);
+	//check_cmd(data, x);
 	if (data->token[x].cmd[0][0] == '/')
+	{
 		path = data->token[x].cmd[0];
+		if (access(data->token[x].cmd[0], X_OK) != 0)
+			error_var(data, XEXEC, data->token[x].cmd[0], 127);
+	}
+	if (data->token[x].cmd[0][0] == '.')
+	{
+		if (access(data->token[x].cmd[0], X_OK) != 0)
+			error_var(data, XEXEC, data->token[x].cmd[0], 126);
+		if (is_directory(data->token[x].cmd[0]) == TRUE)
+			error_var(data, XDIR, data->token[x].cmd[0], 126);
+	}
 	else
 	{
 		if (search_env(data, "PATH"))

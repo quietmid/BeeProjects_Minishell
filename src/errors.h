@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/04 22:40:19 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:59:02 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define ERR_NOFILE "No such file or directory"
 # define ERR_HOME "cd: HOME not set"
 # define ERR_OLDPWD "cd: OLDPWD not set"
+# define ERR_DIR "is a directory"
 
 typedef enum error
 {
@@ -41,6 +42,7 @@ typedef enum error
     XCD,
     XCDHOME,
     XCDOLDPWD,
+    XDIR,
 }   t_error;
 
 #endif
