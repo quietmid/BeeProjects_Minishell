@@ -67,6 +67,7 @@ typedef struct s_token
 	int				cmd_len;
 	int				in;
 	int				out;
+	int				hd;
 	char			**cmd;
 	char			***redir;
 }					t_token;
@@ -162,7 +163,9 @@ void    ft_removequotes(char *str);
 void    ft_unquotes(t_token *token);
 
 //here_doc
-int    check_heredoc(t_data *data);
+int    check_heredoc(t_token *t);
+void    here_doc(t_data *data);
+
 
 //pipes
 void	create_pipes(t_data *data);

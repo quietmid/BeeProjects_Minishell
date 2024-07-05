@@ -201,6 +201,7 @@ t_token	init_token(char *str, int i)
 	t_token t;
 	int	x;
 
+	t.hd = 0;
 	t.idx = i;
 	t.redir_len = calcu_redir(str);
 	t.redir = (char ***)ft_safe_malloc((t.redir_len + 1) * sizeof(char **));
@@ -242,6 +243,7 @@ int	parse_start(t_data *data, char *line)
 		data->token[i] = init_token(input[i], i);
 		input[i] = check_expand(input[i], data);
 		assign_token(input[i], &data->token[i]);
+		data->hd += check_heredoc(&data->token[i]);
 		//debug
 		printf("%s\n", input[i]);
 		printf("token idx: %d \n", data->token[i].idx);
@@ -253,8 +255,10 @@ int	parse_start(t_data *data, char *line)
 		i++;
 	}
 	ft_free_arr(input);
-	// if (data->token != NULL)
-	// 	data->hd = check_heredoc(data);
+	if (data->token != NULL)
+	{
+		here_doc(data);
+	}
 	// debug
 	// printf("here_doc in token[%d]\n", data->hd);
 	// debug

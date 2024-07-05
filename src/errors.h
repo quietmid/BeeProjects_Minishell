@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/05 15:59:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:34:52 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define ERR_PIPE "unexpected error while opening pipe"
 # define ERR_FORK "unexpected error while creating fork"
 # define ERR_EXEC "unexpected error while executing process"
+# define ERR_HD "unexpected error while creating heredoc temp file"
 
 # define ERR_CMD "command not found"
 # define ERR_NOFILE "No such file or directory"
@@ -43,6 +44,7 @@ typedef enum error
     XCDHOME,
     XCDOLDPWD,
     XDIR,
+    XHD,
 }   t_error;
 
 #endif

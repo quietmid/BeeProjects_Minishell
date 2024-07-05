@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/05 16:17:40 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/05 20:48:51 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,32 @@ void	close_pipes(t_data *data)
 	return;
 }
 
+void redir_hd_fd(t_data *data, int x)
+{
+	int i;
+	
+	i = 0;
+	while (data->token[x].redir[i])
+	{
+		if (ft_strcmp(data->token[x].redir[i][0], "<<") ==  0)
+		{
+			data->token->in = open(ft_itoa(x), O_RDONLY);
+			if (data->token->in < 0)
+			{
+				unlink(ft_itoa(x));
+				error_var(data, XFD, ft_itoa(x), 0);
+			}
+			if (dup2(data->token->in, STDIN_FILENO) < 0)
+			{
+				unlink(ft_itoa(x));
+				error(data, XDUP, 0);	
+			}
+			close(data->token->in);
+		}
+		i++;
+	}
+	unlink(ft_itoa(x));
+}
 void redir_in_fd(t_data *data, int x)
 {
 	int i;
@@ -42,7 +68,7 @@ void redir_in_fd(t_data *data, int x)
 			if (dup2(data->token->in, STDIN_FILENO) < 0)
 				error(data, XDUP, 0);
 			close(data->token->in);
-			dprintf(2, "cmd %d redir IN from %s\n",x, data->token[x].redir[i][1]);
+			//dprintf(2, "cmd %d redir IN from %s\n",x, data->token[x].redir[i][1]);
 		}
 		i++;
 	}
@@ -109,15 +135,18 @@ int is_redir(t_data *data, int x, char *str)
 
 void	redirect_first(t_data *data, int x)
 {
-	if (is_redir(data, x, "<") == TRUE)
+	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
-		redir_in_fd(data, x);
+	//	if (is_redir(data, x, "<") == TRUE)
+			redir_in_fd(data, x);
+	//	if (is_redir(data, x, "<<") == TRUE)
+			redir_hd_fd(data, x);
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
-		if (is_redir(data, x, ">") == TRUE )
+	//	if (is_redir(data, x, ">") == TRUE )
 			redir_out_fd(data, x);
-		if (is_redir(data, x, ">>") == TRUE) 
+	//	if (is_redir(data, x, ">>") == TRUE) 
 			redir_append_fd(data, x);
 	}
 	else if (is_redir(data, x, ">") == FALSE || is_redir(data, x, ">>") == FALSE)
@@ -135,11 +164,14 @@ void	redirect_first(t_data *data, int x)
 
 void	redirect_last(t_data *data, int x)
 {
-	if (is_redir(data, x, "<") == TRUE)
+	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
-		redir_in_fd(data, x);
+	//	if (is_redir(data, x, ">") == TRUE )
+			redir_in_fd(data, x);
+		//if ( is_redir(data, x, "<<") == TRUE)
+			redir_hd_fd(data, x);
 	}
-	else if (is_redir(data, x, "<") == FALSE)
+	else if (is_redir(data, x, "<") == FALSE || is_redir(data, x, "<<") == FALSE)
 	{
 		dprintf(2, "cmd %d IN from pipe %d\n", x ,x - 1);
 		if (dup2(data->pipe[x - 1][0], STDIN_FILENO) < 0)
@@ -148,9 +180,9 @@ void	redirect_last(t_data *data, int x)
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
-		if (is_redir(data, x, ">") == TRUE )
+		//if (is_redir(data, x, ">") == TRUE )
 			redir_out_fd(data, x);
-		if (is_redir(data, x, ">>") == TRUE) 
+		//if (is_redir(data, x, ">>") == TRUE) 
 			redir_append_fd(data, x);
 	}
 	close_pipes(data);
@@ -158,11 +190,14 @@ void	redirect_last(t_data *data, int x)
 
 void	redirect_middle(t_data *data, int x)
 {
-	if (is_redir(data, x, "<") == TRUE)
+	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
-		redir_in_fd(data, x);
+		//if (is_redir(data, x, ">") == TRUE )
+			redir_in_fd(data, x);
+	//	if ( is_redir(data, x, "<<") == TRUE)
+			redir_hd_fd(data, x);
 	}
-	else if (is_redir(data, x, "<") == FALSE)
+	else if (is_redir(data, x, "<") == FALSE || is_redir(data, x, "<<") == FALSE)
 	{
 		dprintf(2, "cmd % d IN from PIPE %d OUT to PIPE %d\n", x, x - 1, x);
 		if (dup2(data->pipe[x - 1][0], STDIN_FILENO) < 0)
@@ -171,9 +206,9 @@ void	redirect_middle(t_data *data, int x)
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
-		if (is_redir(data, x, ">") == TRUE )
+		//if (is_redir(data, x, ">") == TRUE )
 			redir_out_fd(data, x);
-		if (is_redir(data, x, ">>") == TRUE) 
+		//if (is_redir(data, x, ">>") == TRUE) 
 			redir_append_fd(data, x);
 	}
 	else if (is_redir(data, x, ">") == FALSE || is_redir(data, x, ">>") == FALSE)
@@ -312,6 +347,8 @@ void child_process(t_data *data, int x)
 	}
 	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
 		error(data, XEXEC, EXIT_FAILURE);
+	if (data->token->hd == 3)
+		unlink(ft_itoa(x));
 	return ;
 }
 
