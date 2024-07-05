@@ -44,21 +44,21 @@ typedef enum e_mode
 		SIG_CHILD = 2,
 }		t_mode;
 
-typedef enum e_token_type
-{
-	NO_TOKEN, // 0
-	PIPE_TOKEN, // | 1
-	HERE_DOC_TOKEN, // << 2 
-	REDIR_IN_TOKEN, // < 3
-	REDIR_OUT_TOKEN, // > 4 
-	REDIR_APP_OUT_TOKEN, // >> 5
-	STRING_TOKEN, // 6
-	DOLLAR_TOKEN, // $ 7
-	INFILE_TOKEN, // 8
-	OUTFILE_TOKEN, // 9
-	OUTFILE_TRUNC_TOKEN, // 10
-	DELIM_TOKEN, // 11
-}	t_token_type;
+// typedef enum e_token_type
+// {
+// 	NO_TOKEN, // 0
+// 	PIPE_TOKEN, // | 1
+// 	HERE_DOC_TOKEN, // << 2 
+// 	REDIR_IN_TOKEN, // < 3
+// 	REDIR_OUT_TOKEN, // > 4 
+// 	REDIR_APP_OUT_TOKEN, // >> 5
+// 	STRING_TOKEN, // 6
+// 	DOLLAR_TOKEN, // $ 7
+// 	INFILE_TOKEN, // 8
+// 	OUTFILE_TOKEN, // 9
+// 	OUTFILE_TRUNC_TOKEN, // 10
+// 	DELIM_TOKEN, // 11
+// }	t_token_type;
 
 typedef struct s_token
 {
@@ -68,14 +68,15 @@ typedef struct s_token
 	int				in;
 	int				out;
 	int				hd;
-	char			**cmd;
-	char			***redir;
+	char			**cmd; // free
+	char			***redir; // free 
+
 }					t_token;
 
 typedef struct s_env
 {
-	char			*key;
-	char			*value;
+	char			*key; // free 
+	char			*value; //free
 	struct s_env	*next;
 }					t_env;
 
@@ -83,19 +84,19 @@ typedef struct s_data
 {
 	int				parent_in;
 	int				parent_out;
-	int				*pid;
-	int				**pipe;
+	int				*pid; // free
+	int				**pipe; // free
 	int				status;
 	int				arr_len;
 	int				hd; //here_doc
-	char			***argv;
-	char			**paths;
-	char			**env_arr;
-	char			*path_cmd;
+	char			***argv; // free
+	char			**paths; // free
+	char			**env_arr; // free
+	char			*path_cmd; // free
 	int				cmd_count;
 	int				pipe_count;
-	char			*pwd;
-	char			*oldpwd;
+	char			*pwd; // free
+	char			*oldpwd; // free
 	t_env			*env;
 	t_token			*token;
 	struct s_parse	*par;
