@@ -63,8 +63,7 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 	(void)data; //uncomment when free all function is done
 	// free all function
 	if (code == XCMD)
-	{
-		ft_putstr_fd(var, 2);
+	{		ft_putstr_fd(var, 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd(ERR_CMD, 2);
 	}
