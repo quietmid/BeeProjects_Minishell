@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/03 19:22:00 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:34:52 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,21 @@
 # define ERR_MALLOC "malloc unexpectedly failed"
 # define ERR_PIPE "unexpected error while opening pipe"
 # define ERR_FORK "unexpected error while creating fork"
+# define ERR_EXEC "unexpected error while executing process"
+# define ERR_HD "unexpected error while creating heredoc temp file"
+
 # define ERR_CMD "command not found"
 # define ERR_NOFILE "No such file or directory"
 # define ERR_HOME "cd: HOME not set"
 # define ERR_OLDPWD "cd: OLDPWD not set"
+# define ERR_DIR "is a directory"
 
 typedef enum error
 {
     XMALLOC,
     XPIPE,
     XFORK,
+    XEXEC,
     XCMD,
     XNOFILE,
     XFD,
@@ -38,6 +43,8 @@ typedef enum error
     XCD,
     XCDHOME,
     XCDOLDPWD,
+    XDIR,
+    XHD,
 }   t_error;
 
 #endif

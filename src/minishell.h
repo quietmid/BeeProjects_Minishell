@@ -13,10 +13,12 @@
 # include <sys/wait.h> // waitpid
 # include <string.h>
 # include <sys/types.h>
+#include <sys/stat.h> //stat
 # include <signal.h>
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
 
 # define TRUE 1
 # define FALSE 0
@@ -65,8 +67,10 @@ typedef struct s_token
 	int				cmd_len;
 	int				in;
 	int				out;
+	int				hd;
 	char			**cmd; // free
 	char			***redir; // free 
+
 }					t_token;
 
 typedef struct s_env
@@ -160,7 +164,9 @@ void    ft_removequotes(char *str);
 void    ft_unquotes(t_token *token);
 
 //here_doc
-int    check_heredoc(t_data *data);
+int    check_heredoc(t_token *t);
+void    here_doc(t_data *data);
+
 
 //pipes
 void	create_pipes(t_data *data);
