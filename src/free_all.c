@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/05 23:06:08 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/08 16:28:27 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void free_data_all(t_data *data, int type)
 
 	i = -1;
 
+	if (type == 1)
+		printf("here\n");
 	if (data->token)
 		ft_free_token(data);
     if (data->pid)

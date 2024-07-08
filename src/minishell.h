@@ -86,6 +86,7 @@ typedef struct s_data
 	int				status;
 	int				arr_len;
 	int				hd; //here_doc
+	int				error_code;
 	char			***argv; // free
 	char			**paths; // free
 	char			**env_arr; // free
@@ -153,8 +154,10 @@ t_token	init_token(char *str, int i);
 // void check_expand(char *s, t_data *d);
 char *check_expand(char *s, t_data *d);
 char *expanding(t_data *data, char *str, int s);
+char *easy_expanding(t_data *data, char *str, int s);
 char *check_meta(char *s);
 char *add_quotes(char *s);
+void* expand_key(t_data *data, char *temp, int *found);
 
 // Remove Quotes
 void    ft_removequotes(char *str);
@@ -199,7 +202,7 @@ void	error_var(t_data *data, t_error code, char *var, int e);
 void 	error_cd(t_data *data, t_error code, char *var);
 
 //memory cleaning
-void 	free_data_all(t_data *data);
+void 	free_data_all(t_data *data, int type);
 void	ft_free_arr(char **arr);
 void	ft_free_tri(char ***tri);
 void	ft_free_token(t_data *s_data);
