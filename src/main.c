@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/03 15:54:12 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:24:14 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,14 @@ void	ft_minishell(t_data *data)
 	char	*line;
 	int		status;
 
-	signal_setup(SIG_PARENT);
 	while (1)
 	{
+		signal_setup(SIG_PARENT);
 		status = 1;
 		line = readline("\033[0;31mminishell-8.8$ \033[0m");
 		if (!line)
 			signal_d();
-		if (line)
+		if (line && *line != '\0')
 		{
 			add_history(line);
 			status = prompt_check(line);
@@ -140,13 +140,10 @@ void	ft_minishell(t_data *data)
 				status = parse_start(data, line);
 			if (status)
 			 	execute(data);
-			if (status == 0)
-				printf("you have triggered my trap card!\n");
 		}
-		else
-			free(line);
+		free(line);
+		ft_free_token(data);
 	}
-	free(line);
 }
 
 int main(int ac, char **ag, char **envp)
@@ -160,18 +157,8 @@ int main(int ac, char **ag, char **envp)
 		return (0);
 	env_setup(&data, envp);
 	ft_minishell(&data);
-	//int i;
-	//int x;
-	//i = 0;
-	//while (&data.token[i])
-	//{
-	//	x = 0;
-	//	while (&data.token[i].redir[x])
-	//		printf("redir: %s", data.token[i].redir[x++]);
-	//	i++;
-	//}
 	// start the program
 	// free all the shit
-	//ft_free_token(&data);
+	// free_data_all(&data);
 	return (0);
 }

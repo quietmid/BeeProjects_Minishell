@@ -6,54 +6,23 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:09:54 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/05 15:02:40 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/08 20:42:59 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *add_quotes(char *s)
+char *expand_help(char *str, char *temp, int s, int i, int found)
 {
-    char *new_s;
+    char *result;
 
-    //debug
-    printf("before str len: %ld\n", ft_strlen(s));
-    //debug
-    new_s = ft_safe_calloc(1, sizeof(char));
-    if (s[0] == 31)
-        s = ft_safe_substr(s, 1, ft_strlen(s) - 2);
-    //debug
-    printf("%s\n", s);
-    printf("after str len: %ld\n", ft_strlen(s));
-    //debug
-    new_s = ft_strjoin("\"", s);
-    new_s = ft_strjoin(new_s, "\"");
-    return (new_s);
-}
-
-char *check_meta(char *s)
-{
-    int i;
-    int len;
-    char *new_s;
-
-    len = ft_strlen(s);
-    printf("1st-str len: %d\n", len);
-    new_s = NULL;
-    i = 0;
-    while (s[i])
-    {
-        if (ft_ismeta(s[i]) || ft_isquote(s[i]))
-        {
-            new_s = add_quotes(s);
-            break ;
-        }
-        i++;
-    }
-    if (new_s)
-        return (new_s);
-    else
-        return (s);
+    result = ft_safe_malloc(sizeof(char) * (ft_strlen(str) - i + ft_strlen(temp)));
+    ft_strlcpy(result, str, s + 1);
+    if (found)
+        result = ft_strjoin(result, temp);
+    str = ft_safe_substr(str, i, ft_strlen(str) - i);
+    result = ft_strjoin(result, str);
+    return (result);
 }
 // takes in the string and s for the location of the $ in the string
 char *expanding(t_data *data, char *str, int s)
@@ -62,46 +31,69 @@ char *expanding(t_data *data, char *str, int s)
     char *temp;
     int found;
     size_t i;
-    t_env *e;
 
     result = 0;
     found = 0;
     i = s + 1;
-    while (!ft_isspace(str[i]) && !ft_isquote(str[i]) && str[i])
+    while (!ft_isspace(str[i]) && !ft_isquote(str[i]) && str[i] != '$' && str[i])
         i++;
     temp = ft_safe_substr(str, s + 1, i - s - 1);
-    e = data->env;
-    while (e)
-    {
-        if (ft_strcmp(temp, e->key) == 0)
-        {
-            temp = e->value;
-            found = 1;
-        }
-        e = e->next;
-    }
+    temp = (char *)expand_key(data, temp, &found);
     if (found == 1)
-    {
-        printf("value: %s\n", temp);
-        printf("value len: %ld\n", ft_strlen(temp));
         temp = check_meta(temp);
-    }
-    // IF found! need to check if temp has a special char
-    if (found == 0)
+    else
         temp = ft_strdup("");
-    if (s == 0 && found == 1)
+    if (s > 0)
+        result = expand_help(str, temp, s, i, found);
+    if (s == 0)
         return (temp);
-    else if (found == 1) // copy str
+    return (result);
+}
+
+char *expand_errcode(t_data *data, char *str, int s)
+{
+    char *result;
+    char *err_code;
+    int len;
+    t_data *tmp; //delete
+
+    tmp = data; // delete
+    len = ft_strlen(str);
+    if (len == 2)
+        result = ft_safe_substr("echo ", 0, 5);
+    else
     {
-        result = malloc(sizeof(char) * (ft_strlen(str) - i + ft_strlen(temp)));
+        result = ft_safe_malloc(sizeof(char) * (len - 2));
         ft_strlcpy(result, str, s + 1);
-        if (temp)
-            result = ft_strjoin(result, temp);
-        str = ft_safe_substr(str, i, ft_strlen(str) - i);
-        result = ft_strjoin(result, str);
     }
-    if (s == 0 && found == 0 && !result)
-        return (temp);
+    err_code = ft_itoa(2); //data->error_code
+    result = ft_strjoin(result, err_code);
+    if (len > (s + 2))
+        str = ft_safe_substr(str, s + 2, len - s - 2);
+    else
+        str = ft_strdup("");
+    result = ft_strjoin(result, str);
+    return (result);
+}
+
+char *easy_expanding(t_data *data, char *str, int s)
+{
+    char *result;
+    int len;
+    t_data *temp;
+
+    temp = data;
+    if (s == 0 && str[s + 1] != '?')
+        result = ft_strdup("");
+    len = ft_strlen(str);
+    result = ft_safe_malloc(sizeof(char) * (len - 2));
+    if (s > 0)
+        ft_strlcpy(result, str, s + 1);
+    if (len > (s + 2))
+        str = ft_safe_substr(str, s + 2, len - s - 2);
+    else
+        str = ft_strdup("");
+    result = ft_strjoin(result, str);
     return (result);
 }
 // takes in the token and check if there is a $ and if there are quotes
@@ -112,23 +104,25 @@ char *expanding(t_data *data, char *str, int s)
 char  *check_expand(char *s, t_data *d)
 {
     size_t i;
+    size_t len;
     char q; // " = 34 & ' = 39
 
     q = 0;
     i = 0;
-    while (i < ft_strlen(s))
+    len = ft_strlen(s);
+    while (i < len)
     {
         if (!q && ft_isquote(s[i]))
-             q = s[i];
+            q = s[i];
         else if (s[i] == q)
             q = 0;
-        // if (s[i] == 36 && s[i + 1] =='?' && (q == 34 || q == 0))
-        //     s = expand_errcode();
-        if ((s[i] == 36 && ((s[i + 1] == '_') || ft_isalpha(s[i + 1]) || ft_isalnum(s[i + 1])) && (q == 34 || q == 0)))
-        {
+        if (s[i] == 36 && s[i + 1] =='?' && (q == 34 || q == 0))
+            s = expand_errcode(d, s, i);
+        if ((s[i] == 36 && ((s[i + 1] == '_') || ft_isalpha(s[i + 1])) && (q == 34 || q == 0)))
             s = expanding(d, s, i);
-            printf("new string is: %s\n", s);
-        }
+        if ((s[i] == 36 && !ft_isspace(s[i + 1]) && (q == 34 || q == 0)))
+            s = easy_expanding(d, s, i);
+        len = ft_strlen(s);
         i++;
     }
     return (s);

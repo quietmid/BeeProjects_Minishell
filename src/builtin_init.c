@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/28 21:01:59 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:27:45 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,9 @@ void	exec_builtin(t_data *data)
 	else if (ft_strcmp(data->token[0].cmd[0], "env") == 0)
 		run_env(data);
 	else if (ft_strcmp(data->token[0].cmd[0], "exit") == 0)
+	{
+		free_data_all(data, 0);
 		exit(0);
+	}
+		//exit(0);
 }

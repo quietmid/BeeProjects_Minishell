@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/05 19:56:41 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/05 19:20:56 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void    here_doc(t_data *data)
     t_token *t;
 
     t = data->token;
+
     i = 0;
     while (i < data->cmd_count)
     {

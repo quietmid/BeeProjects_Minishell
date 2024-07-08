@@ -1,26 +1,6 @@
 
 #include "minishell.h"
 
-
-
-/*free array of strings*/
-
-void	ft_free_arr(char **arr)
-{
-	int	x;
-
-	x = 0;
-	if (!arr || !arr[x])
-		return ;
-	while (arr[x])
-	{
-		free(arr[x]);
-		x++;
-	}
-	free(arr);
-	return ;
-}
-
 /*
 * calculate len of array
 */

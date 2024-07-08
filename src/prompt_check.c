@@ -30,10 +30,10 @@ char syntax_check(char *line)
 
     len = ft_strlen(line) - 1;
     i = 0;
+    if (len == -1)
+        return (0);
     if (line[0] == '|')
         return (line[0]);
-    if (ft_ismeta(line[len]) && line[len] != 36)
-        return (line[len]);
     while (line[i])
     {
         if (line[i] == '|' && line[i + 1] == '|')
