@@ -168,6 +168,7 @@ char **prompt_prep(char *line, int opt)
 		error_msg("prompt split failed");
 	return (result);
 }
+
 // // // debug
 // static void print_redir_argv(char ***redir)
 // {
@@ -183,7 +184,7 @@ char **prompt_prep(char *line, int opt)
 // 		i++;
 //     }
 // }
-// // debug
+
 // static void print_cmd_argv(char **redir)
 // {
 // 	int i;
@@ -200,6 +201,7 @@ t_token	init_token(char *str, int i)
 	t_token t;
 	int	x;
 
+	t.hd = 0;
 	t.idx = i;
 	t.hd = 0;
 	t.redir_len = calcu_redir(str);
@@ -248,8 +250,10 @@ int	parse_start(t_data *data, char *line)
 		i++;
 	}
 	ft_free_arr(input);
-	// if (data->token != NULL)
-	// 	data->hd = check_heredoc(data);
+	if (data->token != NULL)
+	{
+		here_doc(data);
+	}
 	// debug
 	// printf("here_doc in token[%d]\n", data->hd);
 	// debug
