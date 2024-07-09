@@ -15,16 +15,16 @@ void	error_arr_free(char *msg, char **str)
 	exit (EXIT_FAILURE);
 }
 
-void	print_errors(char *errmsg, char *syntax)
+void	print_errors(char *errmsg, char *str, char c)
 {
-	ft_putstr_fd("minishell-8.8$ ", 2);
 	ft_putstr_fd(errmsg, 2);
-	if (syntax)
-	{
-		ft_putstr_fd(syntax, 2);
-		ft_putstr_fd("'", 2);
-	}
-	ft_putstr_fd("\n", 2);
+	if (c)
+		ft_putchar_fd(c, 2);
+	else
+		ft_putstr_fd(" newline", 2);
+	if (str)
+		ft_putstr_fd(str, 2);
+	ft_putstr_fd(" \"\n", 2);
 }
 
 void	error(t_data *data, t_error code, int e)
@@ -44,7 +44,7 @@ void	error(t_data *data, t_error code, int e)
 	exit (e);
 }
 
-void error_cd(t_data *data, t_error code, char *var)
+void error_cd(t_data *data, t_error code, char *var, char c)
 {
 	(void)data;
 	ft_putstr_fd("minishell-8.8$: ", 2);
@@ -57,6 +57,8 @@ void error_cd(t_data *data, t_error code, char *var)
 		ft_putendl_fd(ERR_HOME, 2);
 	else if (code == XCDOLDPWD)
 		ft_putendl_fd(ERR_OLDPWD, 2);
+	else if (code == XSYNTAX)
+		print_errors(ERR_SYNTAX, NULL, c);
 }
 
 void	error_var(t_data *data, t_error code, char *var, int e)

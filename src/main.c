@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/08 17:24:14 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/09 14:22:26 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	ft_minishell(t_data *data)
 		if (line && *line != '\0')
 		{
 			add_history(line);
-			status = prompt_check(line);
+			status = prompt_check(data, line);
 			if (status)
 				status = parse_start(data, line);
 			if (status)
