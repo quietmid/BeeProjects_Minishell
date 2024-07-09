@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/05 21:37:20 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/09 19:45:23 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,20 @@
 /*
 *  create a linked list node (splitting the key and value with '=')
 */
-t_env	*create_envnode(char *envp)
+t_env	*create_envnode(t_data *data, char *envp)
 {
 	t_env	*node;
 	char	**tmp;
 
 	tmp = ft_split(envp, '=');
-	// if (!tmp)
-	// 	"malloc fail"
+	if (!tmp)
+		error(data, XMALLOC, EXIT_FAILURE);
 	node = (void *)malloc(sizeof(t_env));
-	if (node == NULL)
-		return (NULL);
+	if (!node)
+		error(data, XMALLOC, EXIT_FAILURE);
 	node->key = tmp[0];
 	node->value = tmp[1];
 	node->next = NULL;
-	free(tmp);
 	return (node);
 }
 
@@ -93,7 +92,7 @@ void	env_setup(t_data *data, char **envp)
 	x = 0;
 	while (envp[x])
 	{
-		index = create_envnode(envp[x]);
+		index = create_envnode(data, envp[x]);
 		if (head == NULL)
 			head = index;
 		else
