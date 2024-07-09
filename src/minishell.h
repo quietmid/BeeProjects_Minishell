@@ -146,6 +146,7 @@ void	pipe_replace(char *str);
 //int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);
 int		pipe_scans(char *line);
+char quote_finder(char c, char q);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
 // t_token assign_token(char *input, int i);

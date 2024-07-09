@@ -24,12 +24,10 @@ char	quotes_check(char *line)
 char syntax_check(char *line)
 {
     int i;
-    int len;
     char c;
 
-    len = ft_strlen(line) - 1;
     i = 0;
-    if (len == -1)
+    if ((ft_strlen(line) - 1) < 0)
         return (0);
     if (line[0] == '|')
         return (line[0]);
