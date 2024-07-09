@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/09 17:02:29 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/09 20:16:45 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**prepare_paths(t_data *data, t_env *env)
 	if (!paths)
 		error(data, XMALLOC, EXIT_FAILURE);
 	res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
-	if (!paths)
+	if (!res)
 		error(data, XMALLOC, EXIT_FAILURE);
 	x = 0;
 	while (paths[x])
@@ -35,11 +35,9 @@ char	**prepare_paths(t_data *data, t_env *env)
 		if (!tmp)
 			error(data, XMALLOC, EXIT_FAILURE);
 		res[x] = tmp;
-		free(tmp);
 		x++;
 	}
 	res[x] = NULL;
-	ft_free_arr(paths);
 	return (res);
 }
 
@@ -70,9 +68,8 @@ char	*find_path_cmd(t_data *data, int i)
 			}
 			free(cmd);
 			x++;
-		}
+		} 
 	}
-	//ft_free_arr(tmp);
 	return (NULL);
 }
 
@@ -99,7 +96,7 @@ void	execute(t_data	*data)
 			waitpid(data->pid[x], &data->status, 0);
 			x++;
 		}
-		dprintf(1, "status: %d", data->status);
+		dprintf(1, "status: %d\n", data->status);
 	}
 	return ;
 }
@@ -145,8 +142,9 @@ void	ft_minishell(t_data *data)
 			if (status)
 			 	execute(data);
 		}
-		free(line);
-		ft_free_token(data);
+		else 
+			free(line);
+		//ft_free_token(data);
 	}
 }
 
@@ -163,6 +161,6 @@ int main(int ac, char **ag, char **envp)
 	ft_minishell(&data);
 	// start the program
 	// free all the shit
-	// free_data_all(&data);
+	//free_data_all(&data, 1);
 	return (0);
 }
