@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/08 17:24:14 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/09 17:02:29 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ char	**prepare_paths(t_data *data, t_env *env)
 		if (!tmp)
 			error(data, XMALLOC, EXIT_FAILURE);
 		res[x] = tmp;
+		free(tmp);
 		x++;
 	}
 	res[x] = NULL;
+	ft_free_arr(paths);
 	return (res);
 }
 
@@ -70,6 +72,7 @@ char	*find_path_cmd(t_data *data, int i)
 			x++;
 		}
 	}
+	//ft_free_arr(tmp);
 	return (NULL);
 }
 
@@ -96,6 +99,7 @@ void	execute(t_data	*data)
 			waitpid(data->pid[x], &data->status, 0);
 			x++;
 		}
+		dprintf(1, "status: %d", data->status);
 	}
 	return ;
 }

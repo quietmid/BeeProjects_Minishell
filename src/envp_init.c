@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/05 21:37:20 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/09 17:05:23 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_env	*create_envnode(char *envp)
 		return (NULL);
 	node->key = tmp[0];
 	node->value = tmp[1];
-	node->next = NULL;
-	free(tmp);
+	node->next = NULL; 
+	ft_free_arr(tmp); // free?
 	return (node);
 }
 

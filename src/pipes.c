@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/05 20:48:51 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:58:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,7 +347,9 @@ void child_process(t_data *data, int x)
 	}
 	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
 		error(data, XEXEC, EXIT_FAILURE);
-	if (data->token->hd == 3)
+	free(path);
+	free_data_all(data, 1);
+	if (data->token[x].hd == 3)
 		unlink(ft_itoa(x));
 	return ;
 }
@@ -378,7 +380,7 @@ void	create_forks(t_data *data)
 			child_process(data, x);
 		x++;
 	}
-
+	return ;
 }
 
 void	create_pipes(t_data *data)

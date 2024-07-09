@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/08 16:28:27 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/09 17:05:49 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void free_data_all(t_data *data, int type)
 		free(data->pwd);
 	if (data->oldpwd)
 		free(data->oldpwd);
-	if (data->env)
-		ft_free_env(data->env);
+	if (data->env_arr)
+		ft_free_arr(data->env_arr);
+	//if (data->env)
+		//ft_free_env(data->env);
 }
