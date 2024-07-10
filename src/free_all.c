@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/09 19:39:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:04:18 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,54 @@ void	ft_free_token(t_data *data)
 	}
 }
 
-void	ft_free_env(t_env *env)
+void	ft_single_token(t_data *data)
 {
-	t_env *tmp;
+	int i;
 
-	printf("free env\n");
-	while (env)
+	i = 0;
+	while (i < data->cmd_count)
 	{
-		free(env->key);
-		free(env->value);
-		tmp = env;
-		env = env->next;
-		free(tmp);
-		tmp = NULL;
+		if (data->token[i].cmd)
+			ft_free_arr(data->token[i].cmd);
+		if (data->token[i].redir)
+			ft_free_tri(data->token[i].redir);
+		free(&data->token[i]);
+		i++;
 	}
 }
+
+void	ft_envclear(t_env **env)
+{
+	t_env	*current;
+
+	if (!env)
+		return ;
+	while (*env)
+	{
+		current = (*env)->next;
+		free((*env)->key);
+		free((*env)->value);
+		free(*env);
+		*env = current;
+	}
+	*env = NULL;
+}
+
+// void	ft_free_env(t_env *env)
+// {
+// 	t_env *tmp;
+
+// 	printf("free env\n");
+// 	while (env)
+// 	{
+// 		free(env->key);
+// 		free(env->value);
+// 		tmp = env;
+// 		env = env->next;
+// 		free(tmp);
+// 		tmp = NULL;
+// 	}
+// }
 
 void free_data_all(t_data *data, int type)
 {
@@ -93,8 +126,6 @@ void free_data_all(t_data *data, int type)
         while (++i < data->pipe_count)
 			free(data->pipe[i]);
 	}
-	// if (data->argv)
-	// 	ft_free_tri(data->argv);
 	if (data->paths)
 		ft_free_arr(data->paths);
 	if (data->path_cmd)
@@ -106,10 +137,12 @@ void free_data_all(t_data *data, int type)
 	if (data->env_arr)
 		ft_free_arr(data->env_arr);
 	if (data->env)
-		ft_free_env(data->env);
+		ft_envclear(&data->env);
+	dprintf(1, "ENV : %d", ft_envsize(data->env));
 }
 
 // void free_all(t_data *data)
 // {
-	
+// 	if (data->token)
+// 		ft_free_token(data);
 // }

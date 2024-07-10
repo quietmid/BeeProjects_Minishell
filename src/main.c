@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/09 20:16:45 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:59:08 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,12 @@ void	ft_minishell(t_data *data)
 			if (status)
 				status = parse_start(data, line);
 			if (status)
+			{
 			 	execute(data);
+			}
 		}
-		else 
-			free(line);
-		//ft_free_token(data);
+		ft_free_token(data);			
+		free(line);
 	}
 }
 

@@ -90,7 +90,6 @@ typedef struct s_data
 	int				arr_len;
 	int				hd; //here_doc
 	int				error_code;
-	//char			***argv; // free
 	char			**paths; // free
 	char			**env_arr; // free
 	char			*path_cmd; // free
