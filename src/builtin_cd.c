@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/10 20:32:47 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:35:54 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,9 @@ char	*check_address(t_data *data, char *add)
 	
 // }
 
+/*
+* execute builtin command cd version 2
+*/
 void	run_cd(t_data *data)
 {
 	char	*add;
