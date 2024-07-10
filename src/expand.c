@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:09:54 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/08 20:42:59 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/10 15:58:01 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char *expand_help(char *str, char *temp, int s, int i, int found)
     result = ft_strjoin(result, str);
     return (result);
 }
+
 // takes in the string and s for the location of the $ in the string
 char *expanding(t_data *data, char *str, int s)
 {
@@ -127,4 +128,3 @@ char  *check_expand(char *s, t_data *d)
     }
     return (s);
 }
-
