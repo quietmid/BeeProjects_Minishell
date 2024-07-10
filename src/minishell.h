@@ -72,7 +72,7 @@ typedef struct s_data
 	int				arr_len;
 	int				hd; //here_doc
 	int				error_code;
-	char			***argv; // free
+	//char			***argv; // free
 	char			**paths; // free
 	char			**env_arr; // free
 	char			*path_cmd; // free
@@ -103,7 +103,7 @@ t_env	*search_env(t_data *data, char *str);
 void	env_to_arr(t_data *data);
 int		ft_envsize(t_env *lst);
 void	update_data(t_data *data);
-t_env	*create_envnode(char *envp);
+t_env	*create_envnode(t_data *data, char *envp);
 
 // signals
 void	heredoc_handler(int sig);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/08 16:28:27 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/09 19:39:02 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_free_arr(char **arr)
 		x++;
 	}
 	free(arr);
+	arr = NULL;
 }
 void	ft_free_token(t_data *data)
 {
@@ -71,6 +72,7 @@ void	ft_free_env(t_env *env)
 		tmp = env;
 		env = env->next;
 		free(tmp);
+		tmp = NULL;
 	}
 }
 
@@ -91,8 +93,8 @@ void free_data_all(t_data *data, int type)
         while (++i < data->pipe_count)
 			free(data->pipe[i]);
 	}
-	if (data->argv)
-		ft_free_tri(data->argv);
+	// if (data->argv)
+	// 	ft_free_tri(data->argv);
 	if (data->paths)
 		ft_free_arr(data->paths);
 	if (data->path_cmd)
@@ -101,6 +103,13 @@ void free_data_all(t_data *data, int type)
 		free(data->pwd);
 	if (data->oldpwd)
 		free(data->oldpwd);
+	if (data->env_arr)
+		ft_free_arr(data->env_arr);
 	if (data->env)
 		ft_free_env(data->env);
 }
+
+// void free_all(t_data *data)
+// {
+	
+// }

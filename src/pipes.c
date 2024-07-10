@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/05 20:48:51 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/09 19:24:44 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,29 +276,6 @@ void	redirect(t_data *data, int x)
 	close_pipes(data);
 	return ;
 }
-// void check_cmd(t_data *data, int x)
-// {
-// 	// if (data->token[x].cmd[0] == NULL || data->token[x].cmd[0][0] == '\0')
-// 	// {
-// 	// 	error_var(data, XCMD, data->token[x].cmd[0], 127);
-// 	// }
-// 	// if (cmds[0][0] == '/')
-// 	// {
-// 	// 	if (access(cmds[0], X_OK) != 0)
-// 	// 	{
-// 	// 		error_var(data, XCMD, data->token[x].cmd[0], 127);
-// 	// 	}
-// 	// }
-// 	if (cmds[0][0] == '.')
-// 	{
-// 		if (access(cmds[0], X_OK) != 0)
-// 		{
-// 			error(pipex, cmd_err, cmds[0], 126);
-// 		}
-// 		if (open(cmds[0], O_RDONLY | O_DIRECTORY))
-// 			error(pipex, dir_err, cmds[0], 126);
-// 	}
-// }
 
 int	is_directory(char *cmd)
 {
@@ -316,10 +293,9 @@ void child_process(t_data *data, int x)
 {
 	char *path;
 	
+	env_to_arr(data);
 	if (data->cmd_count > 1 || data->token[x].redir)
 		redirect(data, x);
-	env_to_arr(data);
-	//check_cmd(data, x);
 	if (data->token[x].cmd[0][0] == '/')
 	{
 		path = data->token[x].cmd[0];
@@ -339,15 +315,20 @@ void child_process(t_data *data, int x)
 		{
 			data->path_cmd = find_path_cmd(data, x);
 			if (!data->path_cmd)
+			{
 				error_var(data, XCMD, data->token[x].cmd[0], 127);
+			}
 			path = data->path_cmd;
 		}
 		else
+		{
 			error_var(data, XNOFILE, data->token[x].cmd[0], 127);
+		}
 	}
 	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
 		error(data, XEXEC, EXIT_FAILURE);
-	if (data->token->hd == 3)
+	free(data->path_cmd);
+	if (data->token[x].hd == 3)
 		unlink(ft_itoa(x));
 	return ;
 }
@@ -375,10 +356,12 @@ void	create_forks(t_data *data)
 			error(data, XFORK, EXIT_FAILURE);
 		}
 		else if (data->pid[x] == 0)
+		{
 			child_process(data, x);
+		}
 		x++;
 	}
-
+	return ;
 }
 
 void	create_pipes(t_data *data)
