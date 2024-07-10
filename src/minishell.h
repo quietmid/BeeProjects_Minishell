@@ -19,10 +19,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
 # define TRUE 1
 # define FALSE 0
-
 
 //struct
 
@@ -43,22 +41,6 @@ typedef enum e_mode
 		SIG_HEREDOC = 1,
 		SIG_CHILD = 2,
 }		t_mode;
-
-// typedef enum e_token_type
-// {
-// 	NO_TOKEN, // 0
-// 	PIPE_TOKEN, // | 1
-// 	HERE_DOC_TOKEN, // << 2 
-// 	REDIR_IN_TOKEN, // < 3
-// 	REDIR_OUT_TOKEN, // > 4 
-// 	REDIR_APP_OUT_TOKEN, // >> 5
-// 	STRING_TOKEN, // 6
-// 	DOLLAR_TOKEN, // $ 7
-// 	INFILE_TOKEN, // 8
-// 	OUTFILE_TOKEN, // 9
-// 	OUTFILE_TRUNC_TOKEN, // 10
-// 	DELIM_TOKEN, // 11
-// }	t_token_type;
 
 typedef struct s_token
 {
@@ -135,27 +117,17 @@ char 	syntax_check(char *line);
 char	quotes_check(char *line);
 
 // Parsing
-// void	parse(t_data *data, const char *line);
 void	space_replace(char *str);
 void	pipe_replace(char *str);
-//void	assign_token(char *input, t_data *data, int idx);
-// void	array_join(t_data *data);
-//void	array_join(t_data *data, t_parse *u);
-// void	init_token(t_data *data, char **str);
-//void	assign_token(char *input, t_data *data, int i);
-//int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);
 int		pipe_scans(char *line);
 char quote_finder(char c, char q);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
-// t_token assign_token(char *input, int i);
 void	assign_token(char *input, t_token *token);
 t_token	init_token(char *str, int i);
 
 //expand
-// void check_expand(t_token *token, t_data *data);
-// void check_expand(char *s, t_data *d);
 char *check_expand(char *s, t_data *d);
 char *expanding(t_data *data, char *str, int s);
 char *easy_expanding(char *str, int s);
