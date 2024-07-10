@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 int	calcu_redir(char *str)
 {
 	int i;
@@ -196,7 +195,8 @@ t_token	init_token(char *str, int i)
 	t.hd = 0;
 	t.idx = i;
 	t.redir_len = calcu_redir(str);
-	t.redir = (char ***)ft_safe_malloc((t.redir_len + 1) * sizeof(char **));
+	if (t.redir_len > 0)
+		t.redir = (char ***)ft_safe_malloc((t.redir_len + 1) * sizeof(char **));
 	x = -1;
 	while (++x < t.redir_len)
 		t.redir[x] = (char **)ft_safe_calloc(3, sizeof(char *));
