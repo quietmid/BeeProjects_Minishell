@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 16:26:02 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/11 00:28:02 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void    ft_hd(t_data *data, int i, int j)
     char *limiter;
     char *hdfile;
     
-    printf("went to hd");
+    printf("went to hd\n");
     hdfile = ft_itoa(i);
     if (!hdfile)
         error(data, XMALLOC, EXIT_FAILURE);
@@ -47,14 +47,22 @@ void    ft_hd(t_data *data, int i, int j)
     hd = open(hdfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (hd < 0)
 		error(data, XHD, EXIT_FAILURE);
+    signal_setup(SIG_HEREDOC); // just added
     while (1)
 	{
-        signal_setup(SIG_HEREDOC); // just added
 		line = readline("> ");
-		if (ft_strcmp(line, limiter))
-            ft_putendl_fd(line, hd);
-        else if (!ft_strcmp(line, limiter))
-            break;
+        if (!line)
+        {
+            close(hd);
+            break ;
+        }
+        if (line)
+        {
+		    if (ft_strcmp(line, limiter))
+                ft_putendl_fd(line, hd);
+            else if (!ft_strcmp(line, limiter))
+                break;
+        }
 		free(line);
 	}
     data->token[i].hd = hd;

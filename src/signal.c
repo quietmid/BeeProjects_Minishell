@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 16:13:32 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/11 00:32:21 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	heredoc_handler(int sig)
 	if (sig == SIGINT)
 	{
 		write (1, "\n", 1);
-		//close (); we need to close whatever we have been writing into
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		close (0); // we need to close whatever we have been writing into
 	}
 }
 /*
