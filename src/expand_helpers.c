@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 20:41:01 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/08 20:42:54 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/09 15:14:18 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char *add_quotes(char *s)
     new_s = ft_safe_calloc(1, sizeof(char));
     if (s[0] == 31)
         s = ft_safe_substr(s, 1, ft_strlen(s) - 2);
-
     new_s = ft_strjoin("\"", s);
     new_s = ft_strjoin(new_s, "\"");
     return (new_s);
@@ -28,10 +27,8 @@ char *add_quotes(char *s)
 char *check_meta(char *s)
 {
     int i;
-    int len;
     char *new_s;
-
-    len = ft_strlen(s);
+    
     new_s = NULL;
     i = 0;
     while (s[i])

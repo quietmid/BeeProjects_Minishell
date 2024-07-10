@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	quotes_check(char *line)
+char	quotes_check(char *line)
 {
 	char q;
 
@@ -14,9 +14,8 @@ int	quotes_check(char *line)
 		line++;
 	}
 	if (q == 0)
-		return (1);
-	print_errors(ERR_QUOTES, &q); // should print out the correct error msg plus the quote that's missing
-	return (0);
+		return (0);
+	return (q);
 }
 
 // add the error function that prints the char that's the syntax issue
@@ -25,12 +24,10 @@ int	quotes_check(char *line)
 char syntax_check(char *line)
 {
     int i;
-    int len;
     char c;
 
-    len = ft_strlen(line) - 1;
     i = 0;
-    if (len == -1)
+    if ((ft_strlen(line) - 1) < 0)
         return (0);
     if (line[0] == '|')
         return (line[0]);
@@ -53,20 +50,22 @@ char syntax_check(char *line)
     return (0);
 }
 
-int prompt_check(char *line)
+int prompt_check(t_data *data, char *line)
 {
     char c;
 
     c = 0;
-    if (!quotes_check(line))
+    c = quotes_check(line);
+    if (c)
     {
-        printf("im here quotes check\n");
+        error_cd(data, XSYNTAX, NULL, c);
         return (0);
     }
+    c = 0;
     c = syntax_check(line);
-    if (c != 0)
+    if (c)
     {
-        printf("im here syntax check\n");
+        error_cd(data, XSYNTAX, NULL, c);
         return (0);
     }
     return (1);

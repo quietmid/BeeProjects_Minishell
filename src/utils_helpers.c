@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:00:15 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/04 10:47:51 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/09 20:14:55 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,4 @@ char *find_end(char *str)
 	while (*str != '\0' && !ft_ismeta(*str) && !ft_isspace(*str))
 		str++;
 	return (str);
-}
-// 34 = " , 39 = '
-int	ft_isquote(char c)
-{
-	if (c == 34 || c == 39)
-		return (1);
-	return (0);
 }
