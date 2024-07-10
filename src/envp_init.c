@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/10 15:37:11 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:54:21 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_env	*create_envnode(t_data *data, char *envp)
 	if (!node->key)
 		error(data, XMALLOC, EXIT_FAILURE);
 	node->value = ft_strdup(tmp[1]);
-	if (!node->key)
+	if (!node->value)
 		error(data, XMALLOC, EXIT_FAILURE);
 	node->next = NULL;
 	ft_free_arr(tmp);
@@ -54,13 +54,11 @@ void	env_to_arr(t_data *data)
 	while (env != NULL)
 	{
 		tmp = ft_strjoin(env->key, "=");
-		// if (!tmp)
-		// 	malloc error
-		//free(env->key);
+		if (!tmp)
+			error(data, XMALLOC, EXIT_FAILURE);
 		res[x] = ft_strjoin(tmp, env->value);
-		// if (!res[x])
-		// 	malloc error
-		//free(env->value);
+		if (!res[x])
+			error(data, XMALLOC, EXIT_FAILURE);
 		free(tmp);
 		x++;
 		env = env->next;
@@ -75,14 +73,24 @@ void	env_to_arr(t_data *data)
 void	set_wd(t_data *data)
 {
 	t_env	*tmp;
+	char *add;
 	
 	tmp = NULL;
+	add = NULL;
 	tmp = search_env(data, "PWD");
 	if (tmp)
-		data->pwd = ft_strdup(tmp->value);
+	{
+		add = tmp->value;
+		data->pwd = add;
+	}
+	tmp = NULL;
+	add = NULL;
 	tmp = search_env(data, "OLDPWD");
 	if (tmp)
-		data->oldpwd = ft_strdup(tmp->value);
+	{
+		add = tmp->value;
+		data->oldpwd = add;
+	}
 }
 
 /* 

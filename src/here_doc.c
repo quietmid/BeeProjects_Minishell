@@ -6,29 +6,11 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 15:53:09 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:14:05 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// char *heredocfile(t_data *data, int i)
-// {
-//     char *file;
-//     char *tmp;
-//     char *tmp2;
-
-//     tmp = ft_itoa(i);
-//     if (!tmp)
-//         error(data, XMALLOC, EXIT_FAILURE);
-//     tmp2 = ft_strjoin(".", tmp);
-//     if (!tmp2)
-//         error(data, XMALLOC, EXIT_FAILURE);
-//     file = ft_strdup(tmp2);
-//     free(tmp);
-//     free(tmp2);
-//     return (file);
-// }
 
 /* check for here_doc if it returns -1, no here_doc if its >= 0 then it means here doc found*/
 int    check_heredoc(t_token *t)
@@ -56,7 +38,7 @@ void    ft_hd(t_data *data, int i, int j)
     char *line;
     char *limiter;
     char *hdfile;
-    
+ 
     hdfile = ft_itoa(i);
     if (!hdfile)
         error(data, XMALLOC, EXIT_FAILURE);
@@ -73,6 +55,7 @@ void    ft_hd(t_data *data, int i, int j)
             break;
 		free(line);
 	}
+    free(hdfile);
     data->token[i].hd = hd;
 }
 

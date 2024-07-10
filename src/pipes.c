@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/09 19:24:44 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:48:13 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,6 +292,7 @@ int	is_directory(char *cmd)
 void child_process(t_data *data, int x)
 {
 	char *path;
+	char *tmp;
 	
 	env_to_arr(data);
 	if (data->cmd_count > 1 || data->token[x].redir)
@@ -329,7 +330,12 @@ void child_process(t_data *data, int x)
 		error(data, XEXEC, EXIT_FAILURE);
 	free(data->path_cmd);
 	if (data->token[x].hd == 3)
-		unlink(ft_itoa(x));
+	{
+		tmp = ft_itoa(x);
+		unlink(tmp);
+		free(tmp);
+	}
+	free_single_token(data, x);
 	return ;
 }
 
@@ -361,7 +367,6 @@ void	create_forks(t_data *data)
 		}
 		x++;
 	}
-	return ;
 }
 
 void	create_pipes(t_data *data)
