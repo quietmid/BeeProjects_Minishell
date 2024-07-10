@@ -29,8 +29,9 @@ void	print_errors(char *errmsg, char *str, char c)
 
 void	error(t_data *data, t_error code, int e)
 {
-	(void)data; //uncomment when free all function is done
+	//(void)data; //uncomment when free all function is done
 	// free all function
+	(void)data;
 	if (code == XMALLOC)
 		ft_putstr_fd(ERR_MALLOC, 2);
 	if (code == XPIPE)
@@ -42,6 +43,7 @@ void	error(t_data *data, t_error code, int e)
 	if (code == XHD)
 		ft_putstr_fd(ERR_HD, 2);
 	exit (e);
+
 }
 
 void error_cd(t_data *data, t_error code, char *var, char c)
@@ -63,10 +65,11 @@ void error_cd(t_data *data, t_error code, char *var, char c)
 
 void	error_var(t_data *data, t_error code, char *var, int e)
 {
-	(void)data; //uncomment when free all function is done
-	// free all function
+	//(void)data; //uncomment when free all function is done
+	(void)data;
 	if (code == XCMD)
-	{		ft_putstr_fd(var, 2);
+	{		
+		ft_putstr_fd(var, 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd(ERR_CMD, 2);
 	}
@@ -86,5 +89,6 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 		else
 			perror(var);
 	}
+	// free_all(data);
 	exit (e);
 }

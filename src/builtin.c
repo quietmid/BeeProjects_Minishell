@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/04 21:16:16 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/09 19:46:38 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	run_export2(t_data *data, int x)
 	t_env	*new;
 
 	node = data->env;
-	new = create_envnode(data->token->cmd[x]);
+	new = create_envnode(data, data->token->cmd[x]);
 	if (node == NULL)
 		node = new;
 	else
@@ -183,7 +183,7 @@ void	run_unset(t_data *data)
 			prev->next = tmp->next;
 		free(tmp->key);
 		free(tmp->value);
-		free (tmp);
+		free(tmp);
 	}
 // 	else
 // 		"error invalid flag"
