@@ -62,14 +62,3 @@ void    ft_unquotes(t_token *t)
         }
     }
 }
-
-// int main()
-// {
-//     char str[] = "\"happy 'wrold' tree\"";
-    
-//     printf("here\n");
-//     // str = ft_removequotes(str);
-// 	ft_removequotes(str);
-//     printf("%s\n", str);
-//     return (0);
-// }

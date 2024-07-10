@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/05 21:59:08 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/10 16:13:32 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	signal_setup(int mode)
 	}
 	else if (mode == SIG_HEREDOC)
 	{
-		signal(SIGINT, sig_handler);
+		signal(SIGINT, heredoc_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_CHILD)
