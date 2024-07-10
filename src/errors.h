@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/05 18:34:52 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:47:49 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 // need to check the right error_msg
 # define ERR_QUOTES "syntax error unexpected EOF while look for matching ` "
-# define ERR_SYNTAX "syntax error parse error near "
-# define ERR_NL "syntax error near unexpected token 'newline'"
+# define ERR_SYNTAX "syntax near unexpected token ` "
 
 # define ERR_MALLOC "malloc unexpectedly failed"
 # define ERR_PIPE "unexpected error while opening pipe"
@@ -32,6 +31,7 @@
 
 typedef enum error
 {
+    XSYNTAX,
     XMALLOC,
     XPIPE,
     XFORK,

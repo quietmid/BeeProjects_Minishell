@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:32:36 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 15:59:14 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/10 16:00:53 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,13 @@ int	pipe_scans(char *line)
 	}
 	i += 1;
 	return (i);
+}
+
+char quote_finder(char c, char q)
+{
+	if (!q && ft_isquote(c))
+		return (c);
+	else if (c == q)
+		return (0);
+	return (q);
 }

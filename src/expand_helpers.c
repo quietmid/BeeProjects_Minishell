@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/08 20:41:01 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 15:57:36 by jlu              ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/07/10 16:00:29 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -27,10 +28,8 @@ char *add_quotes(char *s)
 char *check_meta(char *s)
 {
     int i;
-    int len;
     char *new_s;
-
-    len = ft_strlen(s);
+    
     new_s = NULL;
     i = 0;
     while (s[i])
