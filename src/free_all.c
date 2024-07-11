@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 20:29:37 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 21:37:19 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,35 +139,36 @@ void	ft_envclear(t_env **env)
 
 void free_data_all(t_data *data, int type)
 {
-	int i;
+	(void)type;
+	// int i;
 
-	i = -1;
+	// i = -1;
 
-	if (type == 1)
-		printf("here\n");
-	if (data->token)
-	 	ft_free_token(data);
-    // if (data->pid)
-    //     free(data->pid);
-    if (data->pipe)
-	{
-        while (++i < data->pipe_count)
-			free(data->pipe[i]);
-	}
-	if (data->paths)
-		ft_free_arr(data->paths);
-	if (data->path_cmd)
-		free(data->path_cmd);
-	if (data->env_arr)
-		ft_free_arr(data->env_arr);
-	dprintf(1, "bENV : %d\n", ft_envsize(data->env));
-	if (ft_envsize(data->env) != 0)
-	 	ft_envclear(&data->env);
-	dprintf(1, "aENV : %d\n", ft_envsize(data->env));
-// 	if (data->pwd)
-// 		free(data->pwd);
-// 	if (data->oldpwd)
-// 	 	free(data->oldpwd);
+	// if (type == 1)
+	// 	printf("here\n");
+	// if (data->token)
+	//  	ft_free_token(data);
+    // // if (data->pid)
+    // //     free(data->pid);
+    // if (data->pipe)
+	// {
+    //     while (++i < data->pipe_count)
+	// 		free(data->pipe[i]);
+	// }
+	// if (data->paths)
+	// 	ft_free_arr(data->paths);
+	// if (data->path_cmd)
+	// 	free(data->path_cmd);
+	// if (data->env_arr)
+	// 	ft_free_arr(data->env_arr);
+	// dprintf(1, "bENV : %d\n", ft_envsize(data->env));
+	// if (ft_envsize(data->env) != 0)
+	//  	ft_envclear(&data->env);
+	// dprintf(1, "aENV : %d\n", ft_envsize(data->env));
+	if (data->pwd)
+		free(data->pwd);
+	if (data->oldpwd)
+	 	free(data->oldpwd);
 }
 
 // void free_all(t_data *data)
