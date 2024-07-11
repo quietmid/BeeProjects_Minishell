@@ -23,10 +23,7 @@ int	calcu_redir(char *str)
 	num_redir = 0;
 	while (str[i])
 	{
-	    if (!q && ft_isquote(str[i]))
-             q = str[i];
-        else if (str[i] == q)
-            q = 0;
+		q = quote_finder(str[i], q);
 		if (ft_isredir(str[i]) && str[i + 1] == str[i] && !q)
 		{
 			num_redir += 1;
@@ -69,10 +66,7 @@ char ***redir_argv(char *str, int len, char ***redir)
 	q = 0;
 	while (str[i])
 	{
-		if (!q && ft_isquote(str[i]))
-			q = str[i];
-		else if (str[i] == q)
-			q = 0;
+		q = quote_finder(str[i], q);
 		if (ft_isredir(str[i]) && !q)
 		{
 			i = extract_redir(str, redir[len], i);
@@ -91,9 +85,9 @@ char ***redir_argv(char *str, int len, char ***redir)
 	redir[len] = NULL;
 	return (redir);
 }
+
 int		extract_cmd(char **temp, int i)
 {
-	// printf("DEBUG: %d\n", i);
 	if ((ft_isredir(temp[i][1]) && !temp[i][2]) || !temp[i][1])
 	{
 		i++;
@@ -128,9 +122,6 @@ char **cmd_argv(char **temp, int len)
 			i++;
 			j++;
 		}
-		//debug
-		//printf("debug: %d\n", i);
-		//debug
 	}
 	cmd[j] = NULL;
 	ft_free_arr(temp);
@@ -203,7 +194,6 @@ t_token	init_token(char *str, int i)
 
 	t.hd = 0;
 	t.idx = i;
-	t.hd = 0;
 	t.redir_len = calcu_redir(str);
 	if (t.redir_len > 0)
 		t.redir = (char ***)ft_safe_malloc((t.redir_len + 1) * sizeof(char **));

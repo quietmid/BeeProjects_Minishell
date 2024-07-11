@@ -142,7 +142,7 @@ void	ft_minishell(t_data *data)
 		if (line && *line != '\0')
 		{
 			add_history(line);
-			status = prompt_check(line);
+			status = prompt_check(data, line);
 			if (status)
 				status = parse_start(data, line);
 			if (status)

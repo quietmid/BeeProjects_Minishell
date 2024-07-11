@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
 /*   Updated: 2024/07/10 18:48:13 by pbumidan         ###   ########.fr       */
@@ -53,6 +53,7 @@ void redir_hd_fd(t_data *data, int x)
 	}
 	unlink(ft_itoa(x));
 }
+
 void redir_in_fd(t_data *data, int x)
 {
 	int i;
@@ -68,7 +69,6 @@ void redir_in_fd(t_data *data, int x)
 			if (dup2(data->token->in, STDIN_FILENO) < 0)
 				error(data, XDUP, 0);
 			close(data->token->in);
-			//dprintf(2, "cmd %d redir IN from %s\n",x, data->token[x].redir[i][1]);
 		}
 		i++;
 	}

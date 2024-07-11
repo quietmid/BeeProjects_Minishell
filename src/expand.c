@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 13:09:54 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/08 20:42:59 by jlu              ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/07/10 16:00:43 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -24,6 +25,7 @@ char *expand_help(char *str, char *temp, int s, int i, int found)
     result = ft_strjoin(result, str);
     return (result);
 }
+
 // takes in the string and s for the location of the $ in the string
 char *expanding(t_data *data, char *str, int s)
 {
@@ -66,7 +68,7 @@ char *expand_errcode(t_data *data, char *str, int s)
         result = ft_safe_malloc(sizeof(char) * (len - 2));
         ft_strlcpy(result, str, s + 1);
     }
-    err_code = ft_itoa(2); //data->error_code
+    err_code = ft_itoa(tmp->error_code); //data->error_code
     result = ft_strjoin(result, err_code);
     if (len > (s + 2))
         str = ft_safe_substr(str, s + 2, len - s - 2);
@@ -76,13 +78,11 @@ char *expand_errcode(t_data *data, char *str, int s)
     return (result);
 }
 
-char *easy_expanding(t_data *data, char *str, int s)
+char *easy_expanding(char *str, int s)
 {
     char *result;
     int len;
-    t_data *temp;
-
-    temp = data;
+    
     if (s == 0 && str[s + 1] != '?')
         result = ft_strdup("");
     len = ft_strlen(str);
@@ -121,10 +121,9 @@ char  *check_expand(char *s, t_data *d)
         if ((s[i] == 36 && ((s[i + 1] == '_') || ft_isalpha(s[i + 1])) && (q == 34 || q == 0)))
             s = expanding(d, s, i);
         if ((s[i] == 36 && !ft_isspace(s[i + 1]) && (q == 34 || q == 0)))
-            s = easy_expanding(d, s, i);
+            s = easy_expanding(s, i);
         len = ft_strlen(s);
         i++;
     }
     return (s);
 }
-

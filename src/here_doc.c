@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
 /*   Updated: 2024/07/10 18:14:05 by pbumidan         ###   ########.fr       */
@@ -48,6 +48,7 @@ void    ft_hd(t_data *data, int i, int j)
 		error(data, XHD, EXIT_FAILURE);
     while (1)
 	{
+        signal_setup(SIG_HEREDOC); // just added
 		line = readline("> ");
 		if (ft_strcmp(line, limiter))
             ft_putendl_fd(line, hd);

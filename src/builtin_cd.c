@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
 /*   Updated: 2024/07/10 20:35:54 by pbumidan         ###   ########.fr       */
@@ -107,9 +107,9 @@ char	*check_address(t_data *data, char *add)
 	else if (tmp == NULL)
 	{
 		if (strcmp(add,"HOME") == 0)
-			error_cd(data, XCDHOME, NULL);
+			error_cd(data, XCDHOME, NULL, 0);
 		if (strcmp(add,"OLDPWD") == 0)
-			error_cd(data, XCDOLDPWD, NULL);
+			error_cd(data, XCDOLDPWD, NULL, 0);
 	}
 	return (res);
 }
@@ -227,7 +227,7 @@ void	run_cd(t_data *data)
 	}
 	else
 	{
-		error_cd(data, XCD, data->token->cmd[1]);
+		error_cd(data, XCD, data->token->cmd[1], 0);
 		return ;	
 	}
 }

@@ -30,23 +30,3 @@ char	*ft_safe_substr(const char *s, unsigned int start, size_t len)
 		error_msg("substr failed");
 	return (str);
 }
-
-// void	ft_free_token(t_data *data)
-// {
-// 	int i;
-// 	int j;
-
-// 	i = 0;
-// 	while (i < data->cmd_count)
-// 	{
-// 		while (&data->token[i])
-// 		{
-// 			if (data->token[i].cmd)
-// 				ft_free_arr(data->token[i].cmd);
-// 			j = 0;
-// 			while (data->token[i].redir[j])
-// 				ft_free_arr(data->token[i].redir[j++]);
-// 		}
-// 		i++;
-// 	}
-// }
