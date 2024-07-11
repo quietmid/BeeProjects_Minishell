@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/11 18:13:35 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:43:55 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,6 @@ int	is_directory(char *cmd)
 void child_process(t_data *data, int x)
 {
 	char *path;
-	char *tmp;
 	
 	env_to_arr(data);
 	if (data->cmd_count > 1 || data->token[x].redir)
@@ -317,6 +316,7 @@ void child_process(t_data *data, int x)
 			data->path_cmd = find_path_cmd(data, x);
 			if (!data->path_cmd)
 			{
+				free(data->path_cmd);
 				error_var(data, XCMD, data->token[x].cmd[0], 127);
 			}
 			path = data->path_cmd;
@@ -333,14 +333,6 @@ void child_process(t_data *data, int x)
 		error(data, XEXEC, EXIT_FAILURE);	
 	}
 	printf("debug2\n");
-	free(data->path_cmd);
-	if (data->token[x].hd == 3)
-	{
-		tmp = ft_itoa(x);
-		unlink(tmp);
-		free(tmp);
-	}
-	//free_single_token(data, x);
 	return ;
 }
 

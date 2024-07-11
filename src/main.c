@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 18:57:35 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:47:58 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,25 @@ char	**prepare_paths(t_data *data, t_env *env)
 	char	**paths;
 	char	**res;
 	char	*tmp;
-	char 	*str;
 	int		x;
 
 	paths = ft_split(env->value, ':');
 	if (!paths)
 		error(data, XMALLOC, EXIT_FAILURE);
+	//res = NULL;
 	res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
 	if (!res)
 		error(data, XMALLOC, EXIT_FAILURE);
 	x = 0;
 	while (paths[x])
 	{
-		str = ft_strdup(paths[x]);
-		if (!str)
-			error(data, XMALLOC, EXIT_FAILURE);
-		free(paths[x]);
-		tmp = ft_strjoin(str, "/");
+		tmp = ft_strjoin(paths[x], "/");
 		if (!tmp)
 			error(data, XMALLOC, EXIT_FAILURE);
-		res[x] = tmp;
+		res[x] = ft_strdup(tmp);
+		if (!res[x])
+			error(data, XMALLOC, EXIT_FAILURE);
+		free(paths[x]);
 		x++;
 	}
 	res[x] = NULL;

@@ -68,6 +68,7 @@ typedef struct s_token
 	int				in;
 	int				out;
 	int				hd;
+	char			*hdfile;
 	char			**cmd; // free
 	char			***redir; // free 
 

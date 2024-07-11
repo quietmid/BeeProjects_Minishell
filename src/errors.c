@@ -65,8 +65,8 @@ void error_cd(t_data *data, t_error code, char *var, char c)
 
 void	error_var(t_data *data, t_error code, char *var, int e)
 {
-	//(void)data; //uncomment when free all function is done
-	(void)data;
+	// //(void)data; //uncomment when free all function is done
+	// (void)data;
 	if (code == XCMD)
 	{		
 		ft_putstr_fd(var, 2);
@@ -90,5 +90,7 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 			perror(var);
 	}
 	// free_all(data);
+	ft_free_token(data);
+	ft_free_before_loop(data);
 	exit (e);
 }

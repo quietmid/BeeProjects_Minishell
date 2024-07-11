@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 19:11:38 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:29:37 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	ft_free_token(t_data *data)
 		printf("debug\n");
 		if (data->token[i].redir)
 			ft_free_tri(data->token[i].redir);
+		if (data->token[i].hdfile)
+			free(data->token[i].hdfile);
 		i++;
 	}
 	free(data->token);
