@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 00:32:21 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/11 17:43:37 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 /*
 * this handles the signals like ctrl - c | ctrl \ | ctrl d
 */
+int	g_sigint;
 
 void	sig_handler(int sig)
 {
@@ -34,12 +35,10 @@ void	heredoc_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write (1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		close (0); // we need to close whatever we have been writing into
-	}
+		g_sigint = 1;
+		printf("hello\n");
+		return ;
+	} 							
 }
 /*
 * SIGINT - interrupt signal (ctrl + c)
@@ -53,9 +52,9 @@ void	signal_setup(int mode)
 
 	tcgetattr(STDIN_FILENO, &term_m);
 	if (mode == SIG_CHILD)
-		term_m.c_lflag |= ECHOCTL;
+		term_m.c_lflag |= (ECHO | ICANON);
 	else
-		term_m.c_lflag &= ~ECHOCTL;
+		term_m.c_lflag &= ~~(ECHO | ICANON);
 	tcsetattr(STDERR_FILENO, TCSANOW, &term_m);
 	if (mode == SIG_PARENT)
 	{
@@ -64,6 +63,7 @@ void	signal_setup(int mode)
 	}
 	else if (mode == SIG_HEREDOC)
 	{
+		printf("SIG_heredoc\n");
 		signal(SIGINT, heredoc_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}

@@ -23,6 +23,7 @@
 # define TRUE 1
 # define FALSE 0
 
+extern int	g_sigint;
 
 //struct
 
@@ -168,7 +169,8 @@ void    ft_unquotes(t_token *token);
 
 //here_doc
 int    check_heredoc(t_token *t);
-void    here_doc(t_data *data);
+int    here_doc(t_data *data);
+int    ft_hd(t_data *data, int i, int j);
 
 //pipes
 void	create_pipes(t_data *data);

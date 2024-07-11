@@ -243,7 +243,8 @@ int	parse_start(t_data *data, char *line)
 	ft_free_arr(input);
 	if (data->token != NULL)
 	{
-		here_doc(data);
+		if (!here_doc(data))
+			return (0);
 	}
 	// debug
 	// printf("here_doc in token[%d]\n", data->hd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 18:14:05 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:50:04 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int    check_heredoc(t_token *t)
     return (0);
 }
 
-void    ft_hd(t_data *data, int i, int j)
+int    ft_hd(t_data *data, int i, int j)
 {
     int hd;
     char *line;
@@ -52,25 +52,25 @@ void    ft_hd(t_data *data, int i, int j)
 	{
 		line = readline("> ");
         if (!line)
-        {
             break ;
-        }
         if (line)
         {
-		    // if (ft_strcmp(line, limiter))
-            //     ft_putendl_fd(line, hd);
-            // else if (!ft_strcmp(line, limiter))
-            //     break;
-            if (!ft_strcmp(line, limiter))
+		    if (ft_strcmp(line, limiter))
+                ft_putendl_fd(line, hd);
+            else if (!ft_strcmp(line, limiter))
                 break;
         }
 		free(line);
 	}
+    if (g_sigint == 1)
+        printf("END\n");
     free(hdfile);
     data->token[i].hd = hd;
+    close(hd);
+    return (1);
 }
 
-void    here_doc(t_data *data)
+int    here_doc(t_data *data)
 {
     int i;
     int j;
@@ -88,12 +88,13 @@ void    here_doc(t_data *data)
             {
                 if (!ft_strncmp("<<", t[i].redir[j][0], 2))
                 {
-                    ft_hd(data, i, j);
+                    if (!ft_hd(data, i, j))
+                        return (0);
                 }
                 j++;
             }
         }
         i++;
     }
-    return ;
+    return (1);
 }

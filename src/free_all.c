@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 20:02:56 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:34:37 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ void free_data_all(t_data *data, int type)
 		free(data->path_cmd);
 	if (data->env_arr)
 		ft_free_arr(data->env_arr);
+	if (data->token)
+		free(data->token);
 	dprintf(1, "bENV : %d\n", ft_envsize(data->env));
 	if (ft_envsize(data->env) != 0)
 	 	ft_envclear(&data->env);
