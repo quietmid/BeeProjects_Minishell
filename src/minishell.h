@@ -90,7 +90,6 @@ typedef struct s_data
 	int				arr_len;
 	int				hd; //here_doc
 	int				error_code;
-	//char			***argv; // free
 	char			**paths; // free
 	char			**env_arr; // free
 	char			*path_cmd; // free
@@ -212,5 +211,6 @@ void	ft_free_arr(char **arr);
 void	ft_free_tri(char ***tri);
 void	ft_free_token(t_data *s_data);
 void	ft_free_env(t_env *env);
+void	free_single_token(t_data *data, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/09 19:46:38 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:45:40 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	run_env(t_data *data)
 		{
 			while (env)
 			{
-				if (env->value)
+				if (env->value[0] != '\0')
 				{
 					ft_putstr_fd(env->key, 1);
 					ft_putstr_fd("=", 1);
@@ -90,7 +90,7 @@ void	run_export3(t_data *data)
 	while (node)
 	{
 		ft_putstr_fd("declare -x ", 1);
-		if (node->value)
+		if (node->value[0] != '\0')
 		{
 			ft_putstr_fd(node->key, 1);
 			ft_putstr_fd("=", 1);
@@ -113,9 +113,18 @@ void	run_export2(t_data *data, int x)
 {
 	t_env	*node;
 	t_env	*new;
+	char 	*tmp;
 
+	new = (void *)malloc(sizeof(t_env));
+	if (!new)
+		error(data, XMALLOC, EXIT_FAILURE);
+	tmp = data->token->cmd[x];
+	new->key = ft_strdup(tmp);
+	if (!new->key)
+		error(data, XMALLOC, EXIT_FAILURE);
+	new->value = ft_strdup("");
+	new->next = NULL;
 	node = data->env;
-	new = create_envnode(data, data->token->cmd[x]);
 	if (node == NULL)
 		node = new;
 	else
@@ -151,10 +160,15 @@ void	run_export(t_data *data)
 			else
 			{
 				if (str[1])
-					node->value = str[1];
+				{
+					node->value = ft_strdup(str[1]);
+					if (!node->value)
+						error(data, XMALLOC, EXIT_FAILURE);
+				}
 			}
 			x++;
 		}
+		ft_free_arr(str);
 	}
 }
 

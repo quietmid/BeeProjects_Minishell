@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/09 20:16:45 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:19:34 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**prepare_paths(t_data *data, t_env *env)
 	char	**paths;
 	char	**res;
 	char	*tmp;
+	char 	*str;
 	int		x;
 
 	paths = ft_split(env->value, ':');
@@ -31,7 +32,11 @@ char	**prepare_paths(t_data *data, t_env *env)
 	x = 0;
 	while (paths[x])
 	{
-		tmp = ft_strjoin(paths[x], "/");
+		str = ft_strdup(paths[x]);
+		if (!str)
+			error(data, XMALLOC, EXIT_FAILURE);
+		free(paths[x]);
+		tmp = ft_strjoin(str, "/");
 		if (!tmp)
 			error(data, XMALLOC, EXIT_FAILURE);
 		res[x] = tmp;
@@ -82,7 +87,8 @@ void	execute(t_data	*data)
 			redirect_builtin(data, 0);	
 		exec_builtin(data);
 		if (data->token[0].redir != NULL)
-			restore_stdio(data, 0);	
+			restore_stdio(data, 0);
+		free_single_token(data, 0);	
 	}
 	else
 	{
@@ -140,11 +146,11 @@ void	ft_minishell(t_data *data)
 			if (status)
 				status = parse_start(data, line);
 			if (status)
+			{
 			 	execute(data);
-		}
-		else 
-			free(line);
-		//ft_free_token(data);
+			}
+		}	
+		free(line);
 	}
 }
 
@@ -159,6 +165,7 @@ int main(int ac, char **ag, char **envp)
 		return (0);
 	env_setup(&data, envp);
 	ft_minishell(&data);
+	free_data_all(&data, 0);
 	// start the program
 	// free all the shit
 	//free_data_all(&data, 1);
