@@ -212,5 +212,6 @@ void	ft_free_tri(char ***tri);
 void	ft_free_token(t_data *s_data);
 void	ft_free_env(t_env *env);
 void	free_single_token(t_data *data, int i);
+void	ft_free_before_loop(t_data *data);
 
 #endif

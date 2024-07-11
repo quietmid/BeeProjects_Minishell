@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 20:19:34 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:57:35 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	execute(t_data	*data)
 		exec_builtin(data);
 		if (data->token[0].redir != NULL)
 			restore_stdio(data, 0);
-		free_single_token(data, 0);	
+		free_single_token(data, 0);
 	}
 	else
 	{
@@ -103,6 +103,8 @@ void	execute(t_data	*data)
 			x++;
 		}
 		dprintf(1, "status: %d\n", data->status);
+		ft_free_token(data);
+		ft_free_before_loop(data);
 	}
 	return ;
 }
@@ -149,6 +151,7 @@ void	ft_minishell(t_data *data)
 			{
 			 	execute(data);
 			}
+			//ft_free_before_loop(data);
 		}	
 		free(line);
 	}

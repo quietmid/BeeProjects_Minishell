@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 20:02:56 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:11:38 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,34 @@ void	ft_free_arr(char **arr)
 	free(arr);
 	arr = NULL;
 }
+
+void	ft_free_before_loop(t_data *data)
+{
+	int i;
+
+	i = 0;
+	// while (i < data->cmd_count)
+	// {
+	// 	if (data->token[i].cmd)
+	// 		ft_free_arr(data->token[i].cmd);
+	// 	if (data->token[i].redir)
+	// 		ft_free_tri(data->token[i].redir);
+	// 	free(&data->token[i]);
+	// 	i++;
+	// }
+	if (data->pid)
+        free(data->pid);
+    if (data->pipe)
+	{
+        while (i < data->pipe_count)
+		{
+			free(data->pipe[i]);
+			i++;
+		}
+		free(data->pipe);
+	}
+}
+
 void	ft_free_token(t_data *data)
 {
 	int i;
@@ -51,13 +79,16 @@ void	ft_free_token(t_data *data)
 	i = 0;
 	while (i < data->cmd_count)
 	{
+		
+		printf("token addr: %p\n", &data->token[i]);
 		if (data->token[i].cmd)
 			ft_free_arr(data->token[i].cmd);
+		printf("debug\n");
 		if (data->token[i].redir)
 			ft_free_tri(data->token[i].redir);
-		free(&data->token[i]);
 		i++;
 	}
+	free(data->token);
 }
 
 void	free_single_token(t_data *data, int i)
@@ -112,10 +143,10 @@ void free_data_all(t_data *data, int type)
 
 	if (type == 1)
 		printf("here\n");
-	// if (data->token)
-	// 	ft_free_token(data);
-    if (data->pid)
-        free(data->pid);
+	if (data->token)
+	 	ft_free_token(data);
+    // if (data->pid)
+    //     free(data->pid);
     if (data->pipe)
 	{
         while (++i < data->pipe_count)

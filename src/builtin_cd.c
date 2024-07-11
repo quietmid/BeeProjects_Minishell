@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/10 20:35:54 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:46:19 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	run_cd(t_data *data)
 				error(data, XMALLOC, EXIT_FAILURE);
 		}
 		else if (tmpenv == NULL)
-			error_cd(data, XCDHOME, NULL);
+			error_cd(data, XCDHOME, NULL, 0);
 	}
 	else if (data->token->cmd[1][0] == '-')
 	{
@@ -201,7 +201,7 @@ void	run_cd(t_data *data)
 				error(data, XMALLOC, EXIT_FAILURE);
 		}
 		else if (tmpenv == NULL)
-			error_cd(data, XCDOLDPWD, NULL);
+			error_cd(data, XCDOLDPWD, NULL, 0);
 	}
 	else if (data->token->cmd[1][0] == '/')
 	{

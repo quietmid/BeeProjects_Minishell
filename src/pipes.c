@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/10 18:48:13 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:13:35 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,8 +326,13 @@ void child_process(t_data *data, int x)
 			error_var(data, XNOFILE, data->token[x].cmd[0], 127);
 		}
 	}
+	printf("debug1\n");
 	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
-		error(data, XEXEC, EXIT_FAILURE);
+	{
+		printf("debug\n");
+		error(data, XEXEC, EXIT_FAILURE);	
+	}
+	printf("debug2\n");
 	free(data->path_cmd);
 	if (data->token[x].hd == 3)
 	{
@@ -335,7 +340,7 @@ void child_process(t_data *data, int x)
 		unlink(tmp);
 		free(tmp);
 	}
-	free_single_token(data, x);
+	//free_single_token(data, x);
 	return ;
 }
 
@@ -365,6 +370,10 @@ void	create_forks(t_data *data)
 		{
 			child_process(data, x);
 		}
+		// dprintf(1, "went to free single\n");
+		// free_single_token(data, x);
+		// dprintf(1, "went to wait\n");
+		// waitpid(data->pid[x], &data->status, 0);
 		x++;
 	}
 }
