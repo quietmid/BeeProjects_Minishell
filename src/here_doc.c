@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 18:14:05 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 22:09:34 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ void    ft_hd(t_data *data, int i, int j)
     int hd;
     char *line;
     char *limiter;
-    char *hdfile;
-    
-    printf("went to hd\n");
-    hdfile = ft_itoa(i);
-    if (!hdfile)
+ 
+    data->token[i].hdfile = ft_itoa(i);
+    if (!data->token[i].hdfile)
         error(data, XMALLOC, EXIT_FAILURE);
     limiter = data->token[i].redir[j][1];
-    hd = open(hdfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+    hd = open(data->token[i].hdfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (hd < 0)
 		error(data, XHD, EXIT_FAILURE);
     signal_setup(SIG_HEREDOC); // just added
@@ -57,16 +55,17 @@ void    ft_hd(t_data *data, int i, int j)
         }
         if (line)
         {
-		    // if (ft_strcmp(line, limiter))
-            //     ft_putendl_fd(line, hd);
-            // else if (!ft_strcmp(line, limiter))
-            //     break;
-            if (!ft_strcmp(line, limiter))
+	        if (ft_strcmp(line, limiter))
+                ft_putendl_fd(line, hd);
+            else if (!ft_strcmp(line, limiter))
+            {
+                free(line);
                 break;
+            }
         }
+	
 		free(line);
 	}
-    free(hdfile);
     data->token[i].hd = hd;
 }
 

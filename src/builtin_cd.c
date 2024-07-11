@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/10 20:35:54 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 22:04:49 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ void	update_data(t_data *data)
 	// if (data->oldpwd)
 	// 	free(data->pwd);
 	tmp = data->pwd;
-	data->oldpwd = ft_strdup(tmp);
+	data->oldpwd = strdup(tmp);
 	if (!data->oldpwd)
 		error(data, XMALLOC, EXIT_FAILURE);
 	free(tmp);
+	//free(data->pwd);
 	// if (data->oldpwd)
 	// 	free(data->oldpwd);
 	// if (data->pwd)
@@ -188,7 +189,7 @@ void	run_cd(t_data *data)
 				error(data, XMALLOC, EXIT_FAILURE);
 		}
 		else if (tmpenv == NULL)
-			error_cd(data, XCDHOME, NULL);
+			error_cd(data, XCDHOME, NULL, 0);
 	}
 	else if (data->token->cmd[1][0] == '-')
 	{
@@ -201,7 +202,7 @@ void	run_cd(t_data *data)
 				error(data, XMALLOC, EXIT_FAILURE);
 		}
 		else if (tmpenv == NULL)
-			error_cd(data, XCDOLDPWD, NULL);
+			error_cd(data, XCDOLDPWD, NULL, 0);
 	}
 	else if (data->token->cmd[1][0] == '/')
 	{
@@ -228,6 +229,5 @@ void	run_cd(t_data *data)
 	else
 	{
 		error_cd(data, XCD, data->token->cmd[1], 0);
-		return ;	
 	}
 }

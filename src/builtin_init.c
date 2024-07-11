@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/08 16:27:45 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/11 22:02:46 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_builtin(t_data *data)
 	else if (ft_strcmp(data->token[0].cmd[0], "exit") == 0)
 		return (TRUE);
 	else
-		return (FALSE);
+		return (0);
 }
 
 /*
@@ -59,5 +59,4 @@ void	exec_builtin(t_data *data)
 		free_data_all(data, 0);
 		exit(0);
 	}
-		//exit(0);
 }

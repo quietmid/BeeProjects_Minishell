@@ -27,7 +27,7 @@ char syntax_check(char *line)
     char c;
 
     i = 0;
-    if ((ft_strlen(line) - 1) < 0)
+    if ((ft_strlen(line) - 1) <= 0)
         return (0);
     if (line[0] == '|')
         return (line[0]);

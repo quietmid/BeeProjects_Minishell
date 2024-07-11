@@ -68,6 +68,7 @@ typedef struct s_token
 	int				in;
 	int				out;
 	int				hd;
+	char			*hdfile;
 	char			**cmd; // free
 	char			***redir; // free 
 
@@ -212,5 +213,6 @@ void	ft_free_tri(char ***tri);
 void	ft_free_token(t_data *s_data);
 void	ft_free_env(t_env *env);
 void	free_single_token(t_data *data, int i);
+void	ft_free_before_loop(t_data *data);
 
 #endif

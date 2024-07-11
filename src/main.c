@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/10 20:19:34 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 21:08:18 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,35 @@
 /*
 * support find_path_cmd fxn (2/2)
 */
-char	**prepare_paths(t_data *data, t_env *env)
+void	prepare_paths(t_data *data, t_env *env)
 {
 	char	**paths;
-	char	**res;
-	char	*tmp;
-	char 	*str;
-	int		x;
+	// char	**res;
+	// char	*tmp;
+	// int		x;
 
 	paths = ft_split(env->value, ':');
 	if (!paths)
 		error(data, XMALLOC, EXIT_FAILURE);
-	res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
-	if (!res)
-		error(data, XMALLOC, EXIT_FAILURE);
-	x = 0;
-	while (paths[x])
-	{
-		str = ft_strdup(paths[x]);
-		if (!str)
-			error(data, XMALLOC, EXIT_FAILURE);
-		free(paths[x]);
-		tmp = ft_strjoin(str, "/");
-		if (!tmp)
-			error(data, XMALLOC, EXIT_FAILURE);
-		res[x] = tmp;
-		x++;
-	}
-	res[x] = NULL;
-	return (res);
+	data->paths = paths;
+	// // //res = NULL;
+	// // res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
+	// // if (!res)
+	// // 	error(data, XMALLOC, EXIT_FAILURE);
+	// x = 0;
+	// while (paths[x])
+	// {
+	// 	tmp = ft_strjoin(paths[x], "/");
+	// 	if (!tmp)
+	// 		error(data, XMALLOC, EXIT_FAILURE);
+	// 	data->paths[x] = ft_strdup(tmp);
+	// 	if (!res[x])
+	// 		error(data, XMALLOC, EXIT_FAILURE);
+	// 	free(paths[x]);
+	// 	x++;
+	// }
+	// res[x] = NULL;
+	// return (res);
 }
 
 /*
@@ -51,32 +51,97 @@ char	**prepare_paths(t_data *data, t_env *env)
 */
 char	*find_path_cmd(t_data *data, int i)
 {
-	char	**tmp;
-	char	*cmd;
+	char	*path_slash;
+	char	*path_slash_cmd;
 	int 	x;
 
-	tmp = prepare_paths(data, search_env(data, "PATH"));
-	if (!tmp)
-	 	error(data, XMALLOC, EXIT_FAILURE);
+	prepare_paths(data, search_env(data, "PATH"));
 	x = 0;
-	while (tmp[x])
+	while (data->paths[x])
 	{
-		if (data->token[i].cmd[0])
+		path_slash = ft_strjoin(data->paths[x], "/");
 		{
-			cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
-			if (!cmd)
-			 	error(data, XMALLOC, EXIT_FAILURE);
-			if (access(cmd, 0) == 0)
-			{
-				ft_free_arr(tmp);
-				return (cmd);
-			}
-			free(cmd);
-			x++;
-		} 
+			if (!path_slash)
+				error(data, XMALLOC, EXIT_FAILURE);
+			path_slash_cmd = ft_strjoin(path_slash, data->token[i].cmd[0]);
+			if (!path_slash_cmd)
+				error(data, XMALLOC, EXIT_FAILURE);
+			free(path_slash);
+		}
+		if (access(path_slash_cmd, 0) == 0)
+			return (path_slash_cmd);
+		free(path_slash_cmd);
+		x++;
 	}
 	return (NULL);
 }
+
+
+////////// ORIGINAL 
+// /*
+// * support find_path_cmd fxn (2/2)
+// */
+// char	**prepare_paths(t_data *data, t_env *env)
+// {
+// 	char	**paths;
+// 	char	**res;
+// 	char	*tmp;
+// 	int		x;
+
+// 	paths = ft_split(env->value, ':');
+// 	if (!paths)
+// 		error(data, XMALLOC, EXIT_FAILURE);
+// 	//res = NULL;
+// 	res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
+// 	if (!res)
+// 		error(data, XMALLOC, EXIT_FAILURE);
+// 	x = 0;
+// 	while (paths[x])
+// 	{
+// 		tmp = ft_strjoin(paths[x], "/");
+// 		if (!tmp)
+// 			error(data, XMALLOC, EXIT_FAILURE);
+// 		res[x] = ft_strdup(tmp);
+// 		if (!res[x])
+// 			error(data, XMALLOC, EXIT_FAILURE);
+// 		free(paths[x]);
+// 		x++;
+// 	}
+// 	res[x] = NULL;
+// 	return (res);
+// }
+
+// /*
+// * look for the envp:path where the cmd belong  before execve (1/2)
+// */
+// char	*find_path_cmd(t_data *data, int i)
+// {
+// 	char	**tmp;
+// 	char	*cmd;
+// 	int 	x;
+
+// 	tmp = prepare_paths(data, search_env(data, "PATH"));
+// 	if (!tmp)
+// 	 	error(data, XMALLOC, EXIT_FAILURE);
+// 	x = 0;
+// 	while (tmp[x])
+// 	{
+// 		if (data->token[i].cmd[0])
+// 		{
+// 			cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
+// 			if (!cmd)
+// 			 	error(data, XMALLOC, EXIT_FAILURE);
+// 			if (access(cmd, 0) == 0)
+// 			{
+// 				ft_free_arr(tmp);
+// 				return (cmd);
+// 			}
+// 			free(cmd);
+// 			x++;
+// 		} 
+// 	}
+// 	return (NULL);
+// }
 
 /* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
@@ -88,7 +153,7 @@ void	execute(t_data	*data)
 		exec_builtin(data);
 		if (data->token[0].redir != NULL)
 			restore_stdio(data, 0);
-		free_single_token(data, 0);	
+		free_single_token(data, 0);
 	}
 	else
 	{
@@ -103,6 +168,8 @@ void	execute(t_data	*data)
 			x++;
 		}
 		dprintf(1, "status: %d\n", data->status);
+		ft_free_token(data);
+		ft_free_before_loop(data);
 	}
 	return ;
 }
@@ -149,6 +216,7 @@ void	ft_minishell(t_data *data)
 			{
 			 	execute(data);
 			}
+			//ft_free_before_loop(data);
 		}	
 		free(line);
 	}
