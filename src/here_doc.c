@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 13:51:26 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/10 18:14:05 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void    ft_hd(t_data *data, int i, int j)
         }
 		free(line);
 	}
-    close(hd);
+    free(hdfile);
     data->token[i].hd = hd;
 }
 

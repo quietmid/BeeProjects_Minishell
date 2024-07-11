@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/09 14:32:58 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/10 20:35:54 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,20 @@ t_env	*search_env(t_data *data, char *str)
 void	update_env(t_data *data)
 {
 	t_env	*node;
+	char	*add;
 
 	node = search_env(data, "OLDPWD");
 	if (node)
-		node->value = data->oldpwd;
+	{
+		add = data->oldpwd;
+		node->value = add;
+	}
 	node = search_env(data, "PWD");
 	if (node)
-		node->value = data->pwd;
+	{
+		add = data->pwd;
+		node->value = add;
+	}
 }
 
 /*
@@ -55,12 +62,14 @@ void	update_env(t_data *data)
 */
 void	update_data(t_data *data)
 {
+	char *tmp;
 	// if (data->oldpwd)
 	// 	free(data->pwd);
-	data->oldpwd = ft_strdup(data->pwd);
-	if (!data->pwd)
+	tmp = data->pwd;
+	data->oldpwd = ft_strdup(tmp);
+	if (!data->oldpwd)
 		error(data, XMALLOC, EXIT_FAILURE);
-
+	free(tmp);
 	// if (data->oldpwd)
 	// 	free(data->oldpwd);
 	// if (data->pwd)
@@ -73,9 +82,10 @@ void	update_data(t_data *data)
 	// 	free(data->pwd);
 	// if (data->pwd)
 	// 	free(data->pwd);
-	data->pwd = getcwd(NULL, 0);
-	if (!data->pwd)
+	tmp = getcwd(NULL, 0);
+	if (!tmp)
 		error(data, XMALLOC, EXIT_FAILURE);
+	data->pwd = tmp;
 }
 
 /*
@@ -90,7 +100,9 @@ char	*check_address(t_data *data, char *add)
 	tmp = search_env(data, add);
 	if (tmp != NULL)
 	{
-		res = tmp->value;
+		res = ft_strdup(tmp->value);
+		if (!res)
+			error(data, XMALLOC, EXIT_FAILURE);
 	}
 	else if (tmp == NULL)
 	{
@@ -105,35 +117,113 @@ char	*check_address(t_data *data, char *add)
 /*
 * execute builtin command cd
 */
+// void	run_cd(t_data *data)
+// {
+// 	char	*add;
+// 	int		dash;
+// 	char	*tmp;
+
+// 	dash = 0;
+// 	if (!data->token->cmd[1] || data->token->cmd[1][0] == '~')
+// 	{
+// 		add = check_address(data, "HOME");
+// 		if (add == NULL)
+// 			return ;
+// 	}
+// 	else if (data->token->cmd[1][0] == '-')
+// 	{
+// 		dash = 1;
+// 		add = check_address(data, "OLDPWD");
+// 		if (add == NULL)
+// 			return ;
+// 	}
+// 	else if (data->token->cmd[1][0] == '/')
+// 	{
+// 		add = ft_strdup(data->token->cmd[1]);
+// 		if (!add)
+// 			error(data, XMALLOC, EXIT_FAILURE);
+// 	}
+// 	else
+// 	{
+// 		tmp = ft_strdup(data->token->cmd[1]);
+// 		if (!tmp)
+// 			error(data, XMALLOC, EXIT_FAILURE);
+// 		add = ft_strjoin("./", tmp);
+// 		free(tmp);
+// 	}
+// 	if (chdir(add) == 0)
+// 	{
+// 		update_data(data);
+// 		update_env(data);
+// 		if (dash == 1)
+// 			ft_putendl_fd(add, 1);
+// 		free(add);
+// 	}
+// 	else
+// 	{
+// 		error_cd(data, XCD, data->token->cmd[1]);
+// 		return ;	
+// 	}
+	
+// }
+
+/*
+* execute builtin command cd version 2
+*/
 void	run_cd(t_data *data)
 {
 	char	*add;
 	int		dash;
+	char	*tmp;
+	t_env	*tmpenv;
 
 	dash = 0;
 	if (!data->token->cmd[1] || data->token->cmd[1][0] == '~')
 	{
-		add = check_address(data, "HOME");
-		if (add == NULL)
-			return ;
+		tmpenv = search_env(data, "HOME");
+		if (tmpenv != NULL)
+		{
+			add = ft_strdup(tmpenv->value);
+			if (!add)
+				error(data, XMALLOC, EXIT_FAILURE);
+		}
+		else if (tmpenv == NULL)
+			error_cd(data, XCDHOME, NULL);
 	}
 	else if (data->token->cmd[1][0] == '-')
 	{
 		dash = 1;
-		add =check_address(data, "OLDPWD");
-		if (add == NULL)
-			return ;
+		tmpenv = search_env(data, "OLDPWD");
+		if (tmpenv != NULL)
+		{
+			add = ft_strdup(tmpenv->value);
+			if (!add)
+				error(data, XMALLOC, EXIT_FAILURE);
+		}
+		else if (tmpenv == NULL)
+			error_cd(data, XCDOLDPWD, NULL);
 	}
 	else if (data->token->cmd[1][0] == '/')
-		add = data->token->cmd[1];
+	{
+		add = ft_strdup(data->token->cmd[1]);
+		if (!add)
+			error(data, XMALLOC, EXIT_FAILURE);
+	}
 	else
-		add = ft_strjoin("./", data->token->cmd[1]);
+	{
+		tmp = ft_strdup(data->token->cmd[1]);
+		if (!tmp)
+			error(data, XMALLOC, EXIT_FAILURE);
+		add = ft_strjoin("./", tmp);
+		free(tmp);
+	}
 	if (chdir(add) == 0)
 	{
 		update_data(data);
 		update_env(data);
 		if (dash == 1)
 			ft_putendl_fd(add, 1);
+		free(add);
 	}
 	else
 	{

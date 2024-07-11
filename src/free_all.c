@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/09 19:39:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:02:56 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,49 @@ void	ft_free_token(t_data *data)
 	}
 }
 
-void	ft_free_env(t_env *env)
+void	free_single_token(t_data *data, int i)
 {
-	t_env *tmp;
-
-	printf("free env\n");
-	while (env)
-	{
-		free(env->key);
-		free(env->value);
-		tmp = env;
-		env = env->next;
-		free(tmp);
-		tmp = NULL;
-	}
+	if (data->token[i].cmd)
+		ft_free_arr(data->token[i].cmd);
+	if (data->token[i].redir)
+		ft_free_tri(data->token[i].redir);
+	free(&data->token[i]);
 }
+
+void	ft_envclear(t_env **env)
+{
+	t_env	*current;
+
+	if (!env)
+		return ;
+	while (*env)
+	{
+		current = (*env)->next;
+		if ((*env)->key)
+			free((*env)->key);
+		if ((*env)->value)
+			free((*env)->value);
+		free(*env);
+		*env = current;
+	}
+	*env = NULL;
+}
+
+// void	ft_free_env(t_env *env)
+// {
+// 	t_env *tmp;
+
+// 	printf("free env\n");
+// 	while (env)
+// 	{
+// 		free(env->key);
+// 		free(env->value);
+// 		tmp = env;
+// 		env = env->next;
+// 		free(tmp);
+// 		tmp = NULL;
+// 	}
+// }
 
 void free_data_all(t_data *data, int type)
 {
@@ -84,8 +112,8 @@ void free_data_all(t_data *data, int type)
 
 	if (type == 1)
 		printf("here\n");
-	if (data->token)
-		ft_free_token(data);
+	// if (data->token)
+	// 	ft_free_token(data);
     if (data->pid)
         free(data->pid);
     if (data->pipe)
@@ -93,23 +121,24 @@ void free_data_all(t_data *data, int type)
         while (++i < data->pipe_count)
 			free(data->pipe[i]);
 	}
-	// if (data->argv)
-	// 	ft_free_tri(data->argv);
 	if (data->paths)
 		ft_free_arr(data->paths);
 	if (data->path_cmd)
 		free(data->path_cmd);
-	if (data->pwd)
-		free(data->pwd);
-	if (data->oldpwd)
-		free(data->oldpwd);
 	if (data->env_arr)
 		ft_free_arr(data->env_arr);
-	if (data->env)
-		ft_free_env(data->env);
+	dprintf(1, "bENV : %d\n", ft_envsize(data->env));
+	if (ft_envsize(data->env) != 0)
+	 	ft_envclear(&data->env);
+	dprintf(1, "aENV : %d\n", ft_envsize(data->env));
+// 	if (data->pwd)
+// 		free(data->pwd);
+// 	if (data->oldpwd)
+// 	 	free(data->oldpwd);
 }
 
 // void free_all(t_data *data)
 // {
-	
+// 	if (data->token)
+// 		ft_free_token(data);
 // }
