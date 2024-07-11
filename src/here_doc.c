@@ -38,7 +38,8 @@ void    ft_hd(t_data *data, int i, int j)
     char *line;
     char *limiter;
     char *hdfile;
- 
+    
+    printf("went to hd\n");
     hdfile = ft_itoa(i);
     if (!hdfile)
         error(data, XMALLOC, EXIT_FAILURE);
@@ -46,14 +47,23 @@ void    ft_hd(t_data *data, int i, int j)
     hd = open(hdfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (hd < 0)
 		error(data, XHD, EXIT_FAILURE);
+    signal_setup(SIG_HEREDOC); // just added
     while (1)
 	{
-        signal_setup(SIG_HEREDOC); // just added
 		line = readline("> ");
-		if (ft_strcmp(line, limiter))
-            ft_putendl_fd(line, hd);
-        else if (!ft_strcmp(line, limiter))
-            break;
+        if (!line)
+        {
+            break ;
+        }
+        if (line)
+        {
+		    // if (ft_strcmp(line, limiter))
+            //     ft_putendl_fd(line, hd);
+            // else if (!ft_strcmp(line, limiter))
+            //     break;
+            if (!ft_strcmp(line, limiter))
+                break;
+        }
 		free(line);
 	}
     free(hdfile);
