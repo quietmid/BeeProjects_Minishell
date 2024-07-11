@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 00:28:02 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/11 13:51:26 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,20 @@ void    ft_hd(t_data *data, int i, int j)
 		line = readline("> ");
         if (!line)
         {
-            close(hd);
             break ;
         }
         if (line)
         {
-		    if (ft_strcmp(line, limiter))
-                ft_putendl_fd(line, hd);
-            else if (!ft_strcmp(line, limiter))
+		    // if (ft_strcmp(line, limiter))
+            //     ft_putendl_fd(line, hd);
+            // else if (!ft_strcmp(line, limiter))
+            //     break;
+            if (!ft_strcmp(line, limiter))
                 break;
         }
 		free(line);
 	}
+    close(hd);
     data->token[i].hd = hd;
 }
 
