@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 20:34:53 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 21:09:12 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void    ft_hd(t_data *data, int i, int j)
     int hd;
     char *line;
     char *limiter;
-    //char *hdfile;
  
     data->token[i].hdfile = ft_itoa(i);
     if (!data->token[i].hdfile)

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/11 20:43:55 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/11 21:13:05 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,22 @@ void redir_hd_fd(t_data *data, int x)
 	{
 		if (ft_strcmp(data->token[x].redir[i][0], "<<") ==  0)
 		{
-			data->token->in = open(ft_itoa(x), O_RDONLY);
+			data->token->in = open(data->token[x].hdfile, O_RDONLY);
 			if (data->token->in < 0)
 			{
-				unlink(ft_itoa(x));
-				error_var(data, XFD, ft_itoa(x), 0);
+				unlink(data->token[x].hdfile);
+				error_var(data, XFD, data->token[x].hdfile, 0);
 			}
 			if (dup2(data->token->in, STDIN_FILENO) < 0)
 			{
-				unlink(ft_itoa(x));
+				unlink(data->token[x].hdfile);
 				error(data, XDUP, 0);	
 			}
 			close(data->token->in);
 		}
 		i++;
 	}
-	unlink(ft_itoa(x));
+	unlink(data->token[x].hdfile);
 }
 
 void redir_in_fd(t_data *data, int x)
@@ -313,13 +313,11 @@ void child_process(t_data *data, int x)
 	{
 		if (search_env(data, "PATH"))
 		{
-			data->path_cmd = find_path_cmd(data, x);
-			if (!data->path_cmd)
+			path = find_path_cmd(data, x);
+			if (!path)
 			{
-				free(data->path_cmd);
 				error_var(data, XCMD, data->token[x].cmd[0], 127);
 			}
-			path = data->path_cmd;
 		}
 		else
 		{
@@ -335,6 +333,54 @@ void child_process(t_data *data, int x)
 	printf("debug2\n");
 	return ;
 }
+
+//original
+// void child_process(t_data *data, int x)
+// {
+// 	char *path;
+	
+// 	env_to_arr(data);
+// 	if (data->cmd_count > 1 || data->token[x].redir)
+// 		redirect(data, x);
+// 	if (data->token[x].cmd[0][0] == '/')
+// 	{
+// 		path = data->token[x].cmd[0];
+// 		if (access(data->token[x].cmd[0], X_OK) != 0)
+// 			error_var(data, XEXEC, data->token[x].cmd[0], 127);
+// 	}
+// 	if (data->token[x].cmd[0][0] == '.')
+// 	{
+// 		if (access(data->token[x].cmd[0], X_OK) != 0)
+// 			error_var(data, XEXEC, data->token[x].cmd[0], 126);
+// 		if (is_directory(data->token[x].cmd[0]) == TRUE)
+// 			error_var(data, XDIR, data->token[x].cmd[0], 126);
+// 	}
+// 	else
+// 	{
+// 		if (search_env(data, "PATH"))
+// 		{
+// 			data->path_cmd = find_path_cmd(data, x);
+// 			if (!data->path_cmd)
+// 			{
+// 				free(data->path_cmd);
+// 				error_var(data, XCMD, data->token[x].cmd[0], 127);
+// 			}
+// 			path = data->path_cmd;
+// 		}
+// 		else
+// 		{
+// 			error_var(data, XNOFILE, data->token[x].cmd[0], 127);
+// 		}
+// 	}
+// 	printf("debug1\n");
+// 	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
+// 	{
+// 		printf("debug\n");
+// 		error(data, XEXEC, EXIT_FAILURE);	
+// 	}
+// 	printf("debug2\n");
+// 	return ;
+// }
 
 
 void	create_forks(t_data *data)
