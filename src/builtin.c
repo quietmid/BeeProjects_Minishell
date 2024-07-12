@@ -6,156 +6,29 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 14:56:56 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:04:32 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-* execute builtin env
-*/
-void	run_env(t_data *data)
-{
-	t_env	*env;
-
-	if (!data->token->cmd[1])
-	{
-		env = data->env;
-		if (data->env->next != NULL)
-		{
-			while (env)
-			{
-				if (env->value[0] != '\0')
-				{
-					ft_putstr_fd(env->key, 1);
-					ft_putstr_fd("=", 1);
-					ft_putstr_fd(env->value, 1);
-					ft_putstr_fd("\n", 1);
-				}
-				env = env->next;
-			}
-		}
-		// error? can env be NULL?
-	}
-// 	else
-// 		"error invalid flag"
-}
-
-/*
-* execute builtin pwd
-*/
 void	run_pwd(t_data *data)
 {
 	ft_putendl_fd(data->pwd, 1);
 }
 
-/*
-* execute builtin export (3/3)
-*/
-void	run_export3(t_data *data)
-{
-	t_env	*node;
-	
-	node = data->env;
-	while (node)
-	{
-		ft_putstr_fd("declare -x ", 1);
-		if (node->value[0] != '\0')
-		{
-			ft_putstr_fd(node->key, 1);
-			ft_putstr_fd("=", 1);
-			ft_putstr_fd("\"", 1);
-			ft_putstr_fd(node->value, 1);
-			ft_putstr_fd("\"", 1);
-			ft_putstr_fd("\n", 1);
-		}
-		else
-		{
-			ft_putendl_fd(node->key, 1);	
-		}
-		node = node->next;
-	}
-}
-/*
-* execute builtin export (2/3)
-*/
-void	run_export2(t_data *data, int x)
-{
-	t_env	*node;
-	t_env	*new;
-	char 	*tmp;
-
-	new = (void *)malloc(sizeof(t_env));
-	if (!new)
-		error(data, XMALLOC, EXIT_FAILURE);
-	tmp = data->token->cmd[x];
-	new->key = ft_strdup(tmp);
-	if (!new->key)
-		error(data, XMALLOC, EXIT_FAILURE);
-	new->value = ft_strdup("");
-	new->next = NULL;
-	node = data->env;
-	if (node == NULL)
-		node = new;
-	else
-	{
-		while (node->next != NULL)
-			node = node->next;
-		node->next = new;
-	}
-}
-
-/*
-* execute builtin export (1/3)
-*/
-void	run_export(t_data *data)
-{
-	t_env	*node;
-	char	**str;
-	int 	x;
-	
-	x = 1;
-	if (ft_arr_len(data->token[0].cmd) == 1)
-		run_export3(data);
-	else
-	{
-		while (x < ft_arr_len(data->token[0].cmd))
-		{
-			str = ft_split(data->token[0].cmd[x], '=');
-			if (!str)
-				error(data, XMALLOC, EXIT_FAILURE);
-			node = search_env(data, str[0]);
-			if (!node)
-				run_export2(data, x);
-			else
-			{
-				if (str[1])
-				{
-					node->value = ft_strdup(str[1]);
-					if (!node->value)
-						error(data, XMALLOC, EXIT_FAILURE);
-				}
-			}
-			x++;
-		}
-		ft_free_arr(str);
-	}
-}
-
-/*
-* execute builtin unset,
-*/
 void	run_unset(t_data *data)
 {
 	t_env	*tmp;
 	t_env	*prev;
+	int		x;
 
-	if (ft_arr_len(data->token->cmd) == 2)
+	x = 1;
+	while (x < ft_arr_len(data->token->cmd))
 	{
 		tmp = data->env;
 		prev = NULL;
-		while (tmp && ft_strcmp(tmp->key, data->token->cmd[1]) != 0)
+		while (tmp && ft_strcmp(tmp->key, data->token->cmd[x]) != 0)
 		{
 			prev = tmp;
 			tmp = tmp->next;
@@ -169,7 +42,6 @@ void	run_unset(t_data *data)
 		free(tmp->key);
 		free(tmp->value);
 		free(tmp);
+		x++;
 	}
-// 	else
-// 		"error invalid flag"
 }

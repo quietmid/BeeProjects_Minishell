@@ -6,15 +6,12 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/11 21:49:54 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:12:20 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-*  create a linked list node (splitting the key and value with '=')
-*/
 t_env	*create_envnode(t_data *data, char *envp)
 {
 	t_env	*node;
@@ -37,9 +34,6 @@ t_env	*create_envnode(t_data *data, char *envp)
 	return (node);
 }
 
-/*
-* convert env linked list into an array before execve
-*/
 void	env_to_arr(t_data *data)
 {
 	t_env	*env;
@@ -67,14 +61,11 @@ void	env_to_arr(t_data *data)
 	data->env_arr = res;
 }
 
-/* 
-*set environmental variables pwd and oldpwd from **envp for the shell for monitoring
-*/
 void	set_wd(t_data *data)
 {
 	t_env	*tmp;
-	char *add;
-	
+	char	*add;
+
 	tmp = NULL;
 	add = NULL;
 	tmp = search_env(data, "PWD");
@@ -93,9 +84,6 @@ void	set_wd(t_data *data)
 	}
 }
 
-/* 
-*Export the **envp and create a linked list from it.
-*/
 void	env_setup(t_data *data, char **envp)
 {
 	t_env	*head;
@@ -121,6 +109,4 @@ void	env_setup(t_data *data, char **envp)
 	}
 	data->env = head;
 	set_wd(data);
-	// printf("pwd: %s\n", data->pwd);
-	// printf("oldpwd: %s\n", data->oldpwd);
 }

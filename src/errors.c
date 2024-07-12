@@ -67,32 +67,30 @@ void error_cd(t_data *data, t_error code, char *var, char c)
 
 void	error_var(t_data *data, t_error code, char *var, int e)
 {
-	// //(void)data; //uncomment when free all function is done
-	// (void)data;
 	if (code == XCMD)
 	{		
 		ft_putstr_fd(var, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(ERR_CMD, 2);
+		ft_putendl_fd(": "ERR_CMD, 2);
 	}
 	else
 	{
-		ft_putstr_fd("minishell-8.8$", 2);
-		ft_putstr_fd(": ", 2);
+		ft_putstr_fd("minishell-8.8$: ", 2);
 		if (code == XNOFILE || code == XDIR)
 		{
 			ft_putstr_fd(var, 2);
-			ft_putstr_fd(": ", 2);
 			if (code == XNOFILE)
-				ft_putendl_fd(ERR_NOFILE, 2);
+				ft_putendl_fd(": "ERR_NOFILE, 2);
 			else if (code == XDIR)
-				ft_putendl_fd(ERR_DIR, 2);
+				ft_putendl_fd(": "ERR_DIR, 2);
 		}
 		else
 			perror(var);
 	}
 	// free_all(data);
-	ft_free_token(data);
-	ft_free_before_loop(data);
+	//ft_free_token(data);
+	//ft_free_before_loop(data);
+	//free_data_all(data, 0);
+	//data->error_code =  (WEXITSTATUS(e));
+	data->status = (WEXITSTATUS(e));
 	exit (e);
 }

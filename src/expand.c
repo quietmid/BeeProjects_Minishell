@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/10 16:00:43 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 22:20:41 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ char *expand_errcode(t_data *data, char *str, int s)
     char *result;
     char *err_code;
     int len;
-    t_data *tmp; //delete
+   // t_data *tmp; //delete
 
-    tmp = data; // delete
+    //tmp = data; // delete
     len = ft_strlen(str);
     if (len == 2)
         result = ft_safe_substr("echo ", 0, 5);
@@ -68,7 +68,7 @@ char *expand_errcode(t_data *data, char *str, int s)
         result = ft_safe_malloc(sizeof(char) * (len - 2));
         ft_strlcpy(result, str, s + 1);
     }
-    err_code = ft_itoa(tmp->error_code); //data->error_code
+    err_code = ft_itoa(WEXITSTATUS(data->status)); //data->status!!!
     result = ft_strjoin(result, err_code);
     if (len > (s + 2))
         str = ft_safe_substr(str, s + 2, len - s - 2);
