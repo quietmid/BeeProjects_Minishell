@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 20:04:24 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/13 00:39:30 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int    ft_hd(t_data *data, int i, int j)
     char buf[1024];
     char *limiter;
     char *hdfile;
+    int wr;
 
     printf("went to hd\n");
     hdfile = ft_itoa(i);
@@ -52,28 +53,22 @@ int    ft_hd(t_data *data, int i, int j)
 	if (hd < 0)
 		error(data, XHD, EXIT_FAILURE);
     set_signal_handler(SIGINT, heredoc_handler);
+    // wr = 0;
     while (1)
     {
         write (1, "> ", 2);
         bytes = read(STDIN_FILENO, buf, 1023);
         if (bytes < 0)
-        {   
-            printf("bytes = -1\n");
             break ;
-        }
+        buf[bytes] = '\0';
         if (bytes == 0)
         {
             printf("\n");
             break ;
-        }    
-        buf[bytes] = '\0';
-        if (buf && buf[0] != '\0')
-        {
-            if (ft_strcmp(buf, limiter))
-                ft_putstr_fd(buf, hd);
-            else if (!ft_strcmp(buf, limiter))
-                break ;
         }
+        if (!ft_strcmp(buf, limiter))
+            break ;
+        ft_putstr_fd(buf, hd);
     }
     printf("out loop\n");
     // while (1)

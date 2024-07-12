@@ -112,6 +112,7 @@ t_env	*create_envnode(t_data *data, char *envp);
 void	heredoc_handler(int sig);
 void	signal_setup(int mode);
 void	sig_handler(int sig);
+void toggle_input(int mode);
 int    set_signal_handler(int signum, void (*handler)(int));
 void	rl_replace_line(const char *text, int clear_undo);
 
