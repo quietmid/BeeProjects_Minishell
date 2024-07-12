@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 21:08:18 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 14:34:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ void	ft_minishell(t_data *data)
 			{
 			 	execute(data);
 			}
+			//free_data_all
 			//ft_free_before_loop(data);
 		}	
 		free(line);
@@ -233,7 +234,7 @@ int main(int ac, char **ag, char **envp)
 		return (0);
 	env_setup(&data, envp);
 	ft_minishell(&data);
-	free_data_all(&data, 0);
+	//free_data_all(&data, 0);
 	// start the program
 	// free all the shit
 	//free_data_all(&data, 1);

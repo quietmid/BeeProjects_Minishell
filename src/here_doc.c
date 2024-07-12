@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 22:09:34 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 14:17:32 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void    ft_hd(t_data *data, int i, int j)
                 break;
             }
         }
-	
 		free(line);
 	}
     data->token[i].hd = hd;

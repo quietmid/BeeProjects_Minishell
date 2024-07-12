@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/09 14:47:49 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 14:45:07 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define ERR_FORK "unexpected error while creating fork"
 # define ERR_EXEC "unexpected error while executing process"
 # define ERR_HD "unexpected error while creating heredoc temp file"
+# define ERR_CWD "unexpected error while executing cwd"
 
 # define ERR_CMD "command not found"
 # define ERR_NOFILE "No such file or directory"
@@ -45,6 +46,7 @@ typedef enum error
     XCDOLDPWD,
     XDIR,
     XHD,
+    XCWD,
 }   t_error;
 
 #endif

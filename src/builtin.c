@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/10 21:45:40 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 14:56:56 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,38 +47,9 @@ void	run_env(t_data *data)
 */
 void	run_pwd(t_data *data)
 {
-	//t_env	*node;
-	char	*pwd;
-
-	if (!data->token->cmd[1])
-	{
-		// node = search_env(data, "PWD");
-		// if (node)
-		// {
-		// 	if (node->value)
-		// 		ft_putstr_fd(node->value, 2);
-		// 		ft_putstr_fd("\n", 2);
-		// 	else
-		// 	{
-		// 		pwd = getcwd(NULL, 0);
-		// 		// if (!pwd)
-		// 		// 	"getcwd fail"
-		// 		ft_putendl_fd(pwd, 2);
-		// 	}
-		// }
-		// else
-		// {
-			pwd = getcwd(NULL, 0);
-			// if (!pwd)
-			// 	"getcwd fail"
-			ft_putendl_fd(pwd, 1);
-			data->pwd = pwd;
-	// 	}
-	// }
-// 	else
-// 		"error invalid flag"
-	}
+	ft_putendl_fd(data->pwd, 1);
 }
+
 /*
 * execute builtin export (3/3)
 */
