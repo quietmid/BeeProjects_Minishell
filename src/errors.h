@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 14:45:07 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:51:36 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,21 @@
 
 typedef enum error
 {
-    XSYNTAX,
-    XMALLOC,
-    XPIPE,
-    XFORK,
-    XEXEC,
-    XCMD,
-    XNOFILE,
-    XFD,
-    XDUP,
-    XCD,
-    XCDHOME,
-    XCDOLDPWD,
-    XDIR,
-    XHD,
-    XCWD,
-}   t_error;
+	XSYNTAX,
+	XMALLOC,
+	XPIPE,
+	XFORK,
+	XEXEC,
+	XCMD,
+	XNOFILE,
+	XFD,
+	XDUP,
+	XCD,
+	XCDHOME,
+	XCDOLDPWD,
+	XDIR,
+	XHD,
+	XCWD,
+}	t_error;
 
 #endif

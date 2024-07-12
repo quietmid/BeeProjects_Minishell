@@ -6,217 +6,60 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 14:45:24 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:55:39 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-* iterate thru the env ll and return key(str)node
-*/
-t_env	*search_env(t_data *data, char *str)
-{
-	t_env	*tmp;
-
-	tmp = data->env;
-	//if (tmp->next != NULL)
-	//{
-		while (tmp)
-		{
-			if (ft_strcmp(tmp->key, str) == 0)
-			{
-				return (tmp);
-			}
-			tmp = tmp->next;
-		}
-		return (NULL);
-//	}
-	//return (NULL);
-}
-
-/*
-* update env after cd
-*/
-void	update_env(t_data *data)
-{
-	t_env	*node;
-	//char	*add;
-
-	node = search_env(data, "OLDPWD");
-	if (node)
-	{
-		free(node->value);
-		node->value = data->oldpwd;
-	}
-	node = search_env(data, "PWD");
-	if (node)
-	{
-		free(node->value);
-		node->value = data->pwd;
-	}
-}
-
-/*
-* update the env data in the main struct after cd
-*/
 void	update_data(t_data *data)
 {
-	char *tmp;
-	// if (data->oldpwd)
-	// 	free(data->pwd);data->pwd;
+	char	*tmp;
+
 	data->oldpwd = strdup(data->pwd);
 	if (!data->oldpwd)
-	 	error(data, XMALLOC, EXIT_FAILURE);
-	//free(data->pwd);
-	// //free(data->pwd);
-	// if (data->oldpwd)
-	// 	free(data->oldpwd);
-	// if (data->pwd)
-	// {
-	// 	data->oldpwd = ft_strdup(data->pwd);
-	// 	// if (!data->oldpwd)
-	// 	// 	errormalloc
-	// } 
-	// if (data->pwd)
-	// 	free(data->pwd);
-	// if (data->pwd)
-	// 	free(data->pwd);
+		error(data, XMALLOC, EXIT_FAILURE);
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
+	{
 		error(data, XCWD, EXIT_FAILURE);
+	}
 	data->pwd = tmp;
 }
 
-/*
-* execute cd "dir"
-*/
-char	*check_address(t_data *data, char *add)
+static void	run_cd2(t_data *data, char *str, char **add)
 {
-	char	*res;
-	t_env	*tmp;
-
-	res = NULL;
-	tmp = search_env(data, add);
-	if (tmp != NULL)
-	{
-		res = ft_strdup(tmp->value);
-		if (!res)
-			error(data, XMALLOC, EXIT_FAILURE);
-	}
-	else if (tmp == NULL)
-	{
-		if (strcmp(add,"HOME") == 0)
-			error_cd(data, XCDHOME, NULL, 0);
-		if (strcmp(add,"OLDPWD") == 0)
-			error_cd(data, XCDOLDPWD, NULL, 0);
-	}
-	return (res);
-}
-
-/*
-* execute builtin command cd
-*/
-// void	run_cd(t_data *data)
-// {
-// 	char	*add;
-// 	int		dash;
-// 	char	*tmp;
-
-// 	dash = 0;
-// 	if (!data->token->cmd[1] || data->token->cmd[1][0] == '~')
-// 	{
-// 		add = check_address(data, "HOME");
-// 		if (add == NULL)
-// 			return ;
-// 	}
-// 	else if (data->token->cmd[1][0] == '-')
-// 	{
-// 		dash = 1;
-// 		add = check_address(data, "OLDPWD");
-// 		if (add == NULL)
-// 			return ;
-// 	}
-// 	else if (data->token->cmd[1][0] == '/')
-// 	{
-// 		add = ft_strdup(data->token->cmd[1]);
-// 		if (!add)
-// 			error(data, XMALLOC, EXIT_FAILURE);
-// 	}
-// 	else
-// 	{
-// 		tmp = ft_strdup(data->token->cmd[1]);
-// 		if (!tmp)
-// 			error(data, XMALLOC, EXIT_FAILURE);
-// 		add = ft_strjoin("./", tmp);
-// 		free(tmp);
-// 	}
-// 	if (chdir(add) == 0)
-// 	{
-// 		update_data(data);
-// 		update_env(data);
-// 		if (dash == 1)
-// 			ft_putendl_fd(add, 1);
-// 		free(add);
-// 	}
-// 	else
-// 	{
-// 		error_cd(data, XCD, data->token->cmd[1]);
-// 		return ;	
-// 	}
-	
-// }
-
-/*
-* execute builtin command cd version 2
-*/
-void	run_cd(t_data *data)
-{
-	char	*add;
-	int		dash;
-	char	*tmp;
 	t_env	*tmpenv;
 
-	dash = 0;
-	if (!data->token->cmd[1] || data->token->cmd[1][0] == '~')
+	tmpenv = search_env(data, str);
+	if (tmpenv != NULL)
 	{
-		tmpenv = search_env(data, "HOME");
-		if (tmpenv != NULL)
-		{
-			add = ft_strdup(tmpenv->value);
-			if (!add)
-				error(data, XMALLOC, EXIT_FAILURE);
-		}
-		else if (tmpenv == NULL)
-			error_cd(data, XCDHOME, NULL, 0);
+		*add = ft_strdup(tmpenv->value);
+		if (!*add)
+			error(data, XMALLOC, EXIT_FAILURE);
 	}
-	else if (data->token->cmd[1][0] == '-')
+	else if (tmpenv == NULL)
 	{
-		dash = 1;
-		tmpenv = search_env(data, "OLDPWD");
-		if (tmpenv != NULL)
-		{
-			add = ft_strdup(tmpenv->value);
-			if (!add)
-				error(data, XMALLOC, EXIT_FAILURE);
-		}
-		else if (tmpenv == NULL)
+		if (strcmp(str, "HOME") == 0)
+			error_cd(data, XCDHOME, NULL, 0);
+		else if (strcmp(str, "OLDPWD") == 0)
 			error_cd(data, XCDOLDPWD, NULL, 0);
 	}
-	else if (data->token->cmd[1][0] == '/')
-	{
-		add = ft_strdup(data->token->cmd[1]);
-		if (!add)
-			error(data, XMALLOC, EXIT_FAILURE);
-	}
-	else
-	{
-		tmp = ft_strdup(data->token->cmd[1]);
-		if (!tmp)
-			error(data, XMALLOC, EXIT_FAILURE);
-		add = ft_strjoin("./", tmp);
-		free(tmp);
-	}
+}
+
+static void	run_cd3(t_data *data, char **add)
+{
+	char	*tmp;
+
+	tmp = ft_strdup(data->token->cmd[1]);
+	if (!tmp)
+		error(data, XMALLOC, EXIT_FAILURE);
+	*add = ft_strjoin("./", tmp);
+	free(tmp);
+}
+
+static void	run_chdir(t_data *data, char *add, int dash)
+{
 	if (chdir(add) == 0)
 	{
 		update_data(data);
@@ -226,7 +69,34 @@ void	run_cd(t_data *data)
 		free(add);
 	}
 	else
-	{
 		error_cd(data, XCD, data->token->cmd[1], 0);
+}
+
+void	run_cd(t_data *data)
+{
+	char	*add;
+	int		dash;
+
+	dash = 0;
+	if (!data->token->cmd[1]
+		|| (data->token->cmd[1][0] == '~' && !data->token->cmd[2]))
+	{
+		run_cd2(data, "HOME", &add);
 	}
+	else if (data->token->cmd[1][0] == '-' && !data->token->cmd[2])
+	{
+		dash = 1;
+		run_cd2(data, "OLDPWD", &add);
+	}
+	else if (data->token->cmd[1][0] == '/')
+	{
+		add = ft_strdup(data->token->cmd[1]);
+		if (!add)
+			error(data, XMALLOC, EXIT_FAILURE);
+	}
+	else
+	{
+		run_cd3(data, &add);
+	}
+	run_chdir(data, add, dash);
 }

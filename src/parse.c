@@ -54,6 +54,7 @@ int	extract_redir(char *str, char **redir, int i)
 	}
 	return (i);
 }
+
 char ***redir_argv(char *str, int len, char ***redir)
 {
 	int i;
@@ -98,7 +99,6 @@ int		extract_cmd(char **temp, int i)
 		i += 1;
 	return (i);
 }
-
 
 char **cmd_argv(char **temp, int len)
 {

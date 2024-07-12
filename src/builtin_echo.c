@@ -6,15 +6,12 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:55:45 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/06/28 21:05:47 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:48:49 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-* check validity of echo's -n flag 
-*/
 int	is_nflag(char *str)
 {
 	int	x;
@@ -34,9 +31,6 @@ int	is_nflag(char *str)
 	return (FALSE);
 }
 
-/*
-* execute builtin command echo (-n)
-*/
 void	run_echo(t_data *data)
 {
 	int	x;
@@ -62,7 +56,6 @@ void	run_echo(t_data *data)
 			start++;
 		}
 	}
-	if (n == 0) // || (n == 1 && ft_arr_len(data->token[0].cmd) == 2))
+	if (n == 0)
 		ft_putstr_fd("\n", 1);
 }
-
