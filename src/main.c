@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 14:13:33 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 18:34:27 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,10 @@ void	ft_minishell(t_data *data)
 	char	*line;
 	int		status;
 
-	signal_setup(SIG_PARENT);
+	toggle_input(SIG_PARENT);
 	while (1)
 	{
+		signal_setup(SIG_PARENT);
 		status = 1;
 		line = readline("\033[0;31mminishell-8.8$ \033[0m");
 		if (!line)
@@ -152,8 +153,8 @@ void	ft_minishell(t_data *data)
 		}
 		printf("minishell status: %d\n", status);
 		free(line);
-
 	}
+	toggle_input(SIG_CHILD);
 }
 
 int main(int ac, char **ag, char **envp)

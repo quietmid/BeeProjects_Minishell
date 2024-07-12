@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 14:09:48 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 19:39:34 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ void	sig_handler(int sig)
 }
 void	heredoc_handler(int sig)
 {
+	// printf("sdf\n");
 	if (sig == SIGINT)
 	{
-		g_sigint = 1;
-		printf("hello\n");
+		// g_sigint = 1;
+		printf("\n");
 	} 							
 }
 /*
@@ -44,16 +45,34 @@ void	heredoc_handler(int sig)
 * EOF          ctrl + d
 */
 
-void	signal_setup(int mode)
+void toggle_input(int mode)
 {
 	struct termios term_m;
 
 	tcgetattr(STDIN_FILENO, &term_m);
 	if (mode == SIG_CHILD)
-		term_m.c_lflag |= (ECHO | ICANON);
+		term_m.c_lflag |= ECHOCTL;
 	else
-		term_m.c_lflag &= ~~(ECHO | ICANON);
-	tcsetattr(STDERR_FILENO, TCSANOW, &term_m);
+		term_m.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term_m);
+}
+int    set_signal_handler(int signum, void (*handler)(int))
+{
+    struct sigaction    sa;
+
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = handler;
+    sa.sa_flags = 0;
+    if (sigaction(signum, &sa, NULL) < 0)
+    {
+        perror("minishell: sigaction");
+        return (-1);
+    }
+    return (0);
+}
+
+void	signal_setup(int mode)
+{
 	if (mode == SIG_PARENT)
 	{
 		signal(SIGINT, sig_handler);
@@ -63,7 +82,7 @@ void	signal_setup(int mode)
 	{
 		printf("SIG_heredoc\n");
 		signal(SIGINT, heredoc_handler);
-		signal(SIGQUIT, SIG_IGN);
+		// signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_CHILD)
 	{

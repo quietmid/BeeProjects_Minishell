@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 14:10:15 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 20:04:24 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,67 @@ int    check_heredoc(t_token *t)
 int    ft_hd(t_data *data, int i, int j)
 {
     int hd;
+    ssize_t bytes;
     char *line;
+    char buf[1024];
     char *limiter;
     char *hdfile;
-    
+
     printf("went to hd\n");
     hdfile = ft_itoa(i);
     if (!hdfile)
         error(data, XMALLOC, EXIT_FAILURE);
-    limiter = data->token[i].redir[j][1];
+    limiter = ft_strjoin(data->token[i].redir[j][1], "\n");
     hd = open(hdfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (hd < 0)
 		error(data, XHD, EXIT_FAILURE);
-    signal_setup(SIG_HEREDOC); // just added
+    set_signal_handler(SIGINT, heredoc_handler);
     while (1)
-	{
-        line = readline("> ");
-        if (!line)
+    {
+        write (1, "> ", 2);
+        bytes = read(STDIN_FILENO, buf, 1023);
+        if (bytes < 0)
+        {   
+            printf("bytes = -1\n");
             break ;
-        if (line && *line != '\0')
-        {
-		    if (ft_strcmp(line, limiter))
-                ft_putendl_fd(line, hd);
-            else if (!ft_strcmp(line, limiter))
-                break;
         }
-        if (g_sigint == 1)
+        if (bytes == 0)
+        {
+            printf("\n");
             break ;
-		free(line);
-	}
-    printf("out of the loop\n");
+        }    
+        buf[bytes] = '\0';
+        if (buf && buf[0] != '\0')
+        {
+            if (ft_strcmp(buf, limiter))
+                ft_putstr_fd(buf, hd);
+            else if (!ft_strcmp(buf, limiter))
+                break ;
+        }
+    }
+    printf("out loop\n");
+    // while (1)
+	// {
+    //     line = readline("> ");
+    //     if (!line)
+    //         break ;
+    //     if (line && *line != '\0')
+    //     {
+	// 	    if (ft_strcmp(line, limiter))
+    //             ft_putendl_fd(line, hd);
+    //         else if (!ft_strcmp(line, limiter))
+    //             break;
+    //     }
+    //     if (g_sigint == 1)
+    //         break ;
+	// 	free(line);
+	// }
+    // printf("out of the loop\n");
     if (g_sigint == 1)
     {
-        printf("END\n");
+        free(hdfile);
+        close (hd);
+        g_sigint = 0;
         return (0);
     }
     free(hdfile);

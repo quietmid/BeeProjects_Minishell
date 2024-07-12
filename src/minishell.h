@@ -18,6 +18,7 @@
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
 
 # define TRUE 1
@@ -44,22 +45,6 @@ typedef enum e_mode
 		SIG_HEREDOC = 1,
 		SIG_CHILD = 2,
 }		t_mode;
-
-// typedef enum e_token_type
-// {
-// 	NO_TOKEN, // 0
-// 	PIPE_TOKEN, // | 1
-// 	HERE_DOC_TOKEN, // << 2 
-// 	REDIR_IN_TOKEN, // < 3
-// 	REDIR_OUT_TOKEN, // > 4 
-// 	REDIR_APP_OUT_TOKEN, // >> 5
-// 	STRING_TOKEN, // 6
-// 	DOLLAR_TOKEN, // $ 7
-// 	INFILE_TOKEN, // 8
-// 	OUTFILE_TOKEN, // 9
-// 	OUTFILE_TRUNC_TOKEN, // 10
-// 	DELIM_TOKEN, // 11
-// }	t_token_type;
 
 typedef struct s_token
 {
@@ -127,6 +112,7 @@ t_env	*create_envnode(t_data *data, char *envp);
 void	heredoc_handler(int sig);
 void	signal_setup(int mode);
 void	sig_handler(int sig);
+int    set_signal_handler(int signum, void (*handler)(int));
 void	rl_replace_line(const char *text, int clear_undo);
 
 //Input checking
