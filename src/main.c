@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 15:26:33 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 14:13:33 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ void	ft_minishell(t_data *data)
 			{
 			 	execute(data);
 			}
-		}	
+		}
+		printf("minishell status: %d\n", status);
 		free(line);
 
 	}

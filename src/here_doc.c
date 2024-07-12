@@ -6,11 +6,13 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 17:50:04 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 14:10:15 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_sigint = 0;
 
 /* check for here_doc if it returns -1, no here_doc if its >= 0 then it means here doc found*/
 int    check_heredoc(t_token *t)
@@ -50,20 +52,26 @@ int    ft_hd(t_data *data, int i, int j)
     signal_setup(SIG_HEREDOC); // just added
     while (1)
 	{
-		line = readline("> ");
+        line = readline("> ");
         if (!line)
             break ;
-        if (line)
+        if (line && *line != '\0')
         {
 		    if (ft_strcmp(line, limiter))
                 ft_putendl_fd(line, hd);
             else if (!ft_strcmp(line, limiter))
                 break;
         }
+        if (g_sigint == 1)
+            break ;
 		free(line);
 	}
+    printf("out of the loop\n");
     if (g_sigint == 1)
+    {
         printf("END\n");
+        return (0);
+    }
     free(hdfile);
     data->token[i].hd = hd;
     close(hd);

@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 17:43:37 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 14:09:48 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 /*
 * this handles the signals like ctrl - c | ctrl \ | ctrl d
 */
-int	g_sigint;
 
 void	sig_handler(int sig)
 {
@@ -37,7 +36,6 @@ void	heredoc_handler(int sig)
 	{
 		g_sigint = 1;
 		printf("hello\n");
-		return ;
 	} 							
 }
 /*
