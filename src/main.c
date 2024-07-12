@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 14:34:53 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 21:43:13 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	ft_minishell(t_data *data)
 	char	*line;
 	int		status;
 
-	signal_setup(SIG_PARENT);
+	toggle_input(SIG_PARENT);
 	while (1)
 	{
 		status = 1;
@@ -221,6 +221,7 @@ void	ft_minishell(t_data *data)
 		}	
 		free(line);
 	}
+	toggle_input(SIG_CHILD);
 }
 
 int main(int ac, char **ag, char **envp)

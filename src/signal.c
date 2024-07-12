@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 00:32:21 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 21:57:47 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,8 @@ void	heredoc_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_signal = 1;
 		write (1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		close (0); // we need to close whatever we have been writing into
 	}
 }
 /*
@@ -47,7 +44,22 @@ void	heredoc_handler(int sig)
 * EOF          ctrl + d
 */
 
-void	signal_setup(int mode)
+int    set_signal_handler(int signum, void (*handler)(int))
+{
+    struct sigaction    sa;
+
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = handler;
+    sa.sa_flags = 0;
+    if (sigaction(signum, &sa, NULL) < 0)
+    {
+        perror("minishell: sigaction");
+        return (-1);
+    }
+    return (0);
+}
+
+void	toggle_input(int mode)
 {
 	struct termios term_m;
 
@@ -56,7 +68,11 @@ void	signal_setup(int mode)
 		term_m.c_lflag |= ECHOCTL;
 	else
 		term_m.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDERR_FILENO, TCSANOW, &term_m);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term_m);
+}
+
+void	signal_setup(int mode)
+{
 	if (mode == SIG_PARENT)
 	{
 		signal(SIGINT, sig_handler);
