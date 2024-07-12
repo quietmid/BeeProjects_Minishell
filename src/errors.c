@@ -42,6 +42,8 @@ void	error(t_data *data, t_error code, int e)
 		ft_putstr_fd(ERR_EXEC, 2);
 	if (code == XHD)
 		ft_putstr_fd(ERR_HD, 2);
+	if (code == XCWD)
+		ft_putstr_fd(ERR_CWD, 2);
 	exit (e);
 
 }

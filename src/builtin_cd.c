@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/11 22:04:49 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/12 14:45:24 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ t_env	*search_env(t_data *data, char *str)
 void	update_env(t_data *data)
 {
 	t_env	*node;
-	char	*add;
+	//char	*add;
 
 	node = search_env(data, "OLDPWD");
 	if (node)
 	{
-		add = data->oldpwd;
-		node->value = add;
+		free(node->value);
+		node->value = data->oldpwd;
 	}
 	node = search_env(data, "PWD");
 	if (node)
 	{
-		add = data->pwd;
-		node->value = add;
+		free(node->value);
+		node->value = data->pwd;
 	}
 }
 
@@ -64,13 +64,12 @@ void	update_data(t_data *data)
 {
 	char *tmp;
 	// if (data->oldpwd)
-	// 	free(data->pwd);
-	tmp = data->pwd;
-	data->oldpwd = strdup(tmp);
+	// 	free(data->pwd);data->pwd;
+	data->oldpwd = strdup(data->pwd);
 	if (!data->oldpwd)
-		error(data, XMALLOC, EXIT_FAILURE);
-	free(tmp);
+	 	error(data, XMALLOC, EXIT_FAILURE);
 	//free(data->pwd);
+	// //free(data->pwd);
 	// if (data->oldpwd)
 	// 	free(data->oldpwd);
 	// if (data->pwd)
@@ -85,7 +84,7 @@ void	update_data(t_data *data)
 	// 	free(data->pwd);
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
-		error(data, XMALLOC, EXIT_FAILURE);
+		error(data, XCWD, EXIT_FAILURE);
 	data->pwd = tmp;
 }
 
