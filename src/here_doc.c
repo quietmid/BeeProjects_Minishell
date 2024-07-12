@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
 /*   Updated: 2024/07/12 20:22:39 by pbumidan         ###   ########.fr       */
@@ -13,6 +13,9 @@
 #include "minishell.h"
 
 /* check for here_doc if it returns -1, no here_doc if its >= 0 then it means here doc found*/
+
+int g_signal;
+
 int    check_heredoc(t_token *t)
 {
     int i;
@@ -31,13 +34,13 @@ int    check_heredoc(t_token *t)
     }
     return (0);
 }
-
-void    ft_hd(t_data *data, int i, int j)
+int    ft_hd(t_data *data, int i, int j)
 {
     int hd;
     char *line;
     char *limiter;
  
+    g_signal = 0;
     data->token[i].hdfile = ft_itoa(i);
     if (!data->token[i].hdfile)
         error(data, XMALLOC, EXIT_FAILURE);
@@ -45,15 +48,13 @@ void    ft_hd(t_data *data, int i, int j)
     hd = open(data->token[i].hdfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (hd < 0)
 		error(data, XHD, EXIT_FAILURE);
-    signal_setup(SIG_HEREDOC); // just added
-    while (1)
+    set_signal_handler(SIGINT, heredoc_handler);
+    while (g_signal == 0)
 	{
 		line = readline("> ");
         if (!line)
-        {
             break ;
-        }
-        if (line)
+        if (line && *line != '\0')
         {
 	        if (ft_strcmp(line, limiter))
                 ft_putendl_fd(line, hd);
@@ -65,10 +66,54 @@ void    ft_hd(t_data *data, int i, int j)
         }
 		free(line);
 	}
+    if (g_signal == 1)
+    {
+        g_signal = 0;
+        unlink(data->token[i].hdfile);
+        return (0);
+    }
     data->token[i].hd = hd;
+    return (1);
 }
 
-void    here_doc(t_data *data)
+// void    ft_hd(t_data *data, int i, int j)
+// {
+//     int hd;
+//     char *line;
+//     char *limiter;
+ 
+//     g_signal = 0;
+//     data->token[i].hdfile = ft_itoa(i);
+//     if (!data->token[i].hdfile)
+//         error(data, XMALLOC, EXIT_FAILURE);
+//     limiter = data->token[i].redir[j][1];
+//     hd = open(data->token[i].hdfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+// 	if (hd < 0)
+// 		error(data, XHD, EXIT_FAILURE);
+//     set_signal_handler(SIGINT, heredoc_handler);
+//     while (g_signal == 0)
+// 	{
+// 		line = readline("> ");
+//         if (!line)
+//         {
+//             break ;
+//         }
+//         if (line)
+//         {
+// 	        if (ft_strcmp(line, limiter))
+//                 ft_putendl_fd(line, hd);
+//             else if (!ft_strcmp(line, limiter))
+//             {
+//                 free(line);
+//                 break;
+//             }
+//         }
+// 		free(line);
+// 	}
+//     data->token[i].hd = hd;
+// }
+
+int    here_doc(t_data *data)
 {
     int i;
     int j;
@@ -86,12 +131,13 @@ void    here_doc(t_data *data)
             {
                 if (!ft_strncmp("<<", t[i].redir[j][0], 2))
                 {
-                    ft_hd(data, i, j);
+                    if (!ft_hd(data, i, j))
+                        return (0);
                 }
                 j++;
             }
         }
         i++;
     }
-    return ;
+    return (1);
 }
