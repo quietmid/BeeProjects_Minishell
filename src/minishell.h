@@ -195,7 +195,10 @@ int	ft_strcmp(char *s1, char *s2);
 //safe mem allocation
 void	*ft_safe_calloc(size_t count, size_t size);
 void	*ft_safe_malloc(size_t size);
+void 	safe_dup2(int fd1, int fd2);
 char	*ft_safe_substr(const char *s, unsigned int start, size_t len);
+int 	safe_dup(int fd);
+
 
 //errors
 void	error_msg(char *msg);
