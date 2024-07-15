@@ -32,6 +32,9 @@ static int	ft_putstr_fd2(char *s, int fd)
 }
 
 /* check for here_doc if it returns -1, no here_doc if its >= 0 then it means here doc found*/
+
+int g_signal;
+
 int    check_heredoc(t_token *t)
 {
     int i;
@@ -111,6 +114,43 @@ int    ft_hd(t_data *data, int i, int j)
     close(hd);
     return (1);
 }
+
+// void    ft_hd(t_data *data, int i, int j)
+// {
+//     int hd;
+//     char *line;
+//     char *limiter;
+ 
+//     g_signal = 0;
+//     data->token[i].hdfile = ft_itoa(i);
+//     if (!data->token[i].hdfile)
+//         error(data, XMALLOC, EXIT_FAILURE);
+//     limiter = data->token[i].redir[j][1];
+//     hd = open(data->token[i].hdfile, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+// 	if (hd < 0)
+// 		error(data, XHD, EXIT_FAILURE);
+//     set_signal_handler(SIGINT, heredoc_handler);
+//     while (g_signal == 0)
+// 	{
+// 		line = readline("> ");
+//         if (!line)
+//         {
+//             break ;
+//         }
+//         if (line)
+//         {
+// 	        if (ft_strcmp(line, limiter))
+//                 ft_putendl_fd(line, hd);
+//             else if (!ft_strcmp(line, limiter))
+//             {
+//                 free(line);
+//                 break;
+//             }
+//         }
+// 		free(line);
+// 	}
+//     data->token[i].hd = hd;
+// }
 
 int    here_doc(t_data *data)
 {

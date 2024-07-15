@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 19:39:34 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 21:57:47 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	heredoc_handler(int sig)
 	// printf("sdf\n");
 	if (sig == SIGINT)
 	{
-		// g_sigint = 1;
-		printf("\n");
-	} 							
+		g_signal = 1;
+		write (1, "\n", 1);
+	}
 }
 /*
 * SIGINT - interrupt signal (ctrl + c)
@@ -45,17 +45,6 @@ void	heredoc_handler(int sig)
 * EOF          ctrl + d
 */
 
-void toggle_input(int mode)
-{
-	struct termios term_m;
-
-	tcgetattr(STDIN_FILENO, &term_m);
-	if (mode == SIG_CHILD)
-		term_m.c_lflag |= ECHOCTL;
-	else
-		term_m.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term_m);
-}
 int    set_signal_handler(int signum, void (*handler)(int))
 {
     struct sigaction    sa;
@@ -70,6 +59,19 @@ int    set_signal_handler(int signum, void (*handler)(int))
     }
     return (0);
 }
+
+void	toggle_input(int mode)
+{
+	struct termios term_m;
+
+	tcgetattr(STDIN_FILENO, &term_m);
+	if (mode == SIG_CHILD)
+		term_m.c_lflag |= ECHOCTL;
+	else
+		term_m.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term_m);
+}
+
 
 void	signal_setup(int mode)
 {

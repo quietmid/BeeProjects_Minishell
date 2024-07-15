@@ -5,27 +5,32 @@ NAME = minishell
 
 LIBFT = ./libft/libft.a	
 
-SRC = ./src/main.c \
-	  ./src/signal.c \
-	  ./src/builtin_init.c \
-	  ./src/builtin_echo.c \
-	  ./src/builtin_cd.c \
-	  ./src/builtin.c \
-	  ./src/envp_init.c \
-	  ./src/utils.c \
-	  ./src/parse.c \
-	  ./src/parse_util.c \
-	  ./src/utils_helpers.c \
-	  ./src/pipes.c \
-	  ./src/safe_malloc.c \
-	  ./src/errors.c \
-	  ./src/here_doc.c \
-	  ./src/prompt_check.c \
-	  ./src/expand.c \
-	  ./src/expand_helpers.c \
-	  ./src/unquotes.c \
-	  ./src/free_all.c \
-	
+SRC =	./src/builtin.c \
+		./src/builtin_cd.c \
+		./src/builtin_echo.c \
+		./src/builtin_env.c \
+		./src/builtin_export.c \
+		./src/builtin_init.c \
+		./src/envp_init.c \
+		./src/errors.c \
+		./src/exec_child.c \
+		./src/exec_redir_builtin.c \
+		./src/exec_redirect.c \
+ 		./src/exec_redirect_fd.c \
+		./src/expand.c \
+		./src/expand_helpers.c \
+		./src/free_all.c \
+		./src/here_doc.c \
+		./src/main.c \
+		./src/parse.c \
+		./src/parse_util.c \
+		./src/pipes.c \
+		./src/prompt_check.c \
+		./src/safe_malloc.c \
+		./src/signal.c \
+		./src/unquotes.c \
+		./src/utils.c \
+		./src/utils_helpers.c \
 
 #BSRC =
 

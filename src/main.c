@@ -6,77 +6,12 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 18:34:27 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/12 22:26:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-* support find_path_cmd fxn (2/2)
-*/
-char	**prepare_paths(t_data *data, t_env *env)
-{
-	char	**paths;
-	char	**res;
-	char	*tmp;
-	char 	*str;
-	int		x;
-
-	paths = ft_split(env->value, ':');
-	if (!paths)
-		error(data, XMALLOC, EXIT_FAILURE);
-	res = (char **)malloc((sizeof(char *)) * (ft_arr_len(paths) + 1));
-	if (!res)
-		error(data, XMALLOC, EXIT_FAILURE);
-	x = 0;
-	while (paths[x])
-	{
-		str = ft_strdup(paths[x]);
-		if (!str)
-			error(data, XMALLOC, EXIT_FAILURE);
-		free(paths[x]);
-		tmp = ft_strjoin(str, "/");
-		if (!tmp)
-			error(data, XMALLOC, EXIT_FAILURE);
-		res[x] = tmp;
-		x++;
-	}
-	res[x] = NULL;
-	return (res);
-}
-
-/*
-* look for the envp:path where the cmd belong  before execve (1/2)
-*/
-char	*find_path_cmd(t_data *data, int i)
-{
-	char	**tmp;
-	char	*cmd;
-	int 	x;
-
-	tmp = prepare_paths(data, search_env(data, "PATH"));
-	if (!tmp)
-	 	error(data, XMALLOC, EXIT_FAILURE);
-	x = 0;
-	while (tmp[x])
-	{
-		if (data->token[i].cmd[0])
-		{
-			cmd = ft_strjoin(tmp[x], data->token[i].cmd[0]);
-			if (!cmd)
-			 	error(data, XMALLOC, EXIT_FAILURE);
-			if (access(cmd, 0) == 0)
-			{
-				ft_free_arr(tmp);
-				return (cmd);
-			}
-			free(cmd);
-			x++;
-		} 
-	}
-	return (NULL);
-}
 
 /* TEST EXECUTE*/ //delete later
 void	execute(t_data	*data)
@@ -88,7 +23,7 @@ void	execute(t_data	*data)
 		exec_builtin(data);
 		if (data->token[0].redir != NULL)
 			restore_stdio(data, 0);
-		free_single_token(data, 0);	
+		free_single_token(data, 0);
 	}
 	else
 	{
@@ -102,7 +37,9 @@ void	execute(t_data	*data)
 			waitpid(data->pid[x], &data->status, 0);
 			x++;
 		}
-		dprintf(1, "status: %d\n", data->status);
+		dprintf(1, "status: %d\n", WEXITSTATUS(data->status));
+		ft_free_token(data);
+		ft_free_before_loop(data);
 	}
 	return ;
 }
@@ -126,7 +63,7 @@ void	signal_d()
 		write (2, "exit", 5);
 	exit (0);
 }
-/* TEST MINISHELL */ //delete later
+
 void	ft_minishell(t_data *data)
 {
 	char	*line;
@@ -150,8 +87,7 @@ void	ft_minishell(t_data *data)
 			{
 			 	execute(data);
 			}
-		}
-		printf("minishell status: %d\n", status);
+    }
 		free(line);
 	}
 	toggle_input(SIG_CHILD);
@@ -168,7 +104,7 @@ int main(int ac, char **ag, char **envp)
 		return (0);
 	env_setup(&data, envp);
 	ft_minishell(&data);
-	free_data_all(&data, 0);
+	//free_data_all(&data, 0);
 	// start the program
 	// free all the shit
 	//free_data_all(&data, 1);

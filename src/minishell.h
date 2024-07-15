@@ -54,6 +54,7 @@ typedef struct s_token
 	int				in;
 	int				out;
 	int				hd;
+	char			*hdfile;
 	char			**cmd; // free
 	char			***redir; // free 
 
@@ -75,7 +76,6 @@ typedef struct s_data
 	int				status;
 	int				arr_len;
 	int				hd; //here_doc
-	int				error_code;
 	char			**paths; // free
 	char			**env_arr; // free
 	char			*path_cmd; // free
@@ -107,8 +107,26 @@ void	env_to_arr(t_data *data);
 int		ft_envsize(t_env *lst);
 void	update_data(t_data *data);
 t_env	*create_envnode(t_data *data, char *envp);
+void	update_env(t_data *data);
+
+// redirects fd
+void redir_hd_fd(t_data *data, int x);
+void redir_in_fd(t_data *data, int x);
+void redir_out_fd(t_data *data, int x);
+void redir_append_fd(t_data *data, int x);
+
+
+// redirect
+void	redirect(t_data *data, int x);
+int		is_redir(t_data *data, int x, char *str);
+
+
+//child
+void child_process(t_data *data, int x);
 
 // signals
+int    set_signal_handler(int signum, void (*handler)(int));
+void	toggle_input(int mode);
 void	heredoc_handler(int sig);
 void	signal_setup(int mode);
 void	sig_handler(int sig);
@@ -122,27 +140,17 @@ char 	syntax_check(char *line);
 char	quotes_check(char *line);
 
 // Parsing
-// void	parse(t_data *data, const char *line);
 void	space_replace(char *str);
 void	pipe_replace(char *str);
-//void	assign_token(char *input, t_data *data, int idx);
-// void	array_join(t_data *data);
-//void	array_join(t_data *data, t_parse *u);
-// void	init_token(t_data *data, char **str);
-//void	assign_token(char *input, t_data *data, int i);
-//int		cmd_len(t_data *data, int i);
 int		parse_start(t_data *data, char *line);
 int		pipe_scans(char *line);
 char quote_finder(char c, char q);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
-// t_token assign_token(char *input, int i);
 void	assign_token(char *input, t_token *token);
 t_token	init_token(char *str, int i);
 
 //expand
-// void check_expand(t_token *token, t_data *data);
-// void check_expand(char *s, t_data *d);
 char *check_expand(char *s, t_data *d);
 char *expanding(t_data *data, char *str, int s);
 char *easy_expanding(char *str, int s);
@@ -158,6 +166,9 @@ void    ft_unquotes(t_token *token);
 int    check_heredoc(t_token *t);
 int    here_doc(t_data *data);
 int    ft_hd(t_data *data, int i, int j);
+// void    here_doc(t_data *data);
+// void    ft_hd(t_data *data, int i, int j);
+
 
 //pipes
 void	create_pipes(t_data *data);
@@ -201,5 +212,6 @@ void	ft_free_tri(char ***tri);
 void	ft_free_token(t_data *s_data);
 void	ft_free_env(t_env *env);
 void	free_single_token(t_data *data, int i);
+void	ft_free_before_loop(t_data *data);
 
 #endif
