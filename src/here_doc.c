@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/15 09:46:40 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/15 14:00:31 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int    check_heredoc(t_token *t)
     }
     return (0);
 }
-
+// 15_7 need another char *str that's not local so I can expand it when it comes to $ sign. it seems like in here_doc, it quotes at all the time, do I need to follow that?
 int    ft_hd(t_data *data, int i, int j)
 {
     int hd;
