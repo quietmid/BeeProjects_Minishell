@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/11 15:28:59 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/15 09:49:14 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char *expand_errcode(t_data *data, char *str, int s)
     else
         str = ft_strdup("");
     result = ft_strjoin(result, str);
+    free(err_code);
+    free(str);
     return (result);
 }
 
