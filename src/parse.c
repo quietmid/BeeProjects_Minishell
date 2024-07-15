@@ -175,7 +175,7 @@ static void print_redir_argv(char ***redir)
 		i++;
     }
 }
-
+//debug
 static void print_cmd_argv(char **redir)
 {
 	int i;

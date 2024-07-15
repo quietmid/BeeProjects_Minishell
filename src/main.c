@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 22:26:33 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:26:05 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	execute(t_data	*data)
 			waitpid(data->pid[x], &data->status, 0);
 			x++;
 		}
-		dprintf(1, "status: %d\n", WEXITSTATUS(data->status));
+		// dprintf(1, "status: %d\n", WEXITSTATUS(data->status));
 		ft_free_token(data);
 		ft_free_before_loop(data);
 	}
@@ -84,9 +84,8 @@ void	ft_minishell(t_data *data)
 			if (status)
 				status = parse_start(data, line);
 			if (status)
-			{
 			 	execute(data);
-			}
+
     }
 		free(line);
 	}

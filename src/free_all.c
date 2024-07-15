@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/11 21:37:19 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:32:22 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	ft_free_token(t_data *data)
 		i++;
 	}
 	free(data->token);
+	printf("token freed\n");
 }
 
 void	free_single_token(t_data *data, int i)
@@ -146,8 +147,8 @@ void free_data_all(t_data *data, int type)
 
 	// if (type == 1)
 	// 	printf("here\n");
-	// if (data->token)
-	//  	ft_free_token(data);
+	if (data->token)
+	 	ft_free_token(data);
     // // if (data->pid)
     // //     free(data->pid);
     // if (data->pipe)

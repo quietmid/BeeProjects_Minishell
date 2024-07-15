@@ -31,6 +31,7 @@ SRC =	./src/builtin.c \
 		./src/unquotes.c \
 		./src/utils.c \
 		./src/utils_helpers.c \
+		./src/safe_func.c \
 
 #BSRC =
 
