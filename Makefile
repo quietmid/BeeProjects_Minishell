@@ -35,7 +35,7 @@ SRC =	./src/builtin.c \
 #BSRC =
 
 CC = cc
-CFLAGS = -g -fsanitize=address -Wall -Wextra
+CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
 
 # -g -fsanitize=address
 
