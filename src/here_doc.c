@@ -6,13 +6,30 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/13 00:39:30 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/13 18:10:41 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int g_sigint = 0;
+
+static int	ft_putstr_fd2(char *s, int fd)
+{
+	int	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+    if (i > 0)
+        return (i);
+    return (0);
+}
 
 /* check for here_doc if it returns -1, no here_doc if its >= 0 then it means here doc found*/
 int    check_heredoc(t_token *t)
@@ -37,12 +54,13 @@ int    check_heredoc(t_token *t)
 int    ft_hd(t_data *data, int i, int j)
 {
     int hd;
-    ssize_t bytes;
     char *line;
     char buf[1024];
+    char tmp_buf[1];
     char *limiter;
     char *hdfile;
-    int wr;
+    ssize_t bytes;
+    ssize_t t_bytes;
 
     printf("went to hd\n");
     hdfile = ft_itoa(i);
@@ -53,41 +71,36 @@ int    ft_hd(t_data *data, int i, int j)
 	if (hd < 0)
 		error(data, XHD, EXIT_FAILURE);
     set_signal_handler(SIGINT, heredoc_handler);
-    // wr = 0;
+    t_bytes = 0;
     while (1)
     {
-        write (1, "> ", 2);
-        bytes = read(STDIN_FILENO, buf, 1023);
+        if (t_bytes == 0)
+            write (1, "> ", 2);
+        bytes = read(STDIN_FILENO, tmp_buf, 1);
         if (bytes < 0)
             break ;
-        buf[bytes] = '\0';
         if (bytes == 0)
         {
-            printf("\n");
-            break ;
+            if (t_bytes == 0)
+            {
+                printf("\n");
+                break ;
+            }
+            else
+                continue ; 
         }
-        if (!ft_strcmp(buf, limiter))
-            break ;
-        ft_putstr_fd(buf, hd);
+        buf[t_bytes] = tmp_buf[0];
+        t_bytes ++;
+        buf[t_bytes] = '\0';
+        if (tmp_buf[0] == '\n')
+        {
+            if (!ft_strcmp(buf, limiter))
+                break ;
+            if (ft_putstr_fd2(buf, hd) != 0)
+                t_bytes = 0;
+        }
     }
     printf("out loop\n");
-    // while (1)
-	// {
-    //     line = readline("> ");
-    //     if (!line)
-    //         break ;
-    //     if (line && *line != '\0')
-    //     {
-	// 	    if (ft_strcmp(line, limiter))
-    //             ft_putendl_fd(line, hd);
-    //         else if (!ft_strcmp(line, limiter))
-    //             break;
-    //     }
-    //     if (g_sigint == 1)
-    //         break ;
-	// 	free(line);
-	// }
-    // printf("out of the loop\n");
     if (g_sigint == 1)
     {
         free(hdfile);
