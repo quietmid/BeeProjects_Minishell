@@ -18,12 +18,14 @@
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
 
 # define TRUE 1
 # define FALSE 0
 
-extern int g_signal;
+extern int	g_sigint;
+
 //struct
 
 typedef enum e_metachar
@@ -43,22 +45,6 @@ typedef enum e_mode
 		SIG_HEREDOC = 1,
 		SIG_CHILD = 2,
 }		t_mode;
-
-// typedef enum e_token_type
-// {
-// 	NO_TOKEN, // 0
-// 	PIPE_TOKEN, // | 1
-// 	HERE_DOC_TOKEN, // << 2 
-// 	REDIR_IN_TOKEN, // < 3
-// 	REDIR_OUT_TOKEN, // > 4 
-// 	REDIR_APP_OUT_TOKEN, // >> 5
-// 	STRING_TOKEN, // 6
-// 	DOLLAR_TOKEN, // $ 7
-// 	INFILE_TOKEN, // 8
-// 	OUTFILE_TOKEN, // 9
-// 	OUTFILE_TRUNC_TOKEN, // 10
-// 	DELIM_TOKEN, // 11
-// }	t_token_type;
 
 typedef struct s_token
 {
@@ -144,6 +130,8 @@ void	toggle_input(int mode);
 void	heredoc_handler(int sig);
 void	signal_setup(int mode);
 void	sig_handler(int sig);
+void toggle_input(int mode);
+int    set_signal_handler(int signum, void (*handler)(int));
 void	rl_replace_line(const char *text, int clear_undo);
 
 //Input checking
@@ -176,10 +164,11 @@ void    ft_unquotes(t_token *token);
 
 //here_doc
 int    check_heredoc(t_token *t);
-int    ft_hd(t_data *data, int i, int j);
 int    here_doc(t_data *data);
+int    ft_hd(t_data *data, int i, int j);
 // void    here_doc(t_data *data);
 // void    ft_hd(t_data *data, int i, int j);
+
 
 //pipes
 void	create_pipes(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/12 22:20:41 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/15 09:49:14 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ char *expand_errcode(t_data *data, char *str, int s)
     char *result;
     char *err_code;
     int len;
-   // t_data *tmp; //delete
-
-    //tmp = data; // delete
+  
     len = ft_strlen(str);
     if (len == 2)
         result = ft_safe_substr("echo ", 0, 5);
@@ -75,6 +73,8 @@ char *expand_errcode(t_data *data, char *str, int s)
     else
         str = ft_strdup("");
     result = ft_strjoin(result, str);
+    free(err_code);
+    free(str);
     return (result);
 }
 

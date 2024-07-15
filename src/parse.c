@@ -243,6 +243,7 @@ int	parse_start(t_data *data, char *line)
 		i++;
 	}
 	ft_free_arr(input);
+	free(line);
 	if (data->token != NULL)
 	{
 		if (!here_doc(data))

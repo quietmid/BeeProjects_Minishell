@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
 /*   Updated: 2024/07/12 21:57:47 by jlu              ###   ########.fr       */
@@ -32,6 +32,7 @@ void	sig_handler(int sig)
 }
 void	heredoc_handler(int sig)
 {
+	// printf("sdf\n");
 	if (sig == SIGINT)
 	{
 		g_signal = 1;
@@ -71,6 +72,7 @@ void	toggle_input(int mode)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_m);
 }
 
+
 void	signal_setup(int mode)
 {
 	if (mode == SIG_PARENT)
@@ -80,8 +82,9 @@ void	signal_setup(int mode)
 	}
 	else if (mode == SIG_HEREDOC)
 	{
+		printf("SIG_heredoc\n");
 		signal(SIGINT, heredoc_handler);
-		signal(SIGQUIT, SIG_IGN);
+		// signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_CHILD)
 	{

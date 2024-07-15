@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
 /*   Updated: 2024/07/12 22:26:33 by pbumidan         ###   ########.fr       */
@@ -72,6 +72,7 @@ void	ft_minishell(t_data *data)
 	toggle_input(SIG_PARENT);
 	while (1)
 	{
+		signal_setup(SIG_PARENT);
 		status = 1;
 		line = readline("\033[0;31mminishell-8.8$ \033[0m");
 		if (!line)
@@ -86,9 +87,7 @@ void	ft_minishell(t_data *data)
 			{
 			 	execute(data);
 			}
-			//free_data_all
-			//ft_free_before_loop(data);
-		}	
+    }
 		free(line);
 	}
 	toggle_input(SIG_CHILD);
