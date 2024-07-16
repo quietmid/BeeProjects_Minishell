@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/16 14:56:22 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/16 17:25:55 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int    check_heredoc(t_token *t)
 static int hd_init(t_data *data, int i)
 {
     int fd;
-    
+
     data->token[i].hdfile = ft_itoa(i);
     if (!data->token[i].hdfile)
         error(data, XMALLOC, EXIT_FAILURE);

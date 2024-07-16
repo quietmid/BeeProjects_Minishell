@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/15 17:32:22 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/16 17:24:18 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,11 @@ void	ft_free_token(t_data *data)
 		printf("debug\n");
 		if (data->token[i].redir)
 			ft_free_tri(data->token[i].redir);
-		if (data->token[i].hdfile)
+		if (data->token[i].hd)
+		{
+			printf("freehdfile\n");
 			free(data->token[i].hdfile);
+		}
 		i++;
 	}
 	free(data->token);
