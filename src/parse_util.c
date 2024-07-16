@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:32:36 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 19:14:15 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:36:16 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,34 @@ int	pipe_scans(char *line)
 	}
 	i += 1;
 	return (i);
+}
+
+int	calcu_redir(char *str)
+{
+	int i;
+	int num_redir;
+	char q;
+
+	q = 0;
+	i = 0;
+	num_redir = 0;
+	while (str[i])
+	{
+		q = quote_finder(str[i], q);
+		if (ft_isredir(str[i]) && str[i + 1] == str[i] && !q)
+		{
+			num_redir += 1;
+			i += 2;
+		}
+		else if (ft_isredir(str[i]) && !q)
+		{
+			num_redir += 1;
+			i++;
+		}
+		else
+			i++;
+	}
+	return (num_redir);
 }
 
 char quote_finder(char c, char q)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/15 09:49:14 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/16 14:56:43 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,7 @@ char *easy_expanding(char *str, int s)
     result = ft_strjoin(result, str);
     return (result);
 }
-// takes in the token and check if there is a $ and if there are quotes
-/*
-    if the first quote is d_q, then even if the $ is in s_q, it WILL expand
-    if the first quote is s_q, then it won't expand 
-*/
+
 char  *check_expand(char *s, t_data *d)
 {
     size_t i;

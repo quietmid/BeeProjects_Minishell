@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/15 18:02:11 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/16 14:53:22 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-* this file should look to initialize minishell with the signal
-*/
-
-/*
-* this handles the signals like ctrl - c | ctrl \ | ctrl d
+* SIGINT - interrupt signal (ctrl + c)
+* SIGQUIT - ctrl + \  does nothing
+* EOF          ctrl + d
 */
 
 void	sig_handler(int sig)
@@ -32,7 +30,6 @@ void	sig_handler(int sig)
 }
 void	heredoc_handler(int sig)
 {
-	// printf("sdf\n");
 	if (sig == SIGINT)
 	{
 		g_sigint = 1;
@@ -40,11 +37,6 @@ void	heredoc_handler(int sig)
 		write (1, "\n", 1);
 	}
 }
-/*
-* SIGINT - interrupt signal (ctrl + c)
-* SIGQUIT - ctrl + \  does nothing
-* EOF          ctrl + d
-*/
 
 int    set_signal_handler(int signum, void (*handler)(int))
 {
@@ -73,7 +65,6 @@ void	toggle_input(int mode)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_m);
 }
 
-
 void	signal_setup(int mode)
 {
 	if (mode == SIG_PARENT)
@@ -83,9 +74,8 @@ void	signal_setup(int mode)
 	}
 	else if (mode == SIG_HEREDOC)
 	{
-		printf("SIG_heredoc\n");
 		signal(SIGINT, heredoc_handler);
-		// signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_CHILD)
 	{

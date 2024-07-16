@@ -120,7 +120,6 @@ void redir_append_fd(t_data *data, int x);
 void	redirect(t_data *data, int x);
 int		is_redir(t_data *data, int x, char *str);
 
-
 //child
 void child_process(t_data *data, int x);
 
@@ -144,7 +143,10 @@ void	space_replace(char *str);
 void	pipe_replace(char *str);
 int		parse_start(t_data *data, char *line);
 int		pipe_scans(char *line);
-char quote_finder(char c, char q);
+int		calcu_redir(char *str);
+int		extract_redir(char *str, char **redir, int i);
+int		extract_cmd(char **temp, int i);
+char 	quote_finder(char c, char q);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
 void	assign_token(char *input, t_token *token);
@@ -180,17 +182,19 @@ void	redirect_builtin(t_data *data, int x);
 void	restore_stdio(t_data *data, int x);
 
 //basic utils
-char	**ft_arr_copy(char **arr);
-int		ft_arr_len(char **array);
 void	ft_arr_print(char **arr);
+char	**ft_arr_copy(char **arr);
+char 	*find_end(char *str);
+int		ft_arr_len(char **array);
 int		ft_envsize(t_env *lst);
 int 	ft_isspace(char c);
 int 	ft_isredir(char c);
 int 	ft_ismeta(char c);
 int		ft_isquote(char c);
 int 	empty_line(char *input);
-char 	*find_end(char *str);
-int	ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
+int 	skip_whitespace(char *str, int i);
+int		skip_whitespace2(char *str, int i);
 
 //safe mem allocation
 void	*ft_safe_calloc(size_t count, size_t size);

@@ -18,9 +18,6 @@ char	quotes_check(char *line)
 	return (q);
 }
 
-// add the error function that prints the char that's the syntax issue
-
-/* if i return an int here, maybe I can use that find the symbols to return in the error msg?*/
 char syntax_check(char *line)
 {
     int i;
