@@ -164,12 +164,15 @@ int	parse_start(t_data *data, char *line)
 		print_cmd_argv(data->token[i].cmd);
 		//debug
 		//free(input[i]);
-		// free(exp_line);
+		free(exp_line);
 		i++;
 	}
 	// input[i] = NULL;
-	ft_free_arr(tmp);
-	tmp = NULL;
+	// if (tmp)
+	// {
+	// 	ft_free_arr(tmp);
+	// 	tmp = NULL;
+	// }
 	// ft_free_arr(input);
 	// input = NULL;
 	if (data->token != NULL)
