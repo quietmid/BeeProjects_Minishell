@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/17 14:31:45 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/17 16:48:06 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,22 +106,21 @@ char  *check_expand(char *s, t_data *d)
     size_t i;
     size_t len;
     char q; // " = 34 & ' = 39
+    char *tmp;
 
     q = 0;
     i = 0;
     len = ft_strlen(s);
     while (i < len)
     {
-        if (!q && ft_isquote(s[i]))
-            q = s[i];
-        else if (s[i] == q)
-            q = 0;
+        tmp = s;
+        q = quote_finder(s[i], q);
         if (s[i] == 36 && s[i + 1] =='?' && (q == 34 || q == 0))
-            s = expand_errcode(d, s, i);
-        if ((s[i] == 36 && ((s[i + 1] == '_') || ft_isalpha(s[i + 1])) && (q == 34 || q == 0)))
-            s = expanding(d, s, i);
-        if ((s[i] == 36 && !ft_isspace(s[i + 1]) && (q == 34 || q == 0)))
-            s = easy_expanding(s, i);
+            s = expand_errcode(d, tmp, i);
+        else if ((s[i] == 36 && ((s[i + 1] == '_') || ft_isalpha(s[i + 1])) && (q == 34 || q == 0)))
+            s = expanding(d, tmp, i);
+        else if ((s[i] == 36 && !ft_isspace(s[i + 1]) && (q == 34 || q == 0)))
+            s = easy_expanding(tmp, i);
         len = ft_strlen(s);
         i++;
     }

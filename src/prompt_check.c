@@ -50,8 +50,10 @@ char syntax_check(char *line)
 int prompt_check(t_data *data, char *line)
 {
     char c;
+    size_t i;
 
     c = 0;
+    i = 0;
     c = quotes_check(line);
     if (c)
     {
@@ -65,5 +67,8 @@ int prompt_check(t_data *data, char *line)
         error_cd(data, XSYNTAX, NULL, c);
         return (0);
     }
+    i = skip_whitespace(line, i);
+    if (i == ft_strlen(line))
+        return (0);
     return (1);
 }
