@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/16 13:54:57 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/17 14:24:03 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,10 @@ void	ft_minishell(t_data *data)
 			if (status)
 			 	execute(data);
 		}
+		if (line)
+			free(line);
     }
-	free(line);
+	// free(line);
 	toggle_input(SIG_CHILD);
 }
 

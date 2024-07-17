@@ -24,8 +24,7 @@ char ***redir_argv(char *str, int len, char ***redir)
 	q = 0;
 	while (str[i])
 	{
-		q = quote_finder(str[i], q);
-		if (ft_isredir(str[i]) && !q)
+		if (ft_isredir(str[i]) && !(quote_finder(str[i], q)))
 		{
 			i = extract_redir(str, redir[len], i);
 			i = skip_whitespace(str, i);
@@ -35,7 +34,8 @@ char ***redir_argv(char *str, int len, char ***redir)
 				redir[len][1] = ft_safe_substr(str, x, i - x);
 			redir[len++][2] = NULL;
 		}
-		i++;
+		else
+			i++;
 	}
 	redir[len] = NULL;
 	return (redir);

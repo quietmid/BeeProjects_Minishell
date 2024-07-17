@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/16 14:56:43 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/17 14:31:45 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,27 @@ char *expand_errcode(t_data *data, char *str, int s)
 {
     char *result;
     char *err_code;
+    char *res;
+    char *tmp;
     int len;
   
     len = ft_strlen(str);
     if (len == 2)
-        result = ft_safe_substr("echo ", 0, 5);
+        tmp = ft_safe_substr("echo ", 0, 5);
     else
     {
-        result = ft_safe_malloc(sizeof(char) * (len - 2));
-        ft_strlcpy(result, str, s + 1);
+        tmp = ft_safe_malloc(sizeof(char) * (len - 2));
+        ft_strlcpy(tmp, str, s + 1);
     }
     err_code = ft_itoa(WEXITSTATUS(data->status)); //data->status!!!
-    result = ft_strjoin(result, err_code);
+    res = ft_strjoin(tmp, err_code);
+    free(tmp);
     if (len > (s + 2))
         str = ft_safe_substr(str, s + 2, len - s - 2);
     else
         str = ft_strdup("");
-    result = ft_strjoin(result, str);
+    result = ft_strjoin(res, str);
+    free(res);
     free(err_code);
     free(str);
     return (result);
