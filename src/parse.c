@@ -139,37 +139,39 @@ static void print_cmd_argv(char **redir)
 
 int	parse_start(t_data *data, char *line)
 {
-	char **input;
+	char *exp_line;
 	char **tmp;
+
 	int i;
 	
 	i = 0;
 	data->cmd_count = pipe_scans(line);
 	data->token = malloc(sizeof(t_token) * data->cmd_count);
-	// input = malloc(sizeof(char *) * (data->cmd_count + 1));
 	if (!data->token)
 		return (0);
-	input = ft_calloc(data->cmd_count + 1, sizeof(char *));
 	tmp = ft_split(line, 31);
 	while (tmp[i])
 	{
 		data->token[i] = init_token(tmp[i], i);
-		input[i] = ft_strdup(check_expand(tmp[i], data));
-		assign_token(input[i], &data->token[i]);
+		exp_line = check_expand(tmp[i], data);
+		assign_token(exp_line, &data->token[i]);
 		data->hd += check_heredoc(&data->token[i]);
+		printf("exp_line: %s\n", exp_line);
 		ft_unquotes(&data->token[i]);
 		//debug
-		printf("%s\n", input[i]);
 		printf("token idx: %d \n", data->token[i].idx);
 		print_redir_argv(data->token[i].redir);
 		print_cmd_argv(data->token[i].cmd);
 		//debug
 		//free(input[i]);
+		// free(exp_line);
 		i++;
 	}
-	input[i] = NULL;
+	// input[i] = NULL;
 	ft_free_arr(tmp);
-	ft_free_arr(input);
+	tmp = NULL;
+	// ft_free_arr(input);
+	// input = NULL;
 	if (data->token != NULL)
 	{
 		if (!here_doc(data))
