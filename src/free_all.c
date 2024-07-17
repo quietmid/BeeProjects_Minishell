@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/17 16:00:43 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/17 19:14:01 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	ft_free_arr(char **arr)
 	{
 		// printf("free str: %s\n", arr[x]);
 		free(arr[x]);
+		// arr[x] = NULL;
 		x++;
 	}
 	free(arr);
-	arr = NULL;
 }
 
 void	ft_free_before_loop(t_data *data)

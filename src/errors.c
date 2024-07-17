@@ -87,8 +87,8 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 			perror(var);
 	}
 	// free_all(data);
-	//ft_free_token(data);
-	//ft_free_before_loop(data);
+	ft_free_token(data);
+	ft_free_before_loop(data);
 	//free_data_all(data, 0);
 	//data->error_code =  (WEXITSTATUS(e));
 	data->status = (WEXITSTATUS(e));
