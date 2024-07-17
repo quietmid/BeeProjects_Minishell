@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/12 19:51:36 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:26:06 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define ERR_EXEC "unexpected error while executing process"
 # define ERR_HD "unexpected error while creating heredoc temp file"
 # define ERR_CWD "unexpected error while executing cwd"
+# define ERR_EXP "not a valid identifier"
 
 # define ERR_CMD "command not found"
 # define ERR_NOFILE "No such file or directory"
@@ -47,6 +48,7 @@ typedef enum error
 	XDIR,
 	XHD,
 	XCWD,
+	XEXP,
 }	t_error;
 
 #endif

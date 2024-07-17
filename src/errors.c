@@ -57,6 +57,12 @@ void error_cd(t_data *data, t_error code, char *var, char c)
 		ft_putstr_fd("cd: ", 2);
 		perror(var);
 	}
+	else if (code == XEXP)
+	{
+		ft_putstr_fd("export: ", 2);
+		ft_putchar_fd(c, 2);
+		ft_putendl_fd(": "ERR_EXP, 2);
+	}
 	else if (code == XCDHOME)
 		ft_putendl_fd(ERR_HOME, 2);
 	else if (code == XCDOLDPWD)
@@ -86,11 +92,6 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 		else
 			perror(var);
 	}
-	// free_all(data);
-	//ft_free_token(data);
-	//ft_free_before_loop(data);
-	//free_data_all(data, 0);
-	//data->error_code =  (WEXITSTATUS(e));
 	data->status = (WEXITSTATUS(e));
 	exit (e);
 }

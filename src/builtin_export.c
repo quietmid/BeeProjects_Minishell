@@ -6,36 +6,11 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:37:44 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 20:43:29 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:44:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	run_export3(t_data *data)
-{
-	t_env	*node;
-
-	node = data->env;
-	while (node)
-	{
-		ft_putstr_fd("declare -x ", 1);
-		if (node->value[0] != '\0')
-		{
-			ft_putstr_fd(node->key, 1);
-			ft_putstr_fd("=", 1);
-			ft_putstr_fd("\"", 1);
-			ft_putstr_fd(node->value, 1);
-			ft_putstr_fd("\"", 1);
-			ft_putstr_fd("\n", 1);
-		}
-		else
-		{
-			ft_putendl_fd(node->key, 1);
-		}
-		node = node->next;
-	}
-}
 
 static void	run_export2a(t_data *data, t_env **new, char **str, int x)
 {
@@ -84,10 +59,36 @@ static void	run_export2(t_data *data, char **str)
 	}
 }
 
+static int check_identifier(t_data *data, char **str)
+{
+	int x;
+	int ret;
+
+	ret = TRUE;
+	if (ft_isalpha(str[0][0]) == 0)
+	{
+		error_cd(data, XEXP, NULL, str[0][0]);
+		ret = FALSE;
+	}
+	x = 1;
+	while(str[0][x])
+	{
+		if (ft_isalnum(str[0][x]) == 0)
+		{
+			error_cd(data, XEXP, NULL, str[0][x]);
+			ret = FALSE;
+		}
+		x++;
+	}
+	return (ret);
+}
+
 static void	run_export4(t_data *data, char **str)
 {
 	t_env	*node;
-
+	
+	if (check_identifier(data, str) == FALSE)
+		return ;
 	node = search_env(data, str[0]);
 	if (!node)
 		run_export2(data, str);
@@ -110,7 +111,7 @@ void	run_export(t_data *data)
 
 	x = 1;
 	if (ft_arr_len(data->token[0].cmd) == 1)
-		run_export3(data);
+		run_export_only(data);
 	else
 	{
 		while (x < ft_arr_len(data->token[0].cmd))
