@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 19:12:20 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:52:45 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,44 @@ void	set_wd(t_data *data)
 {
 	t_env	*tmp;
 	char	*add;
-
-	tmp = NULL;
-	add = NULL;
-	tmp = search_env(data, "PWD");
-	if (tmp)
-	{
-		add = tmp->value;
-		data->pwd = add;
-	}
-	tmp = NULL;
-	add = NULL;
+	
 	tmp = search_env(data, "OLDPWD");
 	if (tmp)
 	{
-		add = tmp->value;
-		data->oldpwd = add;
+		data->oldpwd = ft_strdup(tmp->value);
 	}
+	add = getcwd(NULL, 0);
+	if (!add)
+	{
+		error(data, XCWD, EXIT_FAILURE);
+	}
+	data->pwd = ft_strdup(add);
+	free(add);
 }
+
+// void	set_wd(t_data *data)
+// {
+// 	t_env	*tmp;
+// 	char	*add;
+
+// 	tmp = NULL;
+// 	add = NULL;
+// 	tmp = search_env(data, "PWD");
+// 	if (tmp)
+// 	{
+// 		add = tmp->value;
+// 		data->pwd = add;
+// 	}
+// 	tmp = NULL;
+// 	add = NULL;
+// 	tmp = search_env(data, "OLDPWD");
+// 	if (tmp)
+// 	{
+// 		add = tmp->value;
+// 		data->oldpwd = add;
+// 	}
+// }
+
 
 void	env_setup(t_data *data, char **envp)
 {
