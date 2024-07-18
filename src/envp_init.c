@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 17:44:42 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:06:26 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,43 +66,13 @@ void	env_to_arr(t_data *data)
 
 void	set_wd(t_data *data)
 {
-	//t_env	*tmp;
-	char 	*add;
-	
-	// tmp = search_env(data, "OLDPWD");
-	// if (tmp)
-	// {
-	// 	data->oldpwd = ft_strdup(tmp->value);
-	// }
+	char	*add;
+
 	add = getcwd(NULL, 0);
 	data->pwd = add;
 	if (!add)
 		error(data, XMALLOC, EXIT_FAILURE);
 }
-
-// void	set_wd(t_data *data)
-// {
-// 	t_env	*tmp;
-// 	char	*add;
-
-// 	tmp = NULL;
-// 	add = NULL;
-// 	tmp = search_env(data, "PWD");
-// 	if (tmp)
-// 	{
-// 		add = tmp->value;
-// 		data->pwd = add;
-// 	}
-// 	tmp = NULL;
-// 	add = NULL;
-// 	tmp = search_env(data, "OLDPWD");
-// 	if (tmp)
-// 	{
-// 		add = tmp->value;
-// 		data->oldpwd = add;
-// 	}
-// }
-
 
 void	env_setup(t_data *data, char **envp)
 {
