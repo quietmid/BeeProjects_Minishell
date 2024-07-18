@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-static char ***redir_argv(char *str, int len, char ***redir)
+static char	***redir_argv(char *str, int len, char ***redir)
 {
-	int i;
-	int x;
-	char q;
+	int		i;
+	int		x;
+	char	q;
 
 	i = 0;
 	x = 0;
@@ -41,11 +41,11 @@ static char ***redir_argv(char *str, int len, char ***redir)
 	return (redir);
 }
 
-static char **cmd_argv(char **temp, int len)
+static char	**cmd_argv(char **temp, int len)
 {
-	char **cmd;
-	int i;
-	int j;
+	char	**cmd;
+	int		i;
+	int		j;
 
 	cmd = (char **)ft_safe_calloc((len + 1), sizeof(char *));
 	i = 0;
@@ -54,7 +54,8 @@ static char **cmd_argv(char **temp, int len)
 	{
 		if (ft_isredir(temp[i][0]))
 			i = extract_cmd(temp, i);
-		else if (i > 0 && ((!(ft_isredir(temp[i - 1][0])) && temp[i]) || (!ft_isredir(temp[i - 1][ft_strlen(temp[i - 1])]))))
+		else if (i > 0 && ((!(ft_isredir(temp[i - 1][0])) && temp[i])
+			|| (!ft_isredir(temp[i - 1][ft_strlen(temp[i - 1])]))))
 			cmd[j++] = ft_strdup(temp[i++]);
 		else if (i == 0 && !ft_isredir(temp[i][0]))
 			cmd[j++] = ft_strdup(temp[i++]);
@@ -71,8 +72,8 @@ static char **cmd_argv(char **temp, int len)
 
 static void	assign_token(t_token *t)
 {
-	char **temp;
-	char *str;
+	char	**temp;
+	char	*str;
 
 	str = t->cmd_line;
 	temp = NULL;
@@ -91,8 +92,8 @@ static void	assign_token(t_token *t)
 
 static t_token	init_token(char *str, int i)
 {
-	t_token t;
-	int	x;
+	t_token	t;
+	int		x;
 
 	t.hd = 0;
 	t.idx = i;
@@ -146,9 +147,8 @@ static t_token	init_token(char *str, int i)
 int	parse_start(t_data *data, char *line)
 {
 	// char *exp_line;
-	char **tmp;
-
-	int i;
+	char	**tmp;
+	int		i;
 
 	i = 0;
 	data->cmd_count = pipe_scans(line);

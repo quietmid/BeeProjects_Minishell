@@ -6,12 +6,11 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:30:18 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/18 22:30:09 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:27:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 // char	**ft_arr_copy(char **arr)
 // {

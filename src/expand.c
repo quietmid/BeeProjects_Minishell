@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/18 23:10:12 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:29:08 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_strcpy2(char *dst, const char *src)
 {
 	while (*src)
 		*dst++ = *src++;
-	*dst ='\0';
+	*dst = '\0';
 }
 
 static char	*find_key(t_data *d, char *str, int i)
@@ -96,9 +96,9 @@ static char	*expand_line(t_data *d, char *s, int i) // $??
 
 char	*check_expand(char *s, t_data *d)
 {
-	char	q; // " = 34 & ' = 39
 	char	*new_line;
 	int		i;
+	char	q;// " = 34 & ' = 39
 
 	i = 0;
 	q = 0;
