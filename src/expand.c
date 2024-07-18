@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/18 00:18:59 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 14:35:07 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,10 +236,11 @@ char  *check_expand(char *s, t_data *d)
             }
             free(s);
             // s = ft_strdup(new_line);
-            s = new_line;
+            s = ft_strdup(new_line);
             // free (new_line);
         }
         i++;
     }
+    free(new_line);
     return (s);
 }
