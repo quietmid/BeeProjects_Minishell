@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 20:11:40 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:04:52 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,18 @@ int	is_digit(t_data *data, char *str)
 
 void	exit_message(t_data *data, char *var, int c)
 {
-	(void)data;
-	ft_putstr_fd("exit\n", 2);
-	ft_putstr_fd("minishell-8.8$: ", 2);
 	if (c == 1)
+	{
+		if (data->cmd_count == 1)
+			ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("minishell-8.8$: ", 2);
 		ft_putstr_fd("exit: too many arguments\n", 2);
+	}
 	if (c == 2)
 	{
+		if (data->cmd_count == 1)
+			ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("minishell-8.8$: ", 2);
 		ft_putstr_fd(var, 2);
 		ft_putendl_fd(": numeric argument required", 2);
 	}

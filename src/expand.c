@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/18 20:40:58 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 21:07:14 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char  *find_key(t_data *d, char *str, int i)
     return (value);
 }
 
-static char *expand_line(t_data *d, char *s, int i)
+static char *expand_line(t_data *d, char *s, int i) // $??
 {
     char *value;
     char *line;
