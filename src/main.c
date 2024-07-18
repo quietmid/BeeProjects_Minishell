@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/17 22:00:00 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:04:54 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	ft_minishell(t_data *data)
 	while (1)
 	{
 		signal_setup(SIG_PARENT);
+		// set_signal_handler(SIGINT, sig_handler);
 		status = 1;
 		line = readline("\033[0;31mminishell-8.8$ \033[0m");
 		if (!line)
