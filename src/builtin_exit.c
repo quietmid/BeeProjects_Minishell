@@ -6,11 +6,23 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 15:24:49 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:19:56 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	convert_code(t_data *data, char *str)
+{
+	int	num;
+
+	num = ft_atoi(str);
+    while (num > 255)
+    {
+        num = (num - 255);
+    }
+	data->status = num;
+}
 
 int is_digit(t_data *data, char *str)
 {
@@ -20,7 +32,7 @@ int is_digit(t_data *data, char *str)
     x = 0;
     while(str[x])
     {
-        if (ft_isdigit(str[x]) == 1)
+        if (ft_isdigit(str[x]) == 0)
             return(FALSE);
         x++;
     }
@@ -41,24 +53,29 @@ void    exit_message(t_data *data, char *var, int c)
     }
 }
 
-void    run_exit(t_data *data)
+void    run_exit(t_data *data, int x)
 {
-    if (ft_arr_len(data->token[0].cmd) > 2)
+    if (ft_arr_len(data->token[x].cmd) > 1)
     {
-        if (is_digit(data, data->token[0].cmd[1]) == TRUE)
+        if (is_digit(data, data->token[x].cmd[1]) == FALSE)
         {
-            exit_message(data, data->token[0].cmd[1], 2);
+            exit_message(data, data->token[x].cmd[1], 2);
             data->status = 2;
-            free_data_all(data, 0);
-            exit(data->status);
         }
-        exit_message(data, NULL, 1);
-        data->status = 1;
-        return ;
+        else if (is_digit(data, data->token[x].cmd[1]) == TRUE 
+            && ft_arr_len(data->token[x].cmd) == 2)
+        {
+            convert_code(data, data->token[x].cmd[1]);
+            ft_putstr_fd("exit\n", 2);
+        }
+        else
+        {
+            exit_message(data, NULL, 1);
+            data->status = 1;
+            return ;
+        }
     }
-    else
-    {
-        free_data_all(data, 0);
-        exit(data->status);
-    }
+    free_data_all(data, 0);
+    exit(data->status);
+
 }
