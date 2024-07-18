@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/17 21:57:36 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:19:45 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,13 @@ void	check_commands(t_data *data, int x)
 
 void	check_path(t_data *data, int x, char **path)
 {
-	if (search_env(data, "PATH"))
+	if(is_builtin_x(data, x) == TRUE && !search_env(data, "PATH"))
+	{
+		*path = ft_strjoin("/usr/bin/", data->token[x].cmd[0]);
+		if (!path)
+			error(data, XMALLOC, EXIT_FAILURE);
+	}
+	else if (search_env(data, "PATH"))
 	{
 		*path = find_path_cmd(data, x);
 		if (!path)

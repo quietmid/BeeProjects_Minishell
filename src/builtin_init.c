@@ -6,11 +6,23 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 19:10:29 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:22:37 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int is_builtin_x(t_data *data, int x)
+{
+	if (ft_strcmp(data->token[x].cmd[0], "echo") == 0)
+		return (TRUE);
+	else if (ft_strcmp(data->token[x].cmd[0], "pwd") == 0)
+		return (TRUE);
+	else if (ft_strcmp(data->token[x].cmd[0], "env") == 0)
+		return (TRUE);
+	else
+		return (0);
+}
 
 int	is_builtin(t_data *data)
 {
@@ -50,7 +62,8 @@ void	exec_builtin(t_data *data)
 		run_env(data);
 	else if (ft_strcmp(data->token[0].cmd[0], "exit") == 0)
 	{
-		free_data_all(data, 0);
-		exit(0);
+		run_exit(data);
+		// free_data_all(data, 0);
+		// exit(0);
 	}
 }
