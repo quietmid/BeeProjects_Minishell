@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_helpers2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:30:25 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/16 14:37:30 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 22:07:43 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int skip_whitespace(char *str, int i)
+int	skip_whitespace(char *str, int i)
 {
 	while (ft_isspace(str[i]))
 		i++;

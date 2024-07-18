@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:27:54 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 17:46:43 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:15:46 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	run_env(t_data *data)
 		}
 	}
 	else
-	{		
+	{
 		ft_putstr_fd(data->token->cmd[1], 2);
 		ft_putendl_fd(": "ERR_CMD, 2);
 		data->status = 127;
@@ -70,4 +70,17 @@ void	update_env(t_data *data)
 		free(node->value);
 		node->value = ft_strdup(data->pwd);
 	}
+}
+
+int	ft_envsize(t_env *lst)
+{
+	int	count;
+
+	count = 0;
+	while (lst)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
 }

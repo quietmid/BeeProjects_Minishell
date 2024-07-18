@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unquotes.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/18 22:08:48 by pbumidan          #+#    #+#             */
+/*   Updated: 2024/07/18 22:28:16 by pbumidan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -9,56 +20,58 @@ int	ft_isquote(char c)
 	return (0);
 }
 
-void    ft_removequotes(char *str)
+void	ft_removequotes(char *str)
 {
-    int i;
-    char q;
+	int		i;
+	char	q;
 
-    i = 0;
-    q = 0;
-    while (str[i])
-    {
-        if (!q && ft_isquote(str[i]))
-        {
-            q = str[i];
-            str[i] = 31;
-        }
-        else if (str[i] == q)
-        {
-            q = 0;
-            str[i] = 31;
-        }
-        i++;
-    }
+	i = 0;
+	q = 0;
+	while (str[i])
+	{
+		if (!q && ft_isquote(str[i]))
+		{
+			q = str[i];
+			str[i] = 31;
+		}
+		else if (str[i] == q)
+		{
+			q = 0;
+			str[i] = 31;
+		}
+		i++;
+	}
 }
-/*
-    take in each token, loop through each redir/cmd and check if the [0] is a quote then we remove them.
-*/
-void    ft_unquotes(t_token *t)
-{
-    int i;
-    int x;
 
-    i = -1;
-    while (++i < t->redir_len)
-    {
-        if (ft_isquote(t->redir[i][0][0]))
-            ft_removequotes(t->redir[i][0]);
-        if (ft_isquote(t->redir[i][1][0]))
-            ft_removequotes(t->redir[i][1]);
-    }
-    i = -1;
-    while (++i < t->cmd_len)
-    {
-        x = 0;
-        while (t->cmd[i][x])
-        {
-            if (ft_isquote(t->cmd[i][x]))
-            {
-                ft_removequotes(t->cmd[i]);
-                break ;
-            }
-            x++;
-        }
-    }
+/*
+    take in each token, loop through each redir/cmd and
+	check if the [0] is a quote then we remove them.
+*/
+void	ft_unquotes(t_token *t)
+{
+	int	i;
+	int	x;
+
+	i = -1;
+	while (++i < t->redir_len)
+	{
+		if (ft_isquote(t->redir[i][0][0]))
+			ft_removequotes(t->redir[i][0]);
+		if (ft_isquote(t->redir[i][1][0]))
+			ft_removequotes(t->redir[i][1]);
+	}
+	i = -1;
+	while (++i < t->cmd_len)
+	{
+		x = 0;
+		while (t->cmd[i][x])
+		{
+			if (ft_isquote(t->cmd[i][x]))
+			{
+				ft_removequotes(t->cmd[i]);
+				break ;
+			}
+			x++;
+		}
+	}
 }

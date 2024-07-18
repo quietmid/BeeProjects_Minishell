@@ -6,13 +6,13 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:55:45 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 19:48:49 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:16:43 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_nflag(char *str)
+static int	is_nflag(char *str)
 {
 	int	x;
 

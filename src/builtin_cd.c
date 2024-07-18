@@ -6,13 +6,13 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 17:50:03 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:33:18 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_data(t_data *data)
+static void	update_data(t_data *data)
 {
 	char	*tmp;
 

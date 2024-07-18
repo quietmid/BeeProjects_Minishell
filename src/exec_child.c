@@ -6,13 +6,13 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 20:06:03 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:22:48 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_directory(char *cmd)
+static int	is_directory(char *cmd)
 {
 	struct stat	filestat;
 
@@ -24,10 +24,7 @@ int	is_directory(char *cmd)
 	return (FALSE);
 }
 
-/*
-* support find_path_cmd fxn (2/2)
-*/
-void	prepare_paths(t_data *data, t_env *env)
+static void	prepare_paths(t_data *data, t_env *env)
 {
 	char	**paths;
 
@@ -37,7 +34,7 @@ void	prepare_paths(t_data *data, t_env *env)
 	data->paths = paths;
 }
 
-char	*find_path_cmd(t_data *data, int i)
+static char	*find_path_cmd(t_data *data, int i)
 {
 	char	*path_slash;
 	char	*path_slash_cmd;
@@ -64,7 +61,7 @@ char	*find_path_cmd(t_data *data, int i)
 	return (NULL);
 }
 
-void	check_path(t_data *data, int x, char **path)
+static void	check_path(t_data *data, int x, char **path)
 {
 	if (is_builtin_x(data, x) == TRUE)
 	{

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char ***redir_argv(char *str, int len, char ***redir)
+static char ***redir_argv(char *str, int len, char ***redir)
 {
 	int i;
 	int x;
@@ -41,7 +41,7 @@ char ***redir_argv(char *str, int len, char ***redir)
 	return (redir);
 }
 
-char **cmd_argv(char **temp, int len)
+static char **cmd_argv(char **temp, int len)
 {
 	char **cmd;
 	int i;
@@ -69,7 +69,7 @@ char **cmd_argv(char **temp, int len)
 	return (cmd);
 }
 
-void	assign_token(t_token *t)
+static void	assign_token(t_token *t)
 {
 	char **temp;
 	char *str;
@@ -78,7 +78,7 @@ void	assign_token(t_token *t)
 	temp = NULL;
 	if (str && *str != '\0')
 	{
-		if (t->redir_len != 0) 
+		if (t->redir_len != 0)
 			t->redir = redir_argv(str, t->redir_len, t->redir);
 		temp = prompt_prep(str, 0);
 		t->cmd_len = ft_arr_len(temp);
@@ -89,7 +89,7 @@ void	assign_token(t_token *t)
 		(void)t ;
 }
 
-t_token	init_token(char *str, int i)
+static t_token	init_token(char *str, int i)
 {
 	t_token t;
 	int	x;
@@ -108,20 +108,21 @@ t_token	init_token(char *str, int i)
 	free(str);
 	return (t);
 }
-static void print_redir_argv(char ***redir)
-{
-	int i;
-	i = 0;
-	if (!redir)
-		return ;
-	while (redir[i])
-	{
-		printf("redir [%d] \n", i);
-        printf("redir dir: %s\n", redir[i][0]);
-        printf("redir fd: %s\n", redir[i][1]);
-		i++;
-    }
-}
+
+// static void print_redir_argv(char ***redir)
+// {
+// 	int i;
+// 	i = 0;
+// 	if (!redir)
+// 		return ;
+// 	while (redir[i])
+// 	{
+// 		printf("redir [%d] \n", i);
+//         printf("redir dir: %s\n", redir[i][0]);
+//         printf("redir fd: %s\n", redir[i][1]);
+// 		i++;
+//     }
+// }
 
 		// //debug
 		// printf("%s\n", input[i]);
@@ -130,16 +131,17 @@ static void print_redir_argv(char ***redir)
 		// print_cmd_argv(data->token[i].cmd);
 		// //debug
 // debug
-static void print_cmd_argv(char **redir)
-{
-	int i;
-	if (!redir)
-		return ;
-    for (i = 0; redir[i] != NULL; i++)
-    {
-        printf("cmd: %s\n", redir[i]);
-    }
-}
+
+// static void print_cmd_argv(char **redir)
+// {
+// 	int i;
+// 	if (!redir)
+// 		return ;
+//     for (i = 0; redir[i] != NULL; i++)
+//     {
+//         printf("cmd: %s\n", redir[i]);
+//     }
+// }
 
 int	parse_start(t_data *data, char *line)
 {
@@ -147,7 +149,7 @@ int	parse_start(t_data *data, char *line)
 	char **tmp;
 
 	int i;
-	
+
 	i = 0;
 	data->cmd_count = pipe_scans(line);
 	data->token = malloc(sizeof(t_token) * data->cmd_count);
@@ -163,9 +165,9 @@ int	parse_start(t_data *data, char *line)
 		// printf("exp_line: %s\n", exp_line);
 		ft_unquotes(&data->token[i]);
 		//debug
-		printf("token idx: %d \n", data->token[i].idx);
-		print_redir_argv(data->token[i].redir);
-		print_cmd_argv(data->token[i].cmd);
+		// printf("token idx: %d \n", data->token[i].idx);
+		// print_redir_argv(data->token[i].redir);
+		// print_cmd_argv(data->token[i].cmd);
 		//debug
 		//free(input[i]);
 		i++;
