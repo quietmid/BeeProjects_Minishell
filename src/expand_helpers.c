@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/17 20:53:45 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 20:42:11 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char* expand_key(t_data *data, char *key)
     {
         if (ft_strcmp(key, e->key) == 0)
         {
-            key = e->value;
+            key = ft_strdup(e->value);
             return (key);
         }
         e = e->next;
