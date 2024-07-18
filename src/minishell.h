@@ -92,6 +92,7 @@ typedef struct s_data
 //functions
 
 //builtin
+int 	is_builtin_x(t_data *data, int x);
 int		is_builtin(t_data *data);
 void	exec_builtin(t_data *data);
 void	run_echo(t_data *data);
@@ -101,6 +102,7 @@ void	run_export(t_data *data);
 void	run_export_only(t_data *data);
 void	run_env(t_data *data);
 void	run_unset(t_data *data);
+void	run_exit(t_data *data);
 
 //envp
 void	env_setup(t_data *data, char **envp);

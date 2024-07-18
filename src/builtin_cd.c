@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/16 17:46:53 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:45:03 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ void	update_data(t_data *data)
 {
 	char	*tmp;
 
+	if (data->pwd)
+		free(data->oldpwd);
 	data->oldpwd = strdup(data->pwd);
 	if (!data->oldpwd)
 		error(data, XMALLOC, EXIT_FAILURE);
+	free(data->pwd);
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
 	{
