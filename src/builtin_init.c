@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 18:33:49 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:04:09 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_builtin(t_data *data)
 		return (FALSE);
 }
 
-int is_builtin_x(t_data *data, int x)
+int	is_builtin_x(t_data *data, int x)
 {
 	if (ft_strcmp(data->token[x].cmd[0], "echo") == 0)
 		return (TRUE);

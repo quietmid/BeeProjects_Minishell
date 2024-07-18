@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:37:44 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/17 22:44:33 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:01:52 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	run_export2(t_data *data, char **str)
 	x = ft_arr_len(str);
 	new = (void *)malloc(sizeof(t_env));
 	if (!new)
-		error(data, XMALLOC, EXIT_FAILURE); // something
+		error(data, XMALLOC, EXIT_FAILURE);
 	if (x > 2)
 		error(data, XMALLOC, EXIT_FAILURE);
 	else
@@ -59,10 +59,10 @@ static void	run_export2(t_data *data, char **str)
 	}
 }
 
-static int check_identifier(t_data *data, char **str)
+static int	check_identifier(t_data *data, char **str)
 {
-	int x;
-	int ret;
+	int	x;
+	int	ret;
 
 	ret = TRUE;
 	if (ft_isalpha(str[0][0]) == 0)
@@ -71,7 +71,7 @@ static int check_identifier(t_data *data, char **str)
 		ret = FALSE;
 	}
 	x = 1;
-	while(str[0][x])
+	while (str[0][x])
 	{
 		if (ft_isalnum(str[0][x]) == 0)
 		{
@@ -86,7 +86,7 @@ static int check_identifier(t_data *data, char **str)
 static void	run_export4(t_data *data, char **str)
 {
 	t_env	*node;
-	
+
 	if (check_identifier(data, str) == FALSE)
 		return ;
 	node = search_env(data, str[0]);

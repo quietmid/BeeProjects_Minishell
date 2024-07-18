@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:10:57 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 19:37:03 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:13:17 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ void	close_pipes(t_data *data)
 		close(data->pipe[i][1]);
 		i++;
 	}
-	return;
+	return ;
 }
 
 void	create_forks(t_data *data)
 {
 	int	x;
 
-	data->pid = (int*)malloc(sizeof(int) * (data->cmd_count));
+	data->pid = (int *)malloc(sizeof(int) * (data->cmd_count));
 	if (!data->pid)
 		error(data, XMALLOC, EXIT_FAILURE);
 	x = 0;
-	while (x < data->cmd_count) 
+	while (x < data->cmd_count)
 	{
 		data->pid[x] = fork();
 		if (data->pid[x] < 0)
@@ -51,10 +51,6 @@ void	create_forks(t_data *data)
 		{
 			child_process(data, x);
 		}
-		// dprintf(1, "went to free single\n");
-		// free_single_token(data, x);
-		// dprintf(1, "went to wait\n");
-		// waitpid(data->pid[x], &data->status, 0);
 		x++;
 	}
 }
@@ -79,4 +75,3 @@ void	create_pipes(t_data *data)
 		x++;
 	}
 }
-

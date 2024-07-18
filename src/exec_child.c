@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 18:34:38 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:06:03 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,9 @@ char	*find_path_cmd(t_data *data, int i)
 	return (NULL);
 }
 
-// void	check_commands(t_data *data, int x)
-// {
-// 	if (data->cmd_count > 1 || data->token[x].redir)
-// 		redirect(data, x);
-// 	if (data->token[x].cmd[0][0] == '.')
-// 	{
-// 		if (access(data->token[x].cmd[0], X_OK) != 0)
-// 			error_var(data, XEXEC, data->token[x].cmd[0], 126);
-// 		if (is_directory(data->token[x].cmd[0]) == TRUE)
-// 			error_var(data, XDIR, data->token[x].cmd[0], 126);
-// 	}
-// }
-
 void	check_path(t_data *data, int x, char **path)
 {
-	if(is_builtin_x(data, x) == TRUE)
+	if (is_builtin_x(data, x) == TRUE)
 	{
 		*path = ft_strjoin("/usr/bin/", data->token[x].cmd[0]);
 		if (!*path)

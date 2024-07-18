@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/18 20:02:11 by pbumidan          #+#    #+#             */
+/*   Updated: 2024/07/18 20:49:50 by pbumidan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-// ALPHA error_msg
 void	error_msg(char *msg)
 {
 	ft_putstr_fd(msg, 2);
@@ -29,8 +39,6 @@ void	print_errors(char *errmsg, char *str, char c)
 
 void	error(t_data *data, t_error code, int e)
 {
-	//(void)data; //uncomment when free all function is done
-	// free all function
 	(void)data;
 	if (code == XMALLOC)
 		ft_putstr_fd(ERR_MALLOC, 2);
@@ -45,10 +53,9 @@ void	error(t_data *data, t_error code, int e)
 	if (code == XCWD)
 		ft_putstr_fd(ERR_CWD, 2);
 	exit (e);
-
 }
 
-void error_cd(t_data *data, t_error code, char *var, char c)
+void	error_cd(t_data *data, t_error code, char *var, char c)
 {
 	(void)data;
 	ft_putstr_fd("minishell-8.8$: ", 2);
@@ -92,11 +99,8 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 		else
 			perror(var);
 	}
-	// free_all(data);
 	ft_free_token(data);
 	ft_free_before_loop(data);
-	//free_data_all(data, 0);
-	//data->error_code =  (WEXITSTATUS(e));
 	data->status = (WEXITSTATUS(e));
 	exit (e);
 }
