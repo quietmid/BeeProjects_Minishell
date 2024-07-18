@@ -54,6 +54,7 @@ typedef struct s_token
 	int				in;
 	int				out;
 	int				hd;
+	char			*cmd_line;
 	char			*hdfile;
 	char			**cmd; // free
 	char			***redir; // free 
@@ -125,13 +126,13 @@ int		is_redir(t_data *data, int x, char *str);
 void child_process(t_data *data, int x);
 
 // signals
+int    	set_signal_handler(int signum, void (*handler)(int));
 int    set_signal_handler(int signum, void (*handler)(int));
 void	toggle_input(int mode);
 void	heredoc_handler(int sig);
 void	signal_setup(int mode);
 void	sig_handler(int sig);
-void toggle_input(int mode);
-int    set_signal_handler(int signum, void (*handler)(int));
+void 	toggle_input(int mode);
 void	rl_replace_line(const char *text, int clear_undo);
 
 //Input checking
@@ -142,6 +143,7 @@ char	quotes_check(char *line);
 // Parsing
 void	space_replace(char *str);
 void	pipe_replace(char *str);
+void	assign_token(t_token *token);
 int		parse_start(t_data *data, char *line);
 int		pipe_scans(char *line);
 int		calcu_redir(char *str);
@@ -150,16 +152,16 @@ int		extract_cmd(char **temp, int i);
 char 	quote_finder(char c, char q);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
-void	assign_token(char *input, t_token *token);
 t_token	init_token(char *str, int i);
 
 //expand
 char *check_expand(char *s, t_data *d);
-char *expanding(t_data *data, char *str, int s);
-char *easy_expanding(char *str, int s);
+// char *expanding(t_data *data, char *str, int s);
+// char *easy_expanding(char *str, int s);
 char *check_meta(char *s);
 char *add_quotes(char *s);
-void* expand_key(t_data *data, char *temp, int *found);
+// void* expand_key(t_data *data, char *key);
+char* expand_key(t_data *data, char *key);
 
 // Remove Quotes
 void    ft_removequotes(char *str);

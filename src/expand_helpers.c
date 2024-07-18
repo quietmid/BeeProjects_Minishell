@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/10 16:00:29 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/17 20:53:45 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,17 @@ char *check_meta(char *s)
         return (s);
 }
 
-void* expand_key(t_data *data, char *temp, int *found)
+char* expand_key(t_data *data, char *key)
 {
     t_env *e;
 
     e = data->env;
     while (e)
     {
-        if (ft_strcmp(temp, e->key) == 0)
+        if (ft_strcmp(key, e->key) == 0)
         {
-            temp = e->value;
-            *found = 1;
-            return (temp);
+            key = e->value;
+            return (key);
         }
         e = e->next;
     }
