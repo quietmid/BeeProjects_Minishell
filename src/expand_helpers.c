@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/18 20:42:11 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 22:37:02 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-char *add_quotes(char *s)
+static char *add_quotes(char *s)
 {
     char *new_s;
 
@@ -25,11 +25,11 @@ char *add_quotes(char *s)
     return (new_s);
 }
 
-char *check_meta(char *s)
+char *check_meta(char *s) // ??
 {
     int i;
     char *new_s;
-    
+
     new_s = NULL;
     i = 0;
     while (s[i])

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/18 20:31:56 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:39:34 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	hd_done(t_data *data, int hd, int i)
 	return (1);
 }
 
-int	ft_hd(t_data *data, int i, int j)
+static int	ft_hd(t_data *data, int i, int j)
 {
 	int		hd;
 	int		stdin_backup;

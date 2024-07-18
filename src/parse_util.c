@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:32:36 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/17 16:21:05 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 21:32:18 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	space_replace(char *str)
 
 int	pipe_scans(char *line)
 {
-	int	i;
-	char q;
+	int		i;
+	char	q;
 
 	q = 0;
 	i = 0;
@@ -86,9 +86,9 @@ int	pipe_scans(char *line)
 
 int	calcu_redir(char *str)
 {
-	int i;
-	int num_redir;
-	char q;
+	int		i;
+	int		num_redir;
+	char	q;
 
 	q = 0;
 	i = 0;
@@ -112,7 +112,7 @@ int	calcu_redir(char *str)
 	return (num_redir);
 }
 
-char quote_finder(char c, char q)
+char	quote_finder(char c, char q)
 {
 	if (!q && ft_isquote(c))
 		return (c);

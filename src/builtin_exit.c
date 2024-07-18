@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 20:11:40 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:18:09 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	convert_code(t_data *data, char *str)
 	data->status = num;
 }
 
-int	is_digit(t_data *data, char *str)
+static int	is_digit(t_data *data, char *str)
 {
 	int	x;
 
@@ -39,15 +39,20 @@ int	is_digit(t_data *data, char *str)
 	return (TRUE);
 }
 
-void	exit_message(t_data *data, char *var, int c)
+static void	exit_message(t_data *data, char *var, int c)
 {
-	(void)data;
-	ft_putstr_fd("exit\n", 2);
-	ft_putstr_fd("minishell-8.8$: ", 2);
 	if (c == 1)
+	{
+		if (data->cmd_count == 1)
+			ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("minishell-8.8$: ", 2);
 		ft_putstr_fd("exit: too many arguments\n", 2);
+	}
 	if (c == 2)
 	{
+		if (data->cmd_count == 1)
+			ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("minishell-8.8$: ", 2);
 		ft_putstr_fd(var, 2);
 		ft_putendl_fd(": numeric argument required", 2);
 	}
@@ -66,7 +71,8 @@ void	run_exit(t_data *data, int x)
 			&& ft_arr_len(data->token[x].cmd) == 2)
 		{
 			convert_code(data, data->token[x].cmd[1]);
-			ft_putstr_fd("exit\n", 2);
+			if (data->cmd_count == 1)
+				ft_putstr_fd("exit\n", 2);
 		}
 		else
 		{

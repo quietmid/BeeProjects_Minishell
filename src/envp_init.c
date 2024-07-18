@@ -6,13 +6,13 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 20:06:26 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:19:37 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*create_envnode(t_data *data, char *envp)
+static t_env	*create_envnode(t_data *data, char *envp)
 {
 	t_env	*node;
 	char	**tmp;
@@ -64,7 +64,7 @@ void	env_to_arr(t_data *data)
 	data->env_arr = res;
 }
 
-void	set_wd(t_data *data)
+static void	set_wd(t_data *data)
 {
 	char	*add;
 

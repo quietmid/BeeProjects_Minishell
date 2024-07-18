@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:34:25 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/17 14:46:22 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 21:34:57 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		extract_cmd(char **temp, int i)
+int	extract_cmd(char **temp, int i)
 {
 	if ((ft_isredir(temp[i][1]) && !temp[i][2]) || !temp[i][1])
 	{
@@ -30,7 +30,7 @@ int	extract_redir(char *str, char **redir, int i)
 	if (str[i + 1] == str[i])
 	{			
 		redir[0] = ft_safe_substr(str, i, 2);
-		i += 2;			
+		i += 2;
 	}
 	else
 	{
@@ -40,7 +40,7 @@ int	extract_redir(char *str, char **redir, int i)
 	return (i);
 }
 
-char **prompt_prep(char *line, int opt)
+char	**prompt_prep(char *line, int opt)
 {
 	char	**result;
 
@@ -49,7 +49,9 @@ char **prompt_prep(char *line, int opt)
 	else
 		space_replace(line);
 	result = ft_split(line, 31);
-	if (!result) // err msg?
+	if (!result)
+	{
 		error_msg("prompt split failed");
+	}
 	return (result);
 }

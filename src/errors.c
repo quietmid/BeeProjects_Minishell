@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:02:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 20:49:50 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:20:38 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	error_msg(char *msg)
 	exit (EXIT_FAILURE);
 }
 
-void	error_arr_free(char *msg, char **str)
-{
-	ft_free_arr(str);
-	printf("%s\n", msg);
-	exit (EXIT_FAILURE);
-}
+// void	error_arr_free(char *msg, char **str)
+// {
+// 	ft_free_arr(str);
+// 	printf("%s\n", msg);
+// 	exit (EXIT_FAILURE);
+// }
 
-void	print_errors(char *errmsg, char *str, char c)
+static void	print_errors(char *errmsg, char *str, char c)
 {
 	ft_putstr_fd(errmsg, 2);
 	if (c)
@@ -81,7 +81,7 @@ void	error_cd(t_data *data, t_error code, char *var, char c)
 void	error_var(t_data *data, t_error code, char *var, int e)
 {
 	if (code == XCMD)
-	{		
+	{
 		ft_putstr_fd(var, 2);
 		ft_putendl_fd(": "ERR_CMD, 2);
 	}

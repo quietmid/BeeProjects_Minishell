@@ -6,13 +6,13 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/18 20:50:58 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:38:57 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_tri(char ***tri)
+static void	ft_free_tri(char ***tri)
 {
 	int	i;
 
@@ -92,7 +92,7 @@ void	free_single_token(t_data *data, int i)
 	free(&data->token[i]);
 }
 
-void	ft_envclear(t_env **env)
+static void	ft_envclear(t_env **env)
 {
 	t_env	*current;
 

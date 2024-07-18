@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/16 14:53:22 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 22:08:35 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	sig_handler(int sig)
 		rl_redisplay(); // Redisplay the prompt and input line;
 	}
 }
+
 void	heredoc_handler(int sig)
 {
 	if (sig == SIGINT)
@@ -38,24 +39,24 @@ void	heredoc_handler(int sig)
 	}
 }
 
-int    set_signal_handler(int signum, void (*handler)(int))
+int	set_signal_handler(int signum, void (*handler)(int))
 {
-    struct sigaction    sa;
+	struct sigaction	sa;
 
-    sigemptyset(&sa.sa_mask);
-    sa.sa_handler = handler;
-    sa.sa_flags = 0;
-    if (sigaction(signum, &sa, NULL) < 0)
-    {
-        perror("minishell: sigaction");
-        return (-1);
-    }
-    return (0);
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = handler;
+	sa.sa_flags = 0;
+	if (sigaction(signum, &sa, NULL) < 0)
+	{
+		perror("minishell: sigaction");
+		return (-1);
+	}
+	return (0);
 }
 
 void	toggle_input(int mode)
 {
-	struct termios term_m;
+	struct termios	term_m;
 
 	tcgetattr(STDIN_FILENO, &term_m);
 	if (mode == SIG_CHILD)

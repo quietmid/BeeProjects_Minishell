@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   safe_malloc.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/18 21:55:24 by pbumidan          #+#    #+#             */
+/*   Updated: 2024/07/18 22:08:11 by pbumidan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -13,7 +24,7 @@ void	*ft_safe_calloc(size_t count, size_t size)
 
 void	*ft_safe_malloc(size_t size)
 {
-	void *mem_alloc;
+	void	*mem_alloc;
 
 	mem_alloc = malloc(size);
 	if (!mem_alloc)
@@ -23,7 +34,7 @@ void	*ft_safe_malloc(size_t size)
 
 char	*ft_safe_substr(const char *s, unsigned int start, size_t len)
 {
-	char *str;
+	char	*str;
 
 	str = ft_substr(s, start, len);
 	if (!str)
