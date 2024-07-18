@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/18 14:45:42 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/18 17:50:22 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,14 +173,17 @@ void free_data_all(t_data *data, int type)
 	// 	free(data->path_cmd);
 	// if (data->env_arr)
 	// 	ft_free_arr(data->env_arr);
-	// dprintf(1, "bENV : %d\n", ft_envsize(data->env));
-	// if (ft_envsize(data->env) != 0)
-	//  	ft_envclear(&data->env);
-	// dprintf(1, "aENV : %d\n", ft_envsize(data->env));
-	if (data->pwd)
-		free(data->pwd);
-	if (data->oldpwd)
-	 	free(data->oldpwd);
+	//dprintf(1, "bENV : %d\n", ft_envsize(data->env));
+	if (ft_envsize(data->env) != 0)
+	 	ft_envclear(&data->env);
+	//dprintf(1, "aENV : %d\n", ft_envsize(data->env));
+	// if (data->pwd)
+	// {
+	// 	printf("p: %s", data->pwd);
+	// 	free(data->pwd);
+	// }
+	// if (data->oldpwd)
+	//  	free(data->oldpwd);
 }
 
 // void free_all(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 15:37:16 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:43:05 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,36 +64,36 @@ char	*find_path_cmd(t_data *data, int i)
 	return (NULL);
 }
 
-void	check_commands(t_data *data, int x)
-{
-	if (data->cmd_count > 1 || data->token[x].redir)
-		redirect(data, x);
-	if (data->token[x].cmd[0][0] == '.')
-	{
-		if (access(data->token[x].cmd[0], X_OK) != 0)
-			error_var(data, XEXEC, data->token[x].cmd[0], 126);
-		if (is_directory(data->token[x].cmd[0]) == TRUE)
-			error_var(data, XDIR, data->token[x].cmd[0], 126);
-	}
-}
+// void	check_commands(t_data *data, int x)
+// {
+// 	if (data->cmd_count > 1 || data->token[x].redir)
+// 		redirect(data, x);
+// 	if (data->token[x].cmd[0][0] == '.')
+// 	{
+// 		if (access(data->token[x].cmd[0], X_OK) != 0)
+// 			error_var(data, XEXEC, data->token[x].cmd[0], 126);
+// 		if (is_directory(data->token[x].cmd[0]) == TRUE)
+// 			error_var(data, XDIR, data->token[x].cmd[0], 126);
+// 	}
+// }
 
-void	check_path(t_data *data, int x, char **path)
-{
-	if(is_builtin_x(data, x) == TRUE && !search_env(data, "PATH"))
-	{
-		*path = ft_strjoin("/usr/bin/", data->token[x].cmd[0]);
-		if (!path)
-			error(data, XMALLOC, EXIT_FAILURE);
-	}
-	else if (search_env(data, "PATH"))
-	{
-		*path = find_path_cmd(data, x);
-		if (!path)
-			error_var(data, XCMD, data->token[x].cmd[0], 127);
-	}
-	else
-		error_var(data, XNOFILE, data->token[x].cmd[0], 127);
-}
+// void	check_path(t_data *data, int x, char **path)
+// {
+// 	if(is_builtin_x(data, x) == TRUE)
+// 	{
+// 		*path = ft_strjoin("/usr/bin/", data->token[x].cmd[0]);
+// 		if (!path)
+// 			error(data, XMALLOC, EXIT_FAILURE);
+// 	}
+// 	else if (search_env(data, "PATH"))
+// 	{
+// 		*path = find_path_cmd(data, x);
+// 		if (!path)
+// 			error_var(data, XCMD, data->token[x].cmd[0], 127);
+// 	}
+// 	else
+// 		error_var(data, XNOFILE, data->token[x].cmd[0], 127);
+// }
 
 void	child_process(t_data *data, int x)
 {
@@ -118,7 +118,21 @@ void	child_process(t_data *data, int x)
 	}
 	else
 	{
-		check_path(data, x, &path);
+		//check_path(data, x, &path);
+		if(is_builtin_x(data, x) == TRUE)
+		{
+			path = ft_strjoin("/usr/bin/", data->token[x].cmd[0]);
+			if (!path)
+				error(data, XMALLOC, EXIT_FAILURE);
+		}
+		else if (search_env(data, "PATH"))
+		{
+			path = find_path_cmd(data, x);
+			if (!path)
+				error_var(data, XCMD, data->token[x].cmd[0], 127);
+		}
+		else
+			error_var(data, XNOFILE, data->token[x].cmd[0], 127);
 	}
 	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
 		error(data, XEXEC, EXIT_FAILURE);

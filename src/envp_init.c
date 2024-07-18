@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 15:42:33 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:44:42 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ t_env	*create_envnode(t_data *data, char *envp)
 	if (!tmp)
 		error(data, XMALLOC, EXIT_FAILURE);
 	node = (void *)malloc(sizeof(t_env));
-	if (!node)
-		error(data, XMALLOC, EXIT_FAILURE);
-	node->key = ft_strdup(tmp[0]);
-	if (!node->key)
-		error(data, XMALLOC, EXIT_FAILURE);
-	node->value = ft_strdup(tmp[1]);
-	if (!node->value)
-		error(data, XMALLOC, EXIT_FAILURE);
-	node->next = NULL;
+	{
+		if (!node)
+			error(data, XMALLOC, EXIT_FAILURE);
+		node->key = ft_strdup(tmp[0]);
+		if (!node->key)
+			error(data, XMALLOC, EXIT_FAILURE);
+		node->value = ft_strdup(tmp[1]);
+		if (!node->value)
+			error(data, XMALLOC, EXIT_FAILURE);
+		node->next = NULL;
+	}
 	ft_free_arr(tmp);
+	tmp = NULL;
 	return (node);
 }
 
@@ -63,20 +66,18 @@ void	env_to_arr(t_data *data)
 
 void	set_wd(t_data *data)
 {
-	t_env	*tmp;
-	char	*add;
+	//t_env	*tmp;
+	char 	*add;
 	
-	tmp = search_env(data, "OLDPWD");
-	if (tmp)
-	{
-		data->oldpwd = ft_strdup(tmp->value);
-	}
-	//data->pwd = getcwd(NULL, 0);
+	// tmp = search_env(data, "OLDPWD");
+	// if (tmp)
+	// {
+	// 	data->oldpwd = ft_strdup(tmp->value);
+	// }
 	add = getcwd(NULL, 0);
+	data->pwd = add;
 	if (!add)
-		error(data, XCWD, EXIT_FAILURE);
-	data->pwd = ft_strdup(add);
-	free(add);
+		error(data, XMALLOC, EXIT_FAILURE);
 }
 
 // void	set_wd(t_data *data)
