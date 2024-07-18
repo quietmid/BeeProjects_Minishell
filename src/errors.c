@@ -57,6 +57,12 @@ void error_cd(t_data *data, t_error code, char *var, char c)
 		ft_putstr_fd("cd: ", 2);
 		perror(var);
 	}
+	else if (code == XEXP)
+	{
+		ft_putstr_fd("export: ", 2);
+		ft_putchar_fd(c, 2);
+		ft_putendl_fd(": "ERR_EXP, 2);
+	}
 	else if (code == XCDHOME)
 		ft_putendl_fd(ERR_HOME, 2);
 	else if (code == XCDOLDPWD)

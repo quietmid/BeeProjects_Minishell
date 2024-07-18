@@ -98,6 +98,7 @@ void	run_echo(t_data *data);
 void	run_cd(t_data *data);
 void	run_pwd(t_data *data);
 void	run_export(t_data *data);
+void	run_export_only(t_data *data);
 void	run_env(t_data *data);
 void	run_unset(t_data *data);
 

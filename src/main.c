@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/17 14:24:03 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/17 22:00:00 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	execute(t_data	*data)
 			waitpid(data->pid[x], &data->status, 0);
 			x++;
 		}
-		// dprintf(1, "status: %d\n", WEXITSTATUS(data->status));
 		ft_free_token(data);
 		ft_free_before_loop(data);
 	}
@@ -89,7 +88,6 @@ void	ft_minishell(t_data *data)
 		if (line)
 			free(line);
     }
-	// free(line);
 	toggle_input(SIG_CHILD);
 }
 
