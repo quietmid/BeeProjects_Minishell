@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 15:19:45 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:37:16 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	child_process(t_data *data, int x)
 	char	*path;
 
 	env_to_arr(data);
-	//check_commands(data, x);
 	if (data->cmd_count > 1 || data->token[x].redir)
 		redirect(data, x);
 	if (data->token[x].cmd[0][0] == '.')
@@ -120,14 +119,6 @@ void	child_process(t_data *data, int x)
 	else
 	{
 		check_path(data, x, &path);
-		// if (search_env(data, "PATH"))
-		// {
-		// 	path = find_path_cmd(data, x);
-		// 	if (!path)
-		// 		error_var(data, XCMD, data->token[x].cmd[0], 127);
-		// }
-		// else
-		// 	error_var(data, XNOFILE, data->token[x].cmd[0], 127);
 	}
 	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
 		error(data, XEXEC, EXIT_FAILURE);

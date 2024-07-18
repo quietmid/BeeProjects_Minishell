@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:41:40 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/17 21:52:45 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:42:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,10 @@ void	set_wd(t_data *data)
 	{
 		data->oldpwd = ft_strdup(tmp->value);
 	}
+	//data->pwd = getcwd(NULL, 0);
 	add = getcwd(NULL, 0);
 	if (!add)
-	{
 		error(data, XCWD, EXIT_FAILURE);
-	}
 	data->pwd = ft_strdup(add);
 	free(add);
 }
