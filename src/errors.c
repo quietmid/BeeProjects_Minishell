@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:02:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 18:11:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:21:36 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	error(t_data *data, t_error code, int e)
 
 void	error_cd(t_data *data, t_error code, char *var, char c)
 {
-	(void)data;
 	ft_putstr_fd("minishell-8.8$: ", 2);
 	if (code == XCD)
 	{
 		ft_putstr_fd("cd: ", 2);
 		perror(var);
+		data->status = 1;
 	}
 	else if (code == XEXP)
 	{

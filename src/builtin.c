@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/17 22:42:05 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:16:29 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ void	run_export_only(t_data *data)
 		}
 		else
 		{
-			ft_putendl_fd(node->key, 1);
+			if (node->flag == 1)
+			{
+				ft_putstr_fd(node->key, 1);
+				ft_putendl_fd("=\"\"", 1);
+			}
+			else
+				ft_putendl_fd(node->key, 1);
 		}
 		node = node->next;
 	}
