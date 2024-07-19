@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 18:03:45 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:25:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ int		pipe_scans(char *line);
 int		calcu_redir(char *str);
 int		extract_redir(char *str, char **redir, int i);
 int		extract_cmd(char **temp, int i);
-int 	check_token(t_data *data);
-char 	quote_finder(char c, char q);
+int		check_token(t_data *data);
+char	quote_finder(char c, char q);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**prompt_prep(char *line, int opt);
 
