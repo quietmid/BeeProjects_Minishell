@@ -6,12 +6,11 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/19 17:10:51 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 17:40:12 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static void	ft_strcpy2(char *dst, const char *src)
 {
