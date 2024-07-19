@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:02:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 17:44:21 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 18:11:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@ void	error_msg(char *msg)
 	ft_putstr_fd(msg, 2);
 	exit (EXIT_FAILURE);
 }
-
-// void	error_arr_free(char *msg, char **str)
-// {
-// 	ft_free_arr(str);
-// 	printf("%s\n", msg);
-// 	exit (EXIT_FAILURE);
-// }
 
 static void	print_errors(char *errmsg, char *str, char c)
 {
@@ -39,7 +32,6 @@ static void	print_errors(char *errmsg, char *str, char c)
 
 void	error(t_data *data, t_error code, int e)
 {
-	(void)data;
 	if (code == XMALLOC)
 		ft_putstr_fd(ERR_MALLOC, 2);
 	if (code == XPIPE)
@@ -52,6 +44,8 @@ void	error(t_data *data, t_error code, int e)
 		ft_putstr_fd(ERR_HD, 2);
 	if (code == XCWD)
 		ft_putstr_fd(ERR_CWD, 2);
+	ft_free_token(data);
+	ft_free_before_loop(data);
 	exit (e);
 }
 
