@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquotes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:08:48 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 22:28:16 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:09:32 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_removequotes(char *str)
 void	ft_unquotes(t_token *t)
 {
 	int	i;
-	int	x;
+	size_t	x;
 
 	i = -1;
 	while (++i < t->redir_len)
@@ -61,10 +61,10 @@ void	ft_unquotes(t_token *t)
 			ft_removequotes(t->redir[i][1]);
 	}
 	i = -1;
-	while (++i < t->cmd_len)
+	while (++i < t->cmd_len && t->cmd != NULL)
 	{
 		x = 0;
-		while (t->cmd[i][x])
+		while (x < ft_strlen(t->cmd[i]))
 		{
 			if (ft_isquote(t->cmd[i][x]))
 			{

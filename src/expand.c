@@ -3,32 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/19 14:32:44 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:10:51 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static size_t	ft_strlcpy2(char *dest, const char *src, size_t destsize)
-// {
-// 	size_t	i;
-// 	size_t	srcsize;
-
-// 	i = 0;
-// 	srcsize = ft_strlen((char *)src);
-// 	if (destsize == 0)
-// 		return (srcsize);
-// 	while (i < (destsize - 1) && src[i])
-// 	{
-// 		dest[i] = src[i];
-// 		i++;
-// 	}
-// 	dest[i] = '\0';
-// 	return (srcsize);
-// }
 
 static void	ft_strcpy2(char *dst, const char *src)
 {
@@ -77,11 +60,11 @@ static char	*expand_line(t_data *d, char *s, int i) // $??
 	while (!ft_isspace(s[st]) && !ft_isquote(s[st]) && s[st] != '$'
 		&& s[st] != '?' && s[st])
 		st++;
-	if (st == ft_strlen(s))
+	if (s[i] == '?')
 		x = 0;
 	else
-		x = ft_strlen(s) - i;
-	line_len = ft_strlen(value) + i + x;
+		x = ft_strlen(s) - st;
+	line_len = ft_strlen(value) + i + x + 1;
 	if (x == 0 && i == 1)
 		return (value);
 	line = (char *)ft_safe_malloc(sizeof(char) * line_len);
@@ -98,7 +81,7 @@ char	*check_expand(char *s, t_data *d)
 {
 	char	*new_line;
 	int		i;
-	char	q;// " = 34 & ' = 39
+	char	q; // " = 34 & ' = 39
 
 	i = 0;
 	q = 0;
@@ -111,11 +94,7 @@ char	*check_expand(char *s, t_data *d)
 		{
 			new_line = expand_line(d, s, i + 1);
 			if (!new_line)
-			{
-				ft_putendl_fd("expand failed", 2);
-				free(s);
-				return (NULL);
-			}
+				error_msg("expand malloc failed");
 			free(s);
 			s = ft_strdup(new_line);
 			i = 0;

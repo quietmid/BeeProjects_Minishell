@@ -87,7 +87,7 @@ static void	assign_token(t_token *t)
 		t->cmd_len = ft_arr_len(t->cmd);
 	}
 	else
-		(void)t ;
+		t->cmd = NULL;
 }
 
 static t_token	init_token(char *str, int i)
@@ -97,6 +97,7 @@ static t_token	init_token(char *str, int i)
 
 	t.hd = 0;
 	t.idx = i;
+	t.cmd_len = 0;
 	t.cmd_line = ft_strdup(str);
 	t.redir_len = calcu_redir(str);
 	if (t.redir_len > 0)
@@ -125,13 +126,13 @@ static t_token	init_token(char *str, int i)
 //     }
 // }
 
-		// //debug
-		// printf("%s\n", input[i]);
-		// printf("token idx: %d \n", data->token[i].idx);
-		// print_redir_argv(data->token[i].redir);
-		// print_cmd_argv(data->token[i].cmd);
-		// //debug
-// debug
+// // 		//debug
+// // 		printf("%s\n", input[i]);
+// // 		printf("token idx: %d \n", data->token[i].idx);
+// // 		print_redir_argv(data->token[i].redir);
+// // 		print_cmd_argv(data->token[i].cmd);
+// // 		//debug
+// // debug
 
 // static void print_cmd_argv(char **redir)
 // {
@@ -162,25 +163,17 @@ int	parse_start(t_data *data, char *line)
 		data->token[i].cmd_line = check_expand(data->token[i].cmd_line, data);
 		assign_token(&data->token[i]);
 		data->hd += check_heredoc(&data->token[i]);
-		// printf("exp_line: %s\n", exp_line);
 		ft_unquotes(&data->token[i]);
-		//debug
-		// printf("token idx: %d \n", data->token[i].idx);
-		// print_redir_argv(data->token[i].redir);
-		// print_cmd_argv(data->token[i].cmd);
-		//debug
-		//free(input[i]);
 		i++;
 	}
-	// input[i] = NULL;
 	while (tmp[i])
 		free(tmp[i--]);
 	free (tmp);
-	// ft_free_arr(input);
-	// input = NULL;
 	if (data->token != NULL)
 	{
 		if (!here_doc(data))
+			return (0);
+		if (data->cmd_count == 1 && data->token[0].cmd == NULL)
 			return (0);
 	}
 	return (1);

@@ -42,6 +42,7 @@ CC = cc
 CFLAGS = -g
 # CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
 
+# fsanitize=address -Wall -Wextra -Werror
 # -g -fsanitize=address
 
 RL_HEADER = ~/.brew/Cellar/readline/8.2.10/include
