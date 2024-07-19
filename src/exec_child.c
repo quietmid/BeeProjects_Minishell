@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 22:22:48 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:11:02 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void	child_process(t_data *data, int x)
 	env_to_arr(data);
 	if (data->cmd_count > 1 || data->token[x].redir)
 		redirect(data, x);
-	if (ft_strcmp(data->token[x].cmd[0], "exit") == 0)
+	if (data->token[x].cmd[0] && ft_strcmp(data->token[x].cmd[0], "exit") == 0)
 		run_exit(data, x);
-	if (data->token[x].cmd[0][0] == '.')
+	if (data->token[x].cmd[0] && data->token[x].cmd[0][0] == '.')
 	{
 		if (access(data->token[x].cmd[0], X_OK) != 0)
 			error_var(data, XEXEC, data->token[x].cmd[0], 126);
@@ -96,14 +96,17 @@ void	child_process(t_data *data, int x)
 			error_var(data, XDIR, data->token[x].cmd[0], 126);
 		path = data->token[x].cmd[0];
 	}
-	else if (data->token[x].cmd[0][0] == '/')
+	else if (data->token[x].cmd[0] && data->token[x].cmd[0][0] == '/')
 	{
 		path = data->token[x].cmd[0];
 		if (access(data->token[x].cmd[0], X_OK) != 0)
 			error_var(data, XEXEC, data->token[x].cmd[0], 127);
 	}
 	else
-		check_path(data, x, &path);
+	{
+		if (data->token[x].cmd[0])
+			check_path(data, x, &path);
+	}
 	if (execve(path, data->token[x].cmd, data->env_arr) < 0)
 		error(data, XEXEC, EXIT_FAILURE);
 }
