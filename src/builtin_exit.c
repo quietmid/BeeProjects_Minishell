@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 18:23:49 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 19:31:36 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int	is_digit(t_data *data, char *str)
 
 static void	exit_message(t_data *data, char *var, int c)
 {
+	(void)data;
 	if (c == 1)
 	{
 		ft_putstr_fd("minishell-8.8$: ", 2);

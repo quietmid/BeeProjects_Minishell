@@ -6,14 +6,17 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:37:44 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 15:25:36 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/20 00:03:40 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	run_export2a(t_data *data, t_env **new, char **str, int x)
+static void	run_export2a(t_data *data, t_env **new, char **str, int c)
 {
+	int	x;
+
+	x =  ft_arr_len(str);
 	(*new)->key = ft_strdup(str[0]);
 	if (!(*new)->key)
 		error(data, XMALLOC, EXIT_FAILURE);
@@ -28,24 +31,23 @@ static void	run_export2a(t_data *data, t_env **new, char **str, int x)
 		(*new)->value = ft_strdup("");
 		if (!(*new)->value)
 			error(data, XMALLOC, EXIT_FAILURE);
+		(*new)->flag = 0;
+		if (c == 1)
+			(*new)->flag = 1;
 	}
 }
 
-static void	run_export2(t_data *data, char **str)
+static void	run_export2(t_data *data, char **str, int c)
 {
 	t_env	*node;
 	t_env	*new;
-	int		x;
 
-	x = ft_arr_len(str);
 	new = (void *)malloc(sizeof(t_env));
 	if (!new)
 		error(data, XMALLOC, EXIT_FAILURE);
-	if (x > 2)
-		error(data, XMALLOC, EXIT_FAILURE);
 	else
 	{
-		run_export2a(data, &new, str, x);
+		run_export2a(data, &new, str, c);
 	}
 	new->next = NULL;
 	node = data->env;
@@ -65,7 +67,7 @@ static int	check_identifier(t_data *data, char **str)
 	int	ret;
 
 	ret = TRUE;
-	if (ft_isalpha(str[0][0]) == 0)
+	if (ft_isalpha(str[0][0]) == 0 && str[0][0] != '_')
 	{
 		error_cd(data, XEXP, NULL, str[0][0]);
 		ret = FALSE;
@@ -87,17 +89,15 @@ static int	check_identifier(t_data *data, char **str)
 	return (ret);
 }
 
-static void	run_export4(t_data *data, char **str)
+static void	run_export4(t_data *data, char **str, int c)
 {
 	t_env	*node;
 
 	if (check_identifier(data, str) == FALSE)
-	{
 		return ;
-	}
 	node = search_env(data, str[0]);
 	if (!node)
-		run_export2(data, str);
+		run_export2(data, str, c);
 	else
 	{
 		if (str[1])
@@ -107,13 +107,47 @@ static void	run_export4(t_data *data, char **str)
 			if (!node->value)
 				error(data, XMALLOC, EXIT_FAILURE);
 		}
+		if (c == 1)
+			node->flag = 1;
 	}
+}
+
+int	checkfirst(t_data *data, int x)
+{
+	if (ft_isalpha(data->token[0].cmd[x][0]) == 1)
+		return (1);
+	else if (data->token[0].cmd[x][0] == '_')
+		return (1);
+	else
+		return (0);
+}
+
+int	prep_for_spit(t_data *data, int x)
+{
+	int i;
+	int c;
+
+	i = 0;
+	c = 0;
+	while (data->token[0].cmd[x][i])
+	{
+		if (data->token[0].cmd[x][i] == '=')
+		{
+			data->token[0].cmd[x][i] = 31;
+			if (data->token[0].cmd[x][i + 1] == '\0')
+				c = 1;
+			break ;
+		}
+		i++;
+	}
+	return (c);
 }
 
 void	run_export(t_data *data)
 {
 	char	**str;
 	int		x;
+	int 	c;
 
 	x = 1;
 	if (ft_arr_len(data->token[0].cmd) == 1)
@@ -122,12 +156,18 @@ void	run_export(t_data *data)
 	{
 		while (x < ft_arr_len(data->token[0].cmd))
 		{
-			str = ft_split(data->token[0].cmd[x], '=');
-			if (!str)
-				error(data, XMALLOC, EXIT_FAILURE);
-			run_export4(data, str);
+			if (checkfirst(data, x) == 0)
+				error_cd(data, XEXP, data->token[0].cmd[x], 0);
+			else
+			{
+				c = prep_for_spit(data, x);
+				str = ft_split(data->token[0].cmd[x], 31);
+				if (!str)
+					error(data, XMALLOC, EXIT_FAILURE);
+				run_export4(data, str, c);
+				ft_free_arr(str);
+			}
 			x++;
-			ft_free_arr(str);
 		}
 	}
 }

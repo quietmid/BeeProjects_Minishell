@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 18:25:53 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:56:51 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				flag;
 	struct s_env	*next;
 }					t_env;
 
