@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/18 22:08:35 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:58:04 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	sig_handler(int sig)
 	if (sig == SIGINT)
 	{
 		write (1, "\n", 1);
-		rl_on_new_line(); // inform readline that the cursor is on a newline
-		rl_replace_line("", 0); // clear the current line buffer
-		rl_redisplay(); // Redisplay the prompt and input line;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 

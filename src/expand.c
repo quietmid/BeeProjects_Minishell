@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/19 17:40:12 by jlu              ###   ########.fr       */
+/*   Created: 2024/07/19 17:54:35 by jlu               #+#    #+#             */
+/*   Updated: 2024/07/19 17:57:28 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*find_key(t_data *d, char *str, int i)
 	return (value);
 }
 
-static char	*expand_line(t_data *d, char *s, int i) // $??
+static char	*expand_line(t_data *d, char *s, int i)
 {
 	char	*value;
 	char	*line;
@@ -67,8 +67,7 @@ static char	*expand_line(t_data *d, char *s, int i) // $??
 	if (x == 0 && i == 1)
 		return (value);
 	line = (char *)ft_safe_malloc(sizeof(char) * line_len);
-	if (i != 1)
-		ft_strlcpy(line, s, i);
+	ft_strlcpy(line, s, i);
 	ft_strcpy2(line + i - 1, value);
 	if (x > 0)
 		ft_strcpy2(line + i + ft_strlen(value) - 1, s + st);
@@ -80,7 +79,7 @@ char	*check_expand(char *s, t_data *d)
 {
 	char	*new_line;
 	int		i;
-	char	q; // " = 34 & ' = 39
+	char	q;
 
 	i = 0;
 	q = 0;

@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:08:48 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 17:09:32 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 17:43:52 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,9 @@ void	ft_removequotes(char *str)
 	}
 }
 
-/*
-    take in each token, loop through each redir/cmd and
-	check if the [0] is a quote then we remove them.
-*/
 void	ft_unquotes(t_token *t)
 {
-	int	i;
+	int		i;
 	size_t	x;
 
 	i = -1;

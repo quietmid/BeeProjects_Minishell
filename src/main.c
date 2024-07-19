@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 17:31:27 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 17:50:54 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,9 @@ void	signal_d(void)
 	exit (0);
 }
 
-void	ft_minishell(t_data *data)
+void	ft_minishell(t_data *data, int status)
 {
 	char	*line;
-	int		status;
 
 	toggle_input(SIG_PARENT);
 	while (1)
@@ -104,13 +103,15 @@ void	ft_minishell(t_data *data)
 int	main(int ac, char **ag, char **envp)
 {
 	t_data	data;
+	int		status;
 
 	(void)ac;
 	(void)ag;
 	data = (t_data){0};
-	if (ac != 1) // probably don't need
+	status = 1;
+	if (ac != 1)
 		return (0);
 	env_setup(&data, envp);
-	ft_minishell(&data);
+	ft_minishell(&data, status);
 	return (0);
 }

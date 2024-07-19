@@ -1,12 +1,12 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.hive.fi>                  +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/06/18 20:42:54 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 18:16:55 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,52 +111,17 @@ static t_token	init_token(char *str, int i)
 	return (t);
 }
 
-// static void print_redir_argv(char ***redir)
-// {
-// 	int i;
-// 	i = 0;
-// 	if (!redir)
-// 		return ;
-// 	while (redir[i])
-// 	{
-// 		printf("redir [%d] \n", i);
-//         printf("redir dir: %s\n", redir[i][0]);
-//         printf("redir fd: %s\n", redir[i][1]);
-// 		i++;
-//     }
-// }
-
-// // 		//debug
-// // 		printf("%s\n", input[i]);
-// // 		printf("token idx: %d \n", data->token[i].idx);
-// // 		print_redir_argv(data->token[i].redir);
-// // 		print_cmd_argv(data->token[i].cmd);
-// // 		//debug
-// // debug
-
-// static void print_cmd_argv(char **redir)
-// {
-// 	int i;
-// 	if (!redir)
-// 		return ;
-//     for (i = 0; redir[i] != NULL; i++)
-//     {
-//         printf("cmd: %s\n", redir[i]);
-//     }
-// }
-
 int	parse_start(t_data *data, char *line)
 {
-	// char *exp_line;
 	char	**tmp;
 	int		i;
 
 	i = 0;
 	data->cmd_count = pipe_scans(line);
-	data->token = malloc(sizeof(t_token) * data->cmd_count);
-	if (!data->token)
-		return (0);
+	data->token = ft_safe_malloc(sizeof(t_token) * data->cmd_count);
 	tmp = ft_split(line, 31);
+	if (!tmp)
+		error_msg("split malloc failed");
 	while (tmp[i])
 	{
 		data->token[i] = init_token(tmp[i], i);
@@ -169,16 +134,7 @@ int	parse_start(t_data *data, char *line)
 	while (tmp[i])
 		free(tmp[i--]);
 	free (tmp);
-	if (data->token != NULL)
-	{
-		if (!here_doc(data))
-			return (0);
-		if (data->cmd_count == 1 && data->token[0].cmd == NULL)
-			return (0);
-	}
+	if (!check_token(data))
+		return (0);
 	return (1);
 }
-
-// // debug
-
-

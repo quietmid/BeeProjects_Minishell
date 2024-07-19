@@ -150,6 +150,7 @@ int		pipe_scans(char *line);
 int		calcu_redir(char *str);
 int		extract_redir(char *str, char **redir, int i);
 int		extract_cmd(char **temp, int i);
+int 	check_token(t_data *data);
 char 	quote_finder(char c, char q);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char 	**prompt_prep(char *line, int opt);
@@ -218,7 +219,7 @@ void 	error_cd(t_data *data, t_error code, char *var, char c);
 //memory cleaning
 void 	free_data_all(t_data *data, int type);
 void	ft_free_arr(char **arr);
-//void	ft_free_tri(char ***tri);
+void	ft_free_tri(char ***tri);
 void	ft_free_token(t_data *s_data);
 void	ft_free_env(t_env *env);
 void	free_single_token(t_data *data, int i);
