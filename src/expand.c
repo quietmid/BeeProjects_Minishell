@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 17:54:35 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 18:52:14 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 18:55:34 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,24 @@ static void	ft_strcpy2(char *dst, const char *src)
 	*dst = '\0';
 }
 
-static char	*find_key(t_data *d, char *str, int i)
+static char	*find_key(t_data *d, char *s, int i)
 {
 	int		start;
 	char	*value;
 	char	*key;
 
 	start = i;
-	if (str[i] == '?')
+	if (s[i] == '?')
 	{
 		value = ft_itoa(WEXITSTATUS(d->status));
 		return (value);
 	}
 	else
 	{
-		while (!ft_isspace(str[i]) && !ft_isquote(str[i])
-			&& str[i] != '$' && str[i] != '?' && str[i])
+		while (!ft_isspace(s[i]) && (isalpha(s[i]) || s[i] == '_'))
 			i++;
 		key = (char *)ft_safe_malloc(sizeof(char) * (i - start + 1));
-		ft_strlcpy(key, str + start, i - start + 1);
+		ft_strlcpy(key, s + start, i - start + 1);
 		value = expand_key(d, key);
 	}
 	if (!value)

@@ -36,10 +36,9 @@ SRC =	./src/builtin.c \
 		./src/utils_helpers2.c \
 		./src/safe_func.c \
 
-#BSRC =
 
 CC = cc
-CFLAGS = -g
+CFLAGS = -g -Wall -Wextra -Werror
 # CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
 
 # fsanitize=address -Wall -Wextra -Werror
@@ -51,7 +50,6 @@ RL_LIB = ~/.brew/Cellar/readline/8.2.10/lib
 OBJECTS_DIR = ./obj
 
 OBJECTS = $(addprefix $(OBJECTS_DIR)/,$(notdir $(SRC:.c=.o)))
-# BOBJECTS = $(addprefix $(OBJECTS_DIR)/,$(notdir $(BSRC:.c=.o)))
 
 all: $(NAME)
 
@@ -70,21 +68,6 @@ $(OBJECTS_DIR)/%.o: ./src/%.c
 	@echo "Compiled $(GREEN) $^ $(RESET)"
 	@$(CC) $(CFLAGS) -c -o $@ $^
 
-#bonus: $(BSRC) .bonus
-
-#.bonus: $(LIBFT) $(BOBJECTS)
-#		@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
-#		@touch .bonus
-#		@$(CC) $(CFLAGS) $(BOBJECTS) $(LIBFT) -o $(NAME)
-#		@echo "$(CYAN)--------------------------------"
-#		@echo "$(NAME) = God damn blue shell!"
-#		@echo "$(CYAN)--------------------------------$(RESET)"
-#		@rm -f $(OBJECTS)
-
-#$(OBJECTS_DIR)/%.o: ./BSRC/%.c
-#		@mkdir -p $(OBJECTS_DIR)
-#		@echo "Compiled $(GREEN) $^ $(RESET)"
-#		@$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
 	@$(MAKE) clean -C ./libft

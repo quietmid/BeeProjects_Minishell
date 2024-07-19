@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 17:50:54 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 19:21:43 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	execute(t_data	*data)
 void	signal_d(void)
 {
 	if (isatty(0))
-		write (2, "exit", 5);
+		ft_putendl_fd("exit", 2);
 	exit (0);
 }
 
