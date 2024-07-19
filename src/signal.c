@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 17:58:04 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 18:34:18 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,17 @@ void	signal_setup(int mode)
 {
 	if (mode == SIG_PARENT)
 	{
-		signal(SIGINT, sig_handler);
+		set_signal_handler(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_HEREDOC)
 	{
-		signal(SIGINT, heredoc_handler);
+		set_signal_handler(SIGINT, heredoc_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_CHILD)
 	{
-		signal(SIGINT, sig_handler);
+		set_signal_handler(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
 }

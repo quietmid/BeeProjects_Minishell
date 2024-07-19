@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 17:54:35 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 17:57:28 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 18:52:14 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static char	*expand_line(t_data *d, char *s, int i)
 
 	value = find_key(d, s, i);
 	st = i;
-	while (!ft_isspace(s[st]) && !ft_isquote(s[st]) && s[st] != '$'
-		&& s[st] != '?' && s[st])
+	while (!ft_isspace(s[st]) && (isalpha(s[st]) || s[st] == '_'))
 		st++;
 	if (s[i] == '?')
 		x = 0;
