@@ -31,7 +31,6 @@ SRC =	./src/builtin.c \
 		./src/safe_malloc.c \
 		./src/signal.c \
 		./src/unquotes.c \
-		./src/utils.c \
 		./src/utils_helpers.c \
 		./src/utils_helpers2.c \
 		./src/safe_func.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquotes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:08:48 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 17:09:32 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 18:04:24 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_removequotes(char *str)
 */
 void	ft_unquotes(t_token *t)
 {
-	int	i;
+	int		i;
 	size_t	x;
 
 	i = -1;
