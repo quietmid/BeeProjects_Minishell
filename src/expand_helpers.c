@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/18 23:27:22 by pbumidan         ###   ########.fr       */
+/*   Created: 2024/07/19 18:03:33 by jlu               #+#    #+#             */
+/*   Updated: 2024/07/19 18:03:37 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*add_quotes(char *s)
 	return (new_s);
 }
 
-char	*check_meta(char *s) // ??
+char	*check_meta(char *s)
 {
 	int		i;
 	char	*new_s;

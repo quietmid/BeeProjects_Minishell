@@ -21,6 +21,7 @@ SRC =	./src/builtin.c \
 		./src/expand.c \
 		./src/expand_helpers.c \
 		./src/free_all.c \
+		./src/free_all2.c \
 		./src/here_doc.c \
 		./src/main.c \
 		./src/parse.c \

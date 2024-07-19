@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 21:34:21 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 21:45:03 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:58:31 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	syntax_check(char *line)
 	char	c;
 
 	i = 0;
-	if ((int)(ft_strlen(line) - 1) == -1) // need to know if this is okay
+	if ((int)(ft_strlen(line) - 1) == -1)
 		return (0);
 	if (line[0] == '|')
 		return (line[0]);

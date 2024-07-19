@@ -43,10 +43,6 @@ void	ft_removequotes(char *str)
 	}
 }
 
-/*
-    take in each token, loop through each redir/cmd and
-	check if the [0] is a quote then we remove them.
-*/
 void	ft_unquotes(t_token *t)
 {
 	int		i;

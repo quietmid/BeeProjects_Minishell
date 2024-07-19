@@ -6,42 +6,11 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 17:34:49 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/19 17:53:00 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	ft_free_tri(char ***tri)
-{
-	int	i;
-
-	i = 0;
-	if (tri)
-	{
-		while (tri[i])
-		{
-			ft_free_arr(tri[i]);
-			i++;
-		}
-		free(tri);
-	}
-}
-
-void	ft_free_arr(char **arr)
-{
-	int	x;
-
-	x = 0;
-	if (!arr || !arr[x])
-		return ;
-	while (arr[x])
-	{
-		free(arr[x]);
-		x++;
-	}
-	free(arr);
-}
 
 void	ft_free_before_loop(t_data *data)
 {
