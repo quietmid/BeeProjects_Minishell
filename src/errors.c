@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:02:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 22:20:38 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:23:09 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	error_cd(t_data *data, t_error code, char *var, char c)
 	else if (code == XEXP)
 	{
 		ft_putstr_fd("export: ", 2);
-		ft_putchar_fd(c, 2);
+		ft_putstr_fd(var, 2);
 		ft_putendl_fd(": "ERR_EXP, 2);
 	}
 	else if (code == XCDHOME)

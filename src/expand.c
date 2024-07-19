@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/18 23:29:08 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:32:44 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ char	*check_expand(char *s, t_data *d)
 			s = ft_strdup(new_line);
 			i = 0;
 		}
-		i++;
+		else
+			i++;
 	}
 	free(new_line);
 	return (s);

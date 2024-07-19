@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 22:22:48 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:14:35 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,13 @@ void	child_process(t_data *data, int x)
 	{
 		if (access(data->token[x].cmd[0], X_OK) != 0)
 			error_var(data, XEXEC, data->token[x].cmd[0], 126);
-		if (is_directory(data->token[x].cmd[0]) == TRUE)
-			error_var(data, XDIR, data->token[x].cmd[0], 126);
 		path = data->token[x].cmd[0];
 	}
 	else if (data->token[x].cmd[0][0] == '/')
 	{
 		path = data->token[x].cmd[0];
-		if (access(data->token[x].cmd[0], X_OK) != 0)
-			error_var(data, XEXEC, data->token[x].cmd[0], 127);
+		if (is_directory(data->token[x].cmd[0]) == TRUE)
+			error_var(data, XDIR, data->token[x].cmd[0], 126);;
 	}
 	else
 		check_path(data, x, &path);
