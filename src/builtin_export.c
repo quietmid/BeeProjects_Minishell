@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:37:44 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 20:01:52 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:25:36 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,19 @@ static int	check_identifier(t_data *data, char **str)
 		error_cd(data, XEXP, NULL, str[0][0]);
 		ret = FALSE;
 	}
-	x = 1;
-	while (str[0][x])
+	else
 	{
-		if (ft_isalnum(str[0][x]) == 0)
+		x = 1;
+		while (str[0][x])
 		{
-			error_cd(data, XEXP, NULL, str[0][x]);
-			ret = FALSE;
+			if (ft_isalnum(str[0][x]) == 0)
+			{
+				error_cd(data, XEXP, str[0], 0);
+				ret = FALSE;
+				break ;
+			}
+			x++;
 		}
-		x++;
 	}
 	return (ret);
 }
@@ -88,7 +92,9 @@ static void	run_export4(t_data *data, char **str)
 	t_env	*node;
 
 	if (check_identifier(data, str) == FALSE)
+	{
 		return ;
+	}
 	node = search_env(data, str[0]);
 	if (!node)
 		run_export2(data, str);

@@ -92,15 +92,13 @@ void	child_process(t_data *data, int x)
 	{
 		if (access(data->token[x].cmd[0], X_OK) != 0)
 			error_var(data, XEXEC, data->token[x].cmd[0], 126);
-		if (is_directory(data->token[x].cmd[0]) == TRUE)
-			error_var(data, XDIR, data->token[x].cmd[0], 126);
 		path = data->token[x].cmd[0];
 	}
 	else if (data->token[x].cmd[0] && data->token[x].cmd[0][0] == '/')
 	{
 		path = data->token[x].cmd[0];
-		if (access(data->token[x].cmd[0], X_OK) != 0)
-			error_var(data, XEXEC, data->token[x].cmd[0], 127);
+		if (is_directory(data->token[x].cmd[0]) == TRUE)
+			error_var(data, XDIR, data->token[x].cmd[0], 126);;
 	}
 	else
 	{

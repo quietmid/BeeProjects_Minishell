@@ -3,7 +3,7 @@ PROJECT = minishell
 
 NAME = minishell
 
-LIBFT = ./libft/libft.a	
+LIBFT = ./libft/libft.a
 
 SRC =	./src/builtin.c \
 		./src/builtin_cd.c \
@@ -40,6 +40,7 @@ SRC =	./src/builtin.c \
 
 CC = cc
 CFLAGS = -g
+# CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
 
 # fsanitize=address -Wall -Wextra -Werror
 # -g -fsanitize=address
