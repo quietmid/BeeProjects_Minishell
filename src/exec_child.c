@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/20 19:38:42 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:50:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static void	check_path(t_data *data, int x, char **path)
 	if (is_builtin_x(data, x) == TRUE)
 	{
 		exec_builtin(data, x);
-		exit(0);
+		data->status = 0;
+		exit(data->status);
 	}
 	else if (search_env(data, "PATH"))
 	{
