@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 21:34:21 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 17:58:31 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/20 16:04:32 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,17 @@ int	prompt_check(t_data *data, char *line)
 	if (c)
 	{
 		error_cd(data, XSYNTAX, NULL, c);
-		return (0);
+		return (2);
 	}
 	c = 0;
 	c = syntax_check(line);
 	if (c)
 	{
 		error_cd(data, XSYNTAX, NULL, c);
-		return (0);
+		return (2);
 	}
 	i = skip_whitespace(line, i);
 	if (i == ft_strlen(line))
-		return (0);
+		return (2);
 	return (1);
 }

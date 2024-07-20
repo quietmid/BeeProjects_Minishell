@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 17:53:00 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/20 18:11:28 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,13 @@ void	ft_free_token(t_data *data)
 	while (i < data->cmd_count)
 	{
 		if (data->token[i].cmd)
+		{
 			ft_free_arr(data->token[i].cmd);
+		}
 		if (data->token[i].redir)
+		{
 			ft_free_tri(data->token[i].redir);
+		}
 		if (data->token[i].hd)
 			free(data->token[i].hdfile);
 		if (data->token[i].cmd_line)
@@ -84,7 +88,9 @@ void	free_data_all(t_data *data, int type)
 {
 	(void)type;
 	if (data->token)
+	{
 		ft_free_token(data);
+	}
 	if (ft_envsize(data->env) != 0)
 		ft_envclear(&data->env);
 }

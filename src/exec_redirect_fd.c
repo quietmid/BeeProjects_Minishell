@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:17:18 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 20:03:51 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:04:30 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	redir_in_fd(t_data *data, int x)
 		{
 			data->token->in = open(data->token[x].redir[i][1], O_RDONLY);
 			if (data->token->in < 0)
+			{
+				printf("PPP\n");
 				error_var(data, XFD, data->token[x].redir[i][1], 0);
+			}
 			if (dup2(data->token->in, STDIN_FILENO) < 0)
 				error(data, XDUP, 0);
 			close(data->token->in);

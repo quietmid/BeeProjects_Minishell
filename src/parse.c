@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 18:16:55 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/20 18:15:34 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,14 @@ static void	assign_token(t_token *t)
 		temp = prompt_prep(str, 0);
 		t->cmd_len = ft_arr_len(temp);
 		t->cmd = cmd_argv(temp, t->cmd_len);
-		t->cmd_len = ft_arr_len(t->cmd);
+		if (t->cmd[0] == NULL)
+		{
+			ft_free_arr(t->cmd);
+			free(t->cmd);
+			t->cmd = NULL;
+		}
+		else
+			t->cmd_len = ft_arr_len(t->cmd);
 	}
 	else
 		t->cmd = NULL;

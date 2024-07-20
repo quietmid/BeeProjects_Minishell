@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 17:01:38 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/20 18:16:45 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin(t_data *data)
 {
-	if (data->token[0].cmd[0] == NULL)
+	if (data->token[0].cmd == NULL)
 		return (FALSE);
 	if (ft_strcmp(data->token[0].cmd[0], "echo") == 0)
 		return (TRUE);

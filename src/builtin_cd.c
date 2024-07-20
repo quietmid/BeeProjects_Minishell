@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 18:40:05 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:30:06 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	update_data(t_data *data)
 {
 	char	*tmp;
 
+	if (data->oldpwd)
+		free(data->oldpwd);
 	data->oldpwd = data->pwd;
 	tmp = getcwd(NULL, 0);
 	if (!tmp)

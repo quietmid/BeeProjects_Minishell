@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 19:21:43 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/20 16:04:44 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	ft_minishell(t_data *data, int status)
 		{
 			add_history(line);
 			status = prompt_check(data, line);
-			if (status)
+			if (status == 1)
 				status = parse_start(data, line);
-			if (status)
+			if (status == 1)
 				execute(data);
 			if (status == 0)
 				ft_free_token(data);

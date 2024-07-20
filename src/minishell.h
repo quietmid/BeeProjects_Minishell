@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 20:56:51 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:37:30 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,8 @@ int		ft_isquote(char c);
 int		ft_strcmp(char *s1, char *s2);
 int		skip_whitespace(char *str, int i);
 int		skip_whitespace2(char *str, int i);
+int		checkfirst(t_data *data, int x);
+int		prep_for_spit(t_data *data, int x);
 
 //safe mem allocation
 void	*ft_safe_calloc(size_t count, size_t size);

@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:30:25 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 18:15:25 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/20 18:19:29 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	check_token(t_data *data)
 	{
 		if (!here_doc(data))
 			return (0);
-		if (data->cmd_count == 1 && data->token[0].cmd == NULL)
+		if (data->cmd_count == 1 && data->token[0].cmd == NULL
+			&& data->token[0].redir == NULL)
 			return (0);
 	}
 	return (1);

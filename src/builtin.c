@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:01:32 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 21:16:29 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:37:09 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,35 @@ void	run_unset(t_data *data)
 		free(tmp);
 		x++;
 	}
+}
+
+int	checkfirst(t_data *data, int x)
+{
+	if (ft_isalpha(data->token[0].cmd[x][0]) == 1)
+		return (1);
+	else if (data->token[0].cmd[x][0] == '_')
+		return (1);
+	else
+		return (0);
+}
+
+int	prep_for_spit(t_data *data, int x)
+{
+	int	i;
+	int	c;
+
+	i = 0;
+	c = 0;
+	while (data->token[0].cmd[x][i])
+	{
+		if (data->token[0].cmd[x][i] == '=')
+		{
+			data->token[0].cmd[x][i] = 31;
+			if (data->token[0].cmd[x][i + 1] == '\0')
+				c = 1;
+			break ;
+		}
+		i++;
+	}
+	return (c);
 }
