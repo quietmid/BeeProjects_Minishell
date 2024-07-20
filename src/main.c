@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/20 16:04:44 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/20 19:20:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,11 @@ static void	wait_children(t_data *data)
 
 void	execute(t_data	*data)
 {
-	int	x;
-
-	x = 0;
 	if (data->cmd_count == 1 && is_builtin(data) == TRUE)
 	{
 		if (data->token[0].redir != NULL)
 			redirect_builtin(data, 0);
-		exec_builtin(data);
+		exec_builtin(data, 0);
 		if (data->token[0].redir != NULL)
 			restore_stdio(data, 0);
 		free_single_token(data, 0);
