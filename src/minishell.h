@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/20 16:37:30 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/20 19:22:11 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_data
 //builtin
 int		is_builtin_x(t_data *data, int x);
 int		is_builtin(t_data *data);
-void	exec_builtin(t_data *data);
+void	exec_builtin(t_data *data, int x);
 void	run_echo(t_data *data);
 void	run_cd(t_data *data);
 void	run_pwd(t_data *data);
