@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:02:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/20 18:18:46 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/22 22:43:34 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,21 @@ static void	print_errors(char *errmsg, char *str, char c)
 void	error(t_data *data, t_error code, int e)
 {
 	if (code == XMALLOC)
-		ft_putstr_fd(ERR_MALLOC, 2);
+		ft_putendl_fd(ERR_MALLOC, 2);
 	if (code == XPIPE)
-		ft_putstr_fd(ERR_PIPE, 2);
+		ft_putendl_fd(ERR_PIPE, 2);
 	if (code == XFORK)
-		ft_putstr_fd(ERR_FORK, 2);
+		ft_putendl_fd(ERR_FORK, 2);
 	if (code == XEXEC)
-		ft_putstr_fd(ERR_EXEC, 2);
+		ft_putendl_fd(ERR_EXEC, 2);
 	if (code == XHD)
-		ft_putstr_fd(ERR_HD, 2);
+		ft_putendl_fd(ERR_HD, 2);
 	if (code == XCWD)
-		ft_putstr_fd(ERR_CWD, 2);
+		ft_putendl_fd(ERR_CWD, 2);
 	ft_free_token(data);
 	ft_free_before_loop(data);
-	exit (e);
+	data->status = e;
+	exit(data->status);
 }
 
 void	error_cd(t_data *data, t_error code, char *var, char c)
