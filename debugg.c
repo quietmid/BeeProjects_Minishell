@@ -13,12 +13,12 @@ static void print_redir_argv(char ***redir)
     }
 }
 
-		// //debug
-		// printf("%s\n", input[i]);
-		// printf("token idx: %d \n", data->token[i].idx);
-		// print_redir_argv(data->token[i].redir);
-		// print_cmd_argv(data->token[i].cmd);
-		// //debug
+		//debug
+		printf("%s\n", tmp[i]);
+		printf("token idx: %d \n", data->token[i].idx);
+		print_redir_argv(data->token[i].redir);
+		print_cmd_argv(data->token[i].cmd);
+		//debug
 // debug
 static void print_cmd_argv(char **redir)
 {

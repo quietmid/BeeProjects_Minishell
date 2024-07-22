@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquotes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 22:08:48 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 18:04:24 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:43:53 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,52 @@ int	ft_isquote(char c)
 	return (0);
 }
 
-void	ft_removequotes(char *str)
-{
-	int		i;
-	char	q;
+// new remove quotes function that properly change the string
+
+void ft_removequotes(char *str) {
+    int i;
+	int j;
+    char q;
 
 	i = 0;
+	j = 0;
 	q = 0;
-	while (str[i])
-	{
-		if (!q && ft_isquote(str[i]))
-		{
-			q = str[i];
-			str[i] = 31;
-		}
-		else if (str[i] == q)
-		{
-			q = 0;
-			str[i] = 31;
-		}
-		i++;
-	}
+    while (str[i]) {
+        if (!q && ft_isquote(str[i])) {
+            q = str[i];
+        } else if (q && str[i] == q) {
+            q = 0;
+        } else {
+            str[j++] = str[i];
+        }
+        i++;
+    }
+    str[j] = '\0';
 }
+
+
+// void	ft_removequotes(char *str)
+// {
+// 	int		i;
+// 	char	q;
+
+// 	i = 0;
+// 	q = 0;
+// 	while (str[i])
+// 	{
+// 		if (!q && ft_isquote(str[i]))
+// 		{
+// 			q = str[i];
+// 			str[i] = 31;
+// 		}
+// 		else if (str[i] == q)
+// 		{
+// 			q = 0;
+// 			str[i] = 31;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	ft_unquotes(t_token *t)
 {

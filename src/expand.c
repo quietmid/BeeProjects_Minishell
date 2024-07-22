@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 17:54:35 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/22 14:17:17 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/22 15:32:34 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,14 @@ static char	*expand_line(t_data *d, char *s, int i)
 
 	value = find_key(d, s, i);
 	st = i;
-	while (!ft_isspace(s[st]) && (isalpha(s[st]) || s[st] == '_'))
+	if (s[st] == '?')
 		st++;
-	if (s[i] == '?')
+	else
+	{
+		while (!ft_isspace(s[st]) && (isalpha(s[st]) || s[st] == '_'))
+			st++;
+	}
+	if (s[i] == '?' && ft_strlen(s) == 2)
 		x = 0;
 	else
 		x = ft_strlen(s) - st;
@@ -66,9 +71,14 @@ static char	*expand_line(t_data *d, char *s, int i)
 		return (value);
 	line = (char *)ft_safe_malloc(sizeof(char) * line_len);
 	ft_strlcpy(line, s, i);
+	// printf("1strlcpy: %s\n", line);
 	ft_strcpy2(line + i - 1, value);
+	// printf("2strlcpy: %s\n", line);
 	if (x > 0)
+	{
 		ft_strcpy2(line + i + ft_strlen(value) - 1, s + st);
+		// printf("3strlcpy: %s\n", line);
+	}
 	free (value);
 	return (line);
 }
