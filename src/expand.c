@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 17:54:35 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 18:55:34 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/22 14:17:17 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ char	*check_expand(char *s, t_data *d)
 		if (s[i] == 36 && s[i + 1] && !ft_isspace(s[i + 1])
 			&& s[i + 1] != 36 && (q == 34 || !q))
 		{
+			if (new_line)
+				free(new_line);
 			new_line = expand_line(d, s, i + 1);
-			if (!new_line)
-				error_msg("expand malloc failed");
 			free(s);
 			s = ft_strdup(new_line);
 			i = 0;

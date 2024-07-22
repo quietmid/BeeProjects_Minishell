@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/20 19:22:11 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/20 22:24:01 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include <stdio.h> // printf readline
 # include <stdlib.h> // malloc free
 # include <sys/wait.h> // waitpid
-# include <string.h>
-# include <sys/types.h>
 # include <sys/stat.h> //stat
 # include <signal.h>
 # include <termios.h>
