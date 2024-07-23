@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 17:54:35 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/22 15:32:34 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/23 22:14:17 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ static char	*find_key(t_data *d, char *s, int i)
 	start = i;
 	if (s[i] == '?')
 	{
-		value = ft_itoa(WEXITSTATUS(d->status));
+		if (d->status > 255)
+			value = ft_itoa(WEXITSTATUS(d->status));
+		else
+			value = ft_itoa(d->status);
 		return (value);
 	}
 	else

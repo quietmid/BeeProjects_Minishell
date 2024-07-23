@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/22 22:16:09 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:37:26 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ int	is_builtin_x(t_data *data, int x)
 	if (data->token[0].cmd == NULL)
 		return (FALSE);
 	if (ft_strcmp(data->token[x].cmd[0], "echo") == 0)
-		return (TRUE);
+		return (2);
 	else if (ft_strcmp(data->token[x].cmd[0], "cd") == 0)
 		return (TRUE);
 	else if (ft_strcmp(data->token[x].cmd[0], "pwd") == 0)
-		return (TRUE);
+		return (2);
 	else if (ft_strcmp(data->token[x].cmd[0], "export") == 0)
 		return (TRUE);
 	else if (ft_strcmp(data->token[x].cmd[0], "unset") == 0)
 		return (TRUE);
 	else if (ft_strcmp(data->token[x].cmd[0], "env") == 0)
-		return (TRUE);
+		return (2);
 	else if (ft_strcmp(data->token[x].cmd[0], "exit") == 0)
 		return (TRUE);
 	else
@@ -60,7 +60,7 @@ void	exec_builtin(t_data *data, int x)
 {
 	if (ft_strcmp(data->token[x].cmd[0], "echo") == 0)
 		run_echo(data);
-	if (ft_strcmp(data->token[x].cmd[0], "cd") == 0)
+	else if (ft_strcmp(data->token[x].cmd[0], "cd") == 0)
 		run_cd(data);
 	else if (ft_strcmp(data->token[x].cmd[0], "pwd") == 0)
 		run_pwd(data);
@@ -72,4 +72,5 @@ void	exec_builtin(t_data *data, int x)
 		run_env(data);
 	else if (ft_strcmp(data->token[x].cmd[0], "exit") == 0)
 		run_exit(data, x);
+
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/22 15:32:21 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/23 20:22:08 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ static t_token	init_token(char *str, int i)
 	t.cmd_len = 0;
 	t.cmd_line = ft_strdup(str);
 	t.redir_len = calcu_redir(str);
+	t.hdfile = NULL;
 	if (t.redir_len > 0)
 		t.redir = (char ***)ft_safe_malloc((t.redir_len + 1) * sizeof(char **));
 	x = -1;
@@ -119,34 +120,34 @@ static t_token	init_token(char *str, int i)
 }
 
 
-// debug
-static void print_cmd_argv(char **redir)
-{
-	int i;
-	if (!redir)
-		return ;
-    for (i = 0; redir[i] != NULL; i++)
-    {
-        printf("cmd: %s\n", redir[i]);
-    }
-}
+// // debug
+// static void print_cmd_argv(char **redir)
+// {
+// 	int i;
+// 	if (!redir)
+// 		return ;
+//     for (i = 0; redir[i] != NULL; i++)
+//     {
+//         printf("cmd: %s\n", redir[i]);
+//     }
+// }
 
-static void print_redir_argv(char ***redir)
-{
-	int i;
-	i = 0;
-	if (!redir)
-		return ;
-	while (redir[i])
-	{
-		printf("redir [%d] \n", i);
-        printf("redir dir: %s\n", redir[i][0]);
-        printf("redir fd: %s\n", redir[i][1]);
-		i++;
-    }
-}
+// static void print_redir_argv(char ***redir)
+// {
+// 	int i;
+// 	i = 0;
+// 	if (!redir)
+// 		return ;
+// 	while (redir[i])
+// 	{
+// 		printf("redir [%d] \n", i);
+//         printf("redir dir: %s\n", redir[i][0]);
+//         printf("redir fd: %s\n", redir[i][1]);
+// 		i++;
+//     }
+// }
 
-// debug
+// // debug
 int	parse_start(t_data *data, char *line)
 {
 	char	**tmp;
@@ -166,10 +167,10 @@ int	parse_start(t_data *data, char *line)
 		data->hd += check_heredoc(&data->token[i]);
 		ft_unquotes(&data->token[i]);
 		// printf("%s\n", tmp[i]);
-		printf("cmd_line after: %s\n", data->token[i].cmd_line);
-		printf("token idx: %d \n", data->token[i].idx);
-		print_redir_argv(data->token[i].redir);
-		print_cmd_argv(data->token[i].cmd);
+		// printf("cmd_line after: %s\n", data->token[i].cmd_line);
+		// printf("token idx: %d \n", data->token[i].idx);
+		// print_redir_argv(data->token[i].redir);
+		// print_cmd_argv(data->token[i].cmd);
 		i++;
 	}
 	while (tmp[i])

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:27:25 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 20:08:42 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:23:18 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	redirect_first(t_data *data, int x)
 {
 	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
-		redir_in_fd(data, x);
 		redir_hd_fd(data, x);
+		redir_in_fd(data, x);
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{

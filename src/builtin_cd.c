@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/20 20:04:53 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/23 21:09:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	run_chdir(t_data *data, char *add, int dash)
 		if (dash == 1)
 			ft_putendl_fd(add, 1);
 		free(add);
-		data->status = 0;
+		//data->status = 0;
 	}
 	else
 	{

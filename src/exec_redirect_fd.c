@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:17:18 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/22 23:00:33 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:33:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,23 @@ void	redir_hd_fd(t_data *data, int x)
 				unlink(data->token[x].hdfile);
 				error_var(data, XFD, data->token[x].hdfile, 0);
 			}
-			if (dup2(data->token->in, STDIN_FILENO) < 0)
+			if (data->token[x].cmd)
 			{
-				unlink(data->token[x].hdfile);
-				error(data, XDUP, 0);
+				if (dup2(data->token->in, STDIN_FILENO) < 0)
+				{
+					unlink(data->token[x].hdfile);
+					error(data, XDUP, 0);
+				}
 			}
 			close(data->token->in);
 		}
 		i++;
 	}
-	//if (data->token[x].hd == 3)
+	if (data->token[x].hd == 3)
+	{
 		unlink(data->token[x].hdfile);
+		free(data->token[x].hdfile);
+	}
 }
 
 void	redir_in_fd(t_data *data, int x)
@@ -52,11 +58,13 @@ void	redir_in_fd(t_data *data, int x)
 			data->token->in = open(data->token[x].redir[i][1], O_RDONLY);
 			if (data->token->in < 0)
 			{
-				printf("PPP\n");
-				error_var(data, XFD, data->token[x].redir[i][1], 0);
+				error_var(data, XFD, data->token[x].redir[i][1], 1);
 			}
-			if (dup2(data->token->in, STDIN_FILENO) < 0)
-				error(data, XDUP, 0);
+			if (data->token[x].cmd)
+			{
+				if (dup2(data->token->in, STDIN_FILENO) < 0)
+					error(data, XDUP, 0);
+			}
 			close(data->token->in);
 		}
 		i++;
@@ -75,9 +83,12 @@ void	redir_out_fd(t_data *data, int x)
 			data->token->out = open(data->token[x].redir[i][1], \
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->token->out < 0)
-				error_var(data, XFD, data->token[x].redir[i][1], 0);
-			if (dup2(data->token->out, STDOUT_FILENO) < 0)
-				error(data, XDUP, 0);
+				error_var(data, XFD, data->token[x].redir[i][1], 1);
+			if (data->token[x].cmd)
+			{
+				if (dup2(data->token->out, STDOUT_FILENO) < 0)
+					error(data, XDUP, 0);
+			}
 			close(data->token->out);
 		}
 		i++;
@@ -96,9 +107,12 @@ void	redir_append_fd(t_data *data, int x)
 			data->token->out = open(data->token[x].redir[i][1], \
 				O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->token->out < 0)
-				error_var(data, XFD, data->token[x].redir[i][1], 0);
-			if (dup2(data->token->out, STDOUT_FILENO) < 0)
-				error(data, XDUP, 0);
+				error_var(data, XFD, data->token[x].redir[i][1], 1);
+			if (data->token[x].cmd)
+			{
+				if (dup2(data->token->out, STDOUT_FILENO) < 0)
+					error(data, XDUP, 0);
+			}
 			close(data->token->out);
 		}
 		i++;
