@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:17:18 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/20 18:04:30 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/22 23:00:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	redir_hd_fd(t_data *data, int x)
 		}
 		i++;
 	}
-	unlink(data->token[x].hdfile);
+	//if (data->token[x].hd == 3)
+		unlink(data->token[x].hdfile);
 }
 
 void	redir_in_fd(t_data *data, int x)
