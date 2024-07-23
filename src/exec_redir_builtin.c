@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:34:17 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/12 19:57:49 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:45:25 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	redirect_builtin(t_data *data, int x)
 	{
 		data->parent_out = dup(STDOUT_FILENO);
 		redir_append_fd(data, x);
-	}	
-	return ;
+	}
 }
 
 void	restore_stdio(t_data *data, int x)

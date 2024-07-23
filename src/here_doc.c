@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/22 16:07:34 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/23 17:23:26 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static int	hd_init(t_data *data, int i)
 {
 	int	fd;
 
+	if (data->token[i].hdfile)
+		free(data->token[i].hdfile);
 	data->token[i].hdfile = ft_itoa(i);
 	if (!data->token[i].hdfile)
 		error(data, XMALLOC, EXIT_FAILURE);

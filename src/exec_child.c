@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/22 23:11:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/23 23:43:01 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,13 @@ static void	check_path(t_data *data, int x, char **path)
 		if (is_builtin_x(data, x) == TRUE)
 		{
 			exec_builtin(data, x);
-			data->status = 0;
 			exit(data->status);
+		}
+		else if (is_builtin_x(data, x) == 2)
+		{
+			*path = ft_strjoin("/usr/bin/", data->token[x].cmd[0]);
+			if (!*path)
+				error(data, XMALLOC, EXIT_FAILURE);
 		}
 		else if (search_env(data, "PATH"))
 		{
@@ -80,34 +85,41 @@ static void	check_path(t_data *data, int x, char **path)
 		else
 			error_var(data, XNOFILE, data->token[x].cmd[0], 127);
 	}
-	else
-		*path = strdup("");
 }
 
 void	child_process(t_data *data, int x)
-
 {
 	char	*path;
 
-	env_to_arr(data);
-	if (data->cmd_count > 1 || data->token[x].redir)
+	if ( data->cmd_count > 1|| data->token[x].redir)
 		redirect(data, x);
-	if (data-> token[x].cmd && data->token[x].cmd[0][0] == '.')
-	{
-		if (access(data->token[x].cmd[0], X_OK) != 0)
-			error_var(data, XEXEC, data->token[x].cmd[0], 126);
-		path = data->token[x].cmd[0];
-	}
-	else if (data-> token[x].cmd &&  data->token[x].cmd[0][0] == '/')
+	if ((data-> token[x].cmd && data->token[x].cmd[0][0] == '.')
+		|| (data-> token[x].cmd && data->token[x].cmd[0][0] == '/'))
 	{
 		path = data->token[x].cmd[0];
 		if (is_directory(data->token[x].cmd[0]) == TRUE)
 			error_var(data, XDIR, data->token[x].cmd[0], 126);
+		if (access(data->token[x].cmd[0], R_OK) != 0)
+			error_var(data, XPERM, data->token[x].cmd[0], 126);
+		if (access(data->token[x].cmd[0], X_OK) != 0)
+			error_var(data, XNOFILE, data->token[x].cmd[0], 127);
 	}
+	// else if
+	// {
+	//  	path = data->token[x].cmd[0];
+	// 	if (is_directory(data->token[x].cmd[0]) == TRUE)
+	// 		error_var(data, XDIR, data->token[x].cmd[0], 126);
+	// 	if (access(data->token[x].cmd[0], X_OK) != 0)
+	// 		error_var(data, XNOFILE, data->token[x].cmd[0], 127);
+	// }
 	else
-	{
 		check_path(data, x, &path);
+	if (data->token[x].cmd)
+	{
+		env_to_arr(data);
+		if (execve(path, data->token[x].cmd, data->env_arr) < 0)
+			error(data, XEXEC, EXIT_FAILURE);
 	}
-	if (execve(path, data->token[x].cmd, data->env_arr) != 0)
-		error(data, XEXEC, EXIT_FAILURE);
 }
+
+

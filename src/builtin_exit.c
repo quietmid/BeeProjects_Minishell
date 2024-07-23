@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/19 19:31:36 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:29:42 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,7 @@ static void	convert_code(t_data *data, char *str)
 {
 	int	num;
 
-	num = ft_atoi(str);
-	while (num > 255)
-	{
-		num = (num - 256);
-	}
+	num = (ft_atoi(str) % 256);
 	data->status = num;
 }
 
@@ -30,6 +26,8 @@ static int	is_digit(t_data *data, char *str)
 
 	(void)data;
 	x = 0;
+	if (str[0] == '-' || str[0] == '+')
+		x++;
 	while (str[x])
 	{
 		if (ft_isdigit(str[x]) == 0)
@@ -42,14 +40,12 @@ static int	is_digit(t_data *data, char *str)
 static void	exit_message(t_data *data, char *var, int c)
 {
 	(void)data;
+	ft_putstr_fd("minishell-8.8$: ", 2);
 	if (c == 1)
+		ft_putendl_fd("exit: too many arguments", 2);
+	else if (c == 2)
 	{
-		ft_putstr_fd("minishell-8.8$: ", 2);
-		ft_putstr_fd("exit: too many arguments\n", 2);
-	}
-	if (c == 2)
-	{
-		ft_putstr_fd("minishell-8.8$: ", 2);
+		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(var, 2);
 		ft_putendl_fd(": numeric argument required", 2);
 	}
@@ -70,14 +66,14 @@ void	run_exit(t_data *data, int x)
 		else
 		{
 			if (data->cmd_count == 1)
-				ft_putstr_fd("exit\n", 2);
+				ft_putstr_fd("exit\n", 1);
 			exit_message(data, NULL, 1);
 			data->status = 1;
 			return ;
 		}
 	}
 	if (data->cmd_count == 1)
-		ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit\n", 1);
 	free_data_all(data, 0);
 	exit(data->status);
 }

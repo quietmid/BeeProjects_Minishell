@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 20:01:21 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/20 18:11:28 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/23 17:54:58 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	ft_free_token(t_data *data)
 			ft_free_tri(data->token[i].redir);
 		}
 		if (data->token[i].hd)
+		{
+			unlink(data->token[i].hdfile);
 			free(data->token[i].hdfile);
+		}
 		if (data->token[i].cmd_line)
 			free(data->token[i].cmd_line);
 		i++;
@@ -62,6 +65,11 @@ void	free_single_token(t_data *data, int i)
 		ft_free_tri(data->token[i].redir);
 	if (data->token[i].cmd_line)
 		free(data->token[i].cmd_line);
+	if (data->token[i].hd)
+	{
+		unlink(data->token[i].hdfile);
+		free(data->token[i].hdfile);
+	}
 	free(&data->token[i]);
 }
 

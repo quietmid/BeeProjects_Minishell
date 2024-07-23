@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:37:44 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/20 16:37:07 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/23 21:26:05 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ static void	run_export4(t_data *data, char **str, int c)
 	t_env	*node;
 
 	if (check_identifier(data, str) == FALSE)
+	{
 		return ;
+	}
 	node = search_env(data, str[0]);
 	if (!node)
 		run_export2(data, str, c);
