@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 18:23:41 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:16:32 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,6 @@ void	child_process(t_data *data, int x)
 		if (execve(path, data->token[x].cmd, data->env_arr) < 0)
 			error(data, XEXEC, EXIT_FAILURE);
 	}
+	else
+		exit(data->status);
 }

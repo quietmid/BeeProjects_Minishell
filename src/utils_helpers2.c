@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:30:25 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 16:17:38 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 19:18:50 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	ft_isexpand(char c)
 		return (1);
 	else if (ft_isalpha(c))
 		return (1);
-	else if (!ft_isspace(c))
-		return (1);
+	else if (ft_isspace(c))
+		return (0);
 	else
 		return (0);
 }
