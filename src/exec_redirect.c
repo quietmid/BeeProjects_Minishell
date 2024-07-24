@@ -6,23 +6,67 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:27:25 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/23 18:23:18 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:43:27 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	redirect_first(t_data *data, int x)
+static int	is_redir_x(t_data *data, int x, char *str)
 {
-	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
+	int	i;
+
+	if (data->token[x].redir)
+	{
+		i = (data->token[x].redir_len - 1);
+		while (i > 0)
+		{
+			if (ft_strcmp(data->token[x].redir[i][0], str) == 0)
+				return (i);
+			i--;
+		}
+		return (-1);
+	}
+	return (-1);
+}
+
+static void	redir_in_a(t_data *data, int x)
+{
+	if (is_redir_x(data, x, "<") > is_redir_x(data, x, "<<"))
 	{
 		redir_hd_fd(data, x);
 		redir_in_fd(data, x);
 	}
-	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
+	else
+	{
+		redir_in_fd(data, x);
+		redir_hd_fd(data, x);
+	}
+}
+
+static void	redir_out_a(t_data *data, int x)
+{
+	if (is_redir_x(data, x, ">") > is_redir_x(data, x, ">>"))
+	{
+		redir_append_fd(data, x);
+		redir_out_fd(data, x);
+	}
+	else
 	{
 		redir_out_fd(data, x);
 		redir_append_fd(data, x);
+	}
+}
+
+static void	redirect_first(t_data *data, int x)
+{
+	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
+	{
+		redir_in_a(data, x);
+	}
+	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
+	{
+		redir_out_a(data, x);
 	}
 	else if (is_redir(data, x, ">") == FALSE
 		|| is_redir(data, x, ">>") == FALSE)
@@ -40,8 +84,7 @@ static void	redirect_last(t_data *data, int x)
 {
 	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
-		redir_in_fd(data, x);
-		redir_hd_fd(data, x);
+		redir_in_a(data, x);
 	}
 	else if (is_redir(data, x, "<") == FALSE
 		|| is_redir(data, x, "<<") == FALSE)
@@ -51,8 +94,7 @@ static void	redirect_last(t_data *data, int x)
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
-		redir_out_fd(data, x);
-		redir_append_fd(data, x);
+		redir_out_a(data, x);
 	}
 	close_pipes(data);
 }
@@ -61,8 +103,7 @@ static void	redirect_middle(t_data *data, int x)
 {
 	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
-		redir_in_fd(data, x);
-		redir_hd_fd(data, x);
+		redir_in_a(data, x);
 	}
 	else if (is_redir(data, x, "<") == FALSE
 		|| is_redir(data, x, "<<") == FALSE)
@@ -72,8 +113,7 @@ static void	redirect_middle(t_data *data, int x)
 	}
 	if (is_redir(data, x, ">") == TRUE || is_redir(data, x, ">>") == TRUE)
 	{
-		redir_out_fd(data, x);
-		redir_append_fd(data, x);
+		redir_out_a(data, x);
 	}
 	else if (is_redir(data, x, ">") == FALSE
 		|| is_redir(data, x, ">>") == FALSE)
@@ -82,23 +122,6 @@ static void	redirect_middle(t_data *data, int x)
 			error(data, XDUP, 0);
 	}
 	close_pipes(data);
-}
-
-int	is_redir(t_data *data, int x, char *str)
-{
-	int	i;
-
-	i = 0;
-	if (data->token[x].redir)
-	{
-		while (data->token[x].redir[i])
-		{
-			if (ft_strcmp(data->token[x].redir[i][0], str) == 0)
-				return (TRUE);
-			i++;
-		}
-	}
-	return (FALSE);
 }
 
 void	redirect(t_data *data, int x)
