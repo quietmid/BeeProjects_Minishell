@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/23 17:23:26 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:08:01 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	hd_done(t_data *data, int hd, int i)
 	{
 		unlink(data->token[i].hdfile);
 		free(data->token[i].hdfile);
-		data->token[i].hd = 0; // after free we turn it off
+		data->token[i].hd = 0;
 		close(hd);
 		g_sigint = 0;
 		return (0);

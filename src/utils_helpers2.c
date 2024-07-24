@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:30:25 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/20 18:19:29 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 16:17:38 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,25 @@ int	check_token(t_data *data)
 			return (0);
 	}
 	return (1);
+}
+
+void	signal_d(void)
+{
+	if (isatty(0))
+		ft_putendl_fd("exit", 2);
+	exit (0);
+}
+
+int	ft_isexpand(char c)
+{
+	if (c == '_')
+		return (1);
+	else if (c == '?')
+		return (1);
+	else if (ft_isalpha(c))
+		return (1);
+	else if (!ft_isspace(c))
+		return (1);
+	else
+		return (0);
 }

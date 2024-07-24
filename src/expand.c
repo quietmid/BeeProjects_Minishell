@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 17:54:35 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/23 22:14:17 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:15:34 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@ static void	ft_strcpy2(char *dst, const char *src)
 	while (*src)
 		*dst++ = *src++;
 	*dst = '\0';
+}
+
+static int	ft_return_key(char *str, int st)
+{
+	if (str[st] == '?')
+		st++;
+	else
+	{
+		while (!ft_isspace(str[st]) && (ft_isalpha(str[st]) || str[st] == '_'))
+			st++;
+	}
+	return (st);
 }
 
 static char	*find_key(t_data *d, char *s, int i)
@@ -58,13 +70,7 @@ static char	*expand_line(t_data *d, char *s, int i)
 
 	value = find_key(d, s, i);
 	st = i;
-	if (s[st] == '?')
-		st++;
-	else
-	{
-		while (!ft_isspace(s[st]) && (isalpha(s[st]) || s[st] == '_'))
-			st++;
-	}
+	st = ft_return_key(s, st);
 	if (s[i] == '?' && ft_strlen(s) == 2)
 		x = 0;
 	else
@@ -74,14 +80,9 @@ static char	*expand_line(t_data *d, char *s, int i)
 		return (value);
 	line = (char *)ft_safe_malloc(sizeof(char) * line_len);
 	ft_strlcpy(line, s, i);
-	// printf("1strlcpy: %s\n", line);
 	ft_strcpy2(line + i - 1, value);
-	// printf("2strlcpy: %s\n", line);
 	if (x > 0)
-	{
 		ft_strcpy2(line + i + ft_strlen(value) - 1, s + st);
-		// printf("3strlcpy: %s\n", line);
-	}
 	free (value);
 	return (line);
 }
@@ -98,8 +99,7 @@ char	*check_expand(char *s, t_data *d)
 	while (s[i])
 	{
 		q = quote_finder(s[i], q);
-		if (s[i] == 36 && s[i + 1] && !ft_isspace(s[i + 1])
-			&& s[i + 1] != 36 && (q == 34 || !q))
+		if (s[i] == 36 && s[i + 1] && ft_isexpand(s[i + 1]) && (q == 34 || !q))
 		{
 			if (new_line)
 				free(new_line);

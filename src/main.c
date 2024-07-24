@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/23 22:05:15 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:07:41 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,20 @@ void	execute(t_data	*data)
 }
 /* we can use this one if we want improve user experience*/
 
-// static void	line_history(char *line)
-// {
-// 	static char	*last = NULL;
-
-// 	if (*line && (!last || ft_strcmp(last, line)))
-// 	{
-// 		add_history(line);
-// 		free(last);
-// 		last = ft_strdup(line);
-// 	}
-// }
-
-void	signal_d(void)
+static void	line_history(char *line)
 {
-	if (isatty(0))
-		ft_putendl_fd("exit", 2);
-	exit (0);
+	static char	*last;
+	char		*line_copy;
+
+	last = NULL;
+	if (*line && (!last || ft_strcmp(last, line)))
+	{
+		line_copy = ft_strdup(line);
+		add_history(line_copy);
+		free(last);
+		last = ft_strdup(line_copy);
+		free (line_copy);
+	}
 }
 
 void	ft_minishell(t_data *data, int status)
@@ -83,7 +80,7 @@ void	ft_minishell(t_data *data, int status)
 			signal_d();
 		if (line && *line != '\0')
 		{
-			add_history(line);
+			line_history(line);
 			status = prompt_check(data, line);
 			if (status == 1)
 				status = parse_start(data, line);

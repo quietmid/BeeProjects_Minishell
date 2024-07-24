@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/20 22:24:01 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 16:14:01 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,8 @@ void	heredoc_handler(int sig);
 void	signal_setup(int mode);
 void	sig_handler(int sig);
 void	toggle_input(int mode);
-void	rl_replace_line(const char *text, int clear_undo);
+void	signal_d(void);
+// void	rl_replace_line(const char *text, int clear_undo);
 
 //Input checking
 int		prompt_check(t_data *data, char *line);
@@ -159,6 +160,7 @@ char	**prompt_prep(char *line, int opt);
 //expand
 char	*check_expand(char *s, t_data *d);
 char	*expand_key(t_data *data, char *key);
+int		ft_isexpand(char c);
 
 // Remove Quotes
 void	ft_removequotes(char *str);
