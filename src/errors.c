@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:02:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/23 22:16:47 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:54:10 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ void	error_cd(t_data *data, t_error code, char *var, char c)
 	{
 		ft_putstr_fd("cd: ", 2);
 		perror(var);
+		data->status = 1;
+	}
+	else if (code == XARG)
+	{
+		ft_putendl_fd("cd: too many arguments", 2);
 		data->status = 1;
 	}
 	else if (code == XEXP)

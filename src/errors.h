@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/23 23:16:16 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:52:22 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ typedef enum error
 	XHD,
 	XCWD,
 	XEXP,
-	XPERM
+	XPERM,
+	XARG,
 }	t_error;
 
 #endif
