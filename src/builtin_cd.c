@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:21:19 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 18:14:44 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:54:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ void	run_cd(t_data *data)
 	int		dash;
 
 	dash = 0;
+	if (ft_arr_len(data->token->cmd) > 2)
+	{
+		error_cd(data, XARG, NULL, 0);
+		return ;
+	}
 	if (!data->token->cmd[1]
 		|| (data->token->cmd[1][0] == '~' && !data->token->cmd[2]))
 	{
