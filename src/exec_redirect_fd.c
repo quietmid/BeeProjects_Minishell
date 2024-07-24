@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:17:18 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/23 19:33:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:43:34 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,21 @@ void	redir_append_fd(t_data *data, int x)
 		}
 		i++;
 	}
+}
+
+int	is_redir(t_data *data, int x, char *str)
+{
+	int	i;
+
+	i = 0;
+	if (data->token[x].redir)
+	{
+		while (data->token[x].redir[i])
+		{
+			if (ft_strcmp(data->token[x].redir[i][0], str) == 0)
+				return (TRUE);
+			i++;
+		}
+	}
+	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/23 23:43:01 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:39:12 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,22 +96,12 @@ void	child_process(t_data *data, int x)
 	if ((data-> token[x].cmd && data->token[x].cmd[0][0] == '.')
 		|| (data-> token[x].cmd && data->token[x].cmd[0][0] == '/'))
 	{
-		path = data->token[x].cmd[0];
 		if (is_directory(data->token[x].cmd[0]) == TRUE)
 			error_var(data, XDIR, data->token[x].cmd[0], 126);
-		if (access(data->token[x].cmd[0], R_OK) != 0)
-			error_var(data, XPERM, data->token[x].cmd[0], 126);
-		if (access(data->token[x].cmd[0], X_OK) != 0)
-			error_var(data, XNOFILE, data->token[x].cmd[0], 127);
+		if (access(data->token[x].cmd[0], W_OK | R_OK | X_OK) != 0)
+			error_var(data, XPERM, data->token[x].cmd[0], 127);
+		path = data->token[x].cmd[0];
 	}
-	// else if
-	// {
-	//  	path = data->token[x].cmd[0];
-	// 	if (is_directory(data->token[x].cmd[0]) == TRUE)
-	// 		error_var(data, XDIR, data->token[x].cmd[0], 126);
-	// 	if (access(data->token[x].cmd[0], X_OK) != 0)
-	// 		error_var(data, XNOFILE, data->token[x].cmd[0], 127);
-	// }
 	else
 		check_path(data, x, &path);
 	if (data->token[x].cmd)
