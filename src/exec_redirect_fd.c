@@ -6,11 +6,25 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:17:18 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 17:43:34 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:23:12 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	unlink_error(t_data *data, t_error code, int x)
+{
+	if (code == XDUP)
+	{
+		unlink(data->token[x].hdfile);
+		error(data, XDUP, 0);
+	}
+	if (code == XFD)
+	{
+		unlink(data->token[x].hdfile);
+		error_var(data, XFD, data->token[x].hdfile, 0);
+	}
+}
 
 void	redir_hd_fd(t_data *data, int x)
 {
@@ -23,17 +37,11 @@ void	redir_hd_fd(t_data *data, int x)
 		{
 			data->token->in = open(data->token[x].hdfile, O_RDONLY);
 			if (data->token->in < 0)
-			{
-				unlink(data->token[x].hdfile);
-				error_var(data, XFD, data->token[x].hdfile, 0);
-			}
+				unlink_error(data, XFD, x);
 			if (data->token[x].cmd)
 			{
 				if (dup2(data->token->in, STDIN_FILENO) < 0)
-				{
-					unlink(data->token[x].hdfile);
-					error(data, XDUP, 0);
-				}
+					unlink_error(data, XDUP, x);
 			}
 			close(data->token->in);
 		}
@@ -117,21 +125,4 @@ void	redir_append_fd(t_data *data, int x)
 		}
 		i++;
 	}
-}
-
-int	is_redir(t_data *data, int x, char *str)
-{
-	int	i;
-
-	i = 0;
-	if (data->token[x].redir)
-	{
-		while (data->token[x].redir[i])
-		{
-			if (ft_strcmp(data->token[x].redir[i][0], str) == 0)
-				return (TRUE);
-			i++;
-		}
-	}
-	return (FALSE);
 }

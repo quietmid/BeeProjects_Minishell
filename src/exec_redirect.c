@@ -6,29 +6,11 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:27:25 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 17:43:27 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:26:25 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	is_redir_x(t_data *data, int x, char *str)
-{
-	int	i;
-
-	if (data->token[x].redir)
-	{
-		i = (data->token[x].redir_len - 1);
-		while (i > 0)
-		{
-			if (ft_strcmp(data->token[x].redir[i][0], str) == 0)
-				return (i);
-			i--;
-		}
-		return (-1);
-	}
-	return (-1);
-}
 
 static void	redir_in_a(t_data *data, int x)
 {
@@ -58,7 +40,7 @@ static void	redir_out_a(t_data *data, int x)
 	}
 }
 
-static void	redirect_first(t_data *data, int x)
+void	redirect_first(t_data *data, int x)
 {
 	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
@@ -80,7 +62,7 @@ static void	redirect_first(t_data *data, int x)
 	close_pipes(data);
 }
 
-static void	redirect_last(t_data *data, int x)
+void	redirect_last(t_data *data, int x)
 {
 	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
@@ -99,7 +81,7 @@ static void	redirect_last(t_data *data, int x)
 	close_pipes(data);
 }
 
-static void	redirect_middle(t_data *data, int x)
+void	redirect_middle(t_data *data, int x)
 {
 	if (is_redir(data, x, "<") == TRUE || is_redir(data, x, "<<") == TRUE)
 	{
@@ -122,19 +104,4 @@ static void	redirect_middle(t_data *data, int x)
 			error(data, XDUP, 0);
 	}
 	close_pipes(data);
-}
-
-void	redirect(t_data *data, int x)
-{
-	if (x < data->cmd_count)
-	{
-		if (x == 0)
-			redirect_first(data, x);
-		else if (x == (data->cmd_count - 1))
-			redirect_last(data, x);
-		else
-			redirect_middle(data, x);
-	}
-	close_pipes(data);
-	return ;
 }

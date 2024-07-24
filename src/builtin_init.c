@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 16:50:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/23 21:37:26 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:14:56 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,4 @@ void	exec_builtin(t_data *data, int x)
 		run_env(data);
 	else if (ft_strcmp(data->token[x].cmd[0], "exit") == 0)
 		run_exit(data, x);
-
 }

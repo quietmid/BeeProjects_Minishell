@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 16:14:01 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 18:26:04 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,10 @@ void	redir_append_fd(t_data *data, int x);
 // redirect
 void	redirect(t_data *data, int x);
 int		is_redir(t_data *data, int x, char *str);
+int		is_redir_x(t_data *data, int x, char *str);
+void	redirect_first(t_data *data, int x);
+void	redirect_middle(t_data *data, int x);
+void	redirect_last(t_data *data, int x);
 
 //child
 void	child_process(t_data *data, int x);

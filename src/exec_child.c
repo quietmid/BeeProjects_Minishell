@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 15:39:12 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:23:41 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	child_process(t_data *data, int x)
 {
 	char	*path;
 
-	if ( data->cmd_count > 1|| data->token[x].redir)
+	if (data->cmd_count > 1 || data->token[x].redir)
 		redirect(data, x);
 	if ((data-> token[x].cmd && data->token[x].cmd[0][0] == '.')
 		|| (data-> token[x].cmd && data->token[x].cmd[0][0] == '/'))
@@ -111,5 +111,3 @@ void	child_process(t_data *data, int x)
 			error(data, XEXEC, EXIT_FAILURE);
 	}
 }
-
-
