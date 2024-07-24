@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 16:07:41 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 17:26:58 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	execute(t_data	*data)
 	}
 	return ;
 }
-/* we can use this one if we want improve user experience*/
 
 static void	line_history(char *line)
 {
@@ -75,7 +74,7 @@ void	ft_minishell(t_data *data, int status)
 	{
 		signal_setup(SIG_PARENT);
 		status = 1;
-		line = readline("\033[0;31mminishell-8.8$ \033[0m");
+		line = readline("minishell-8.8$ ");
 		if (!line)
 			signal_d();
 		if (line && *line != '\0')
