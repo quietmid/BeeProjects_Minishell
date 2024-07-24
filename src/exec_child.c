@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 19:16:32 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 19:23:51 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	child_process(t_data *data, int x)
 	{
 		if (is_directory(data->token[x].cmd[0]) == TRUE)
 			error_var(data, XDIR, data->token[x].cmd[0], 126);
-		if (access(data->token[x].cmd[0], W_OK | R_OK | X_OK) != 0)
+		if (access(data->token[x].cmd[0], X_OK) != 0)
 			error_var(data, XPERM, data->token[x].cmd[0], 127);
 		path = data->token[x].cmd[0];
 	}
