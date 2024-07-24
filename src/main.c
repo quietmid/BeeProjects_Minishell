@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 17:26:58 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 17:41:11 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,6 @@ void	execute(t_data	*data)
 	return ;
 }
 
-static void	line_history(char *line)
-{
-	static char	*last;
-	char		*line_copy;
-
-	last = NULL;
-	if (*line && (!last || ft_strcmp(last, line)))
-	{
-		line_copy = ft_strdup(line);
-		add_history(line_copy);
-		free(last);
-		last = ft_strdup(line_copy);
-		free (line_copy);
-	}
-}
-
 void	ft_minishell(t_data *data, int status)
 {
 	char	*line;
@@ -79,7 +63,7 @@ void	ft_minishell(t_data *data, int status)
 			signal_d();
 		if (line && *line != '\0')
 		{
-			line_history(line);
+			add_history(line);
 			status = prompt_check(data, line);
 			if (status == 1)
 				status = parse_start(data, line);
