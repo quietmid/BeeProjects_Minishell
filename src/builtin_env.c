@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:27:54 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/18 22:15:46 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:21:48 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	run_env(t_data *data)
 			}
 			env = env->next;
 		}
+		data->status = 0;
 	}
 	else
 	{

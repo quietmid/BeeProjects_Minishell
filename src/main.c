@@ -6,11 +6,13 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 19:15:58 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 16:04:09 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_sigint = 0;
 
 static void	wait_children(t_data *data)
 {
@@ -31,7 +33,7 @@ void	execute(t_data	*data)
 	{
 		if (data->token[0].redir != NULL)
 			redirect_builtin(data, 0);
-		if (is_builtin(data) == TRUE)
+		if (is_builtin(data) == TRUE && data->ms_stat == 0)
 			exec_builtin(data, 0);
 		if (data->token[0].redir != NULL)
 			restore_stdio(data, 0);
@@ -56,7 +58,7 @@ void	ft_minishell(t_data *data, int status)
 	toggle_input(SIG_PARENT);
 	while (1)
 	{
-		signal_setup(SIG_PARENT);
+		signal_setup(SIG_PARENT, data);
 		status = 1;
 		line = readline("minishell-8.8$ ");
 		if (!line)

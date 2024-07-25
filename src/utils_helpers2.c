@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:30:25 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 19:18:50 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 16:46:24 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,15 @@ void	signal_d(void)
 	exit (0);
 }
 
-int	ft_isexpand(char c)
+int	ft_isexp(char c)
 {
 	if (c == '_')
 		return (1);
 	else if (c == '?')
 		return (1);
 	else if (ft_isalpha(c))
+		return (1);
+	else if (ft_isquote(c))
 		return (1);
 	else if (ft_isspace(c))
 		return (0);

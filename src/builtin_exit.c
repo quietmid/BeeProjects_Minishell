@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/23 20:29:42 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:19:37 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,23 @@ static int	is_digit(t_data *data, char *str)
 
 static void	exit_message(t_data *data, char *var, int c)
 {
+	char	*tmp;
+	char	*msg;
+
 	(void)data;
-	ft_putstr_fd("minishell-8.8$: ", 2);
 	if (c == 1)
-		ft_putendl_fd("exit: too many arguments", 2);
+		ft_putendl_fd("minishell-8.8$: exit: too many arguments", 2);
 	else if (c == 2)
 	{
-		ft_putstr_fd("exit: ", 2);
-		ft_putstr_fd(var, 2);
-		ft_putendl_fd(": numeric argument required", 2);
+		tmp = ft_strjoin(var, ": numeric argument required");
+		if (!tmp)
+			error(data, XMALLOC, EXIT_FAILURE);
+		msg = ft_strjoin("minishell-8.8$: exit: ", tmp);
+		if (!msg)
+			error(data, XMALLOC, EXIT_FAILURE);
+		free (tmp);
+		ft_putendl_fd(msg, 2);
+		free(msg);
 	}
 }
 

@@ -6,13 +6,13 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 23:17:23 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 16:08:01 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 21:33:01 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_sigint = 0;
+// int	g_sigint = 0;
 
 int	check_heredoc(t_token *t)
 {
@@ -54,6 +54,7 @@ static int	hd_done(t_data *data, int hd, int i)
 	{
 		unlink(data->token[i].hdfile);
 		free(data->token[i].hdfile);
+		data->status = 130;
 		data->token[i].hd = 0;
 		close(hd);
 		g_sigint = 0;
@@ -71,7 +72,7 @@ static int	ft_hd(t_data *data, int i, int j)
 
 	stdin_backup = safe_dup(STDIN_FILENO);
 	hd = hd_init(data, i);
-	set_signal_handler(SIGINT, heredoc_handler);
+	set_signal_handler(SIGINT, heredoc_handler, data);
 	while (1)
 	{
 		line = readline("> ");

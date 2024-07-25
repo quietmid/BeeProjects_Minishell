@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:02:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 18:54:10 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:16:22 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,27 @@ void	error(t_data *data, t_error code, int e)
 		ft_putendl_fd(ERR_HD, 2);
 	if (code == XCWD)
 		ft_putendl_fd(ERR_CWD, 2);
-	ft_free_token(data);
-	ft_free_before_loop(data);
 	data->status = e;
-	exit(data->status);
+	data->ms_stat = 1;
 }
 
 void	error_cd(t_data *data, t_error code, char *var, char c)
 {
+	data->status = 1;
+	data->ms_stat = 1;
 	ft_putstr_fd("minishell-8.8$: ", 2);
 	if (code == XCD)
 	{
 		ft_putstr_fd("cd: ", 2);
 		perror(var);
-		data->status = 1;
 	}
 	else if (code == XARG)
-	{
 		ft_putendl_fd("cd: too many arguments", 2);
-		data->status = 1;
-	}
 	else if (code == XEXP)
 	{
 		ft_putstr_fd("export: ", 2);
 		ft_putstr_fd(var, 2);
 		ft_putendl_fd(": "ERR_EXP, 2);
-		data->status = 1;
 	}
 	else if (code == XCDHOME)
 		ft_putendl_fd(ERR_HOME, 2);
@@ -100,8 +95,6 @@ void	error_var(t_data *data, t_error code, char *var, int e)
 		else
 			perror(var);
 	}
-	ft_free_token(data);
-	ft_free_before_loop(data);
-	data->status = (WEXITSTATUS(e));
-	exit (e);
+	data->ms_stat = 1;
+	data->status = e;
 }

@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:52:41 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 18:34:18 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/24 22:02:50 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	sig_handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_sigint = 130;
 	}
 }
 
@@ -39,7 +40,7 @@ void	heredoc_handler(int sig)
 	}
 }
 
-int	set_signal_handler(int signum, void (*handler)(int))
+int	set_signal_handler(int signum, void (*handler)(int), t_data *data)
 {
 	struct sigaction	sa;
 
@@ -50,6 +51,11 @@ int	set_signal_handler(int signum, void (*handler)(int))
 	{
 		perror("minishell: sigaction");
 		return (-1);
+	}
+	if (g_sigint == 1)
+	{
+		data->status = 130;
+		g_sigint = 0;
 	}
 	return (0);
 }
@@ -66,21 +72,21 @@ void	toggle_input(int mode)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_m);
 }
 
-void	signal_setup(int mode)
+void	signal_setup(int mode, t_data *data)
 {
 	if (mode == SIG_PARENT)
 	{
-		set_signal_handler(SIGINT, sig_handler);
+		set_signal_handler(SIGINT, sig_handler, data);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_HEREDOC)
 	{
-		set_signal_handler(SIGINT, heredoc_handler);
+		set_signal_handler(SIGINT, heredoc_handler, data);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == SIG_CHILD)
 	{
-		set_signal_handler(SIGINT, sig_handler);
+		set_signal_handler(SIGINT, sig_handler, data);
 		signal(SIGQUIT, SIG_IGN);
 	}
 }

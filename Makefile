@@ -10,6 +10,7 @@ SRC =	./src/builtin.c \
 		./src/builtin_echo.c \
 		./src/builtin_env.c \
 		./src/builtin_export.c \
+		./src/builtin_unset.c \
 		./src/builtin_exit.c \
 		./src/builtin_init.c \
 		./src/envp_init.c \

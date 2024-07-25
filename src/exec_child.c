@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:24:11 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 19:23:51 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 15:19:46 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	child_process(t_data *data, int x)
 	}
 	else
 		check_path(data, x, &path);
-	if (data->token[x].cmd)
+	if (data->token[x].cmd && data->ms_stat == 0)
 	{
 		env_to_arr(data);
 		if (execve(path, data->token[x].cmd, data->env_arr) < 0)

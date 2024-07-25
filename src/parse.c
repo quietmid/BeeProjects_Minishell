@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:42:45 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 16:06:53 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 15:04:06 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	parse_start(t_data *data, char *line)
 	int		i;
 
 	i = 0;
+	data->ms_stat = 0;
 	data->cmd_count = pipe_scans(line);
 	data->token = ft_safe_malloc(sizeof(t_token) * data->cmd_count);
 	tmp = ft_split(line, 31);

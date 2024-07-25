@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir_builtin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:34:17 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 18:24:51 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:16:41 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	restore_stdio(t_data *data, int x)
 	if (is_redir(data, x, "<") == TRUE)
 	{
 		if (dup2(data->parent_in, STDIN_FILENO) < 0)
+		{
 			error(data, XDUP, 0);
+		}
 		close(data->parent_in);
 	}
 	if (is_redir(data, x, ">") == TRUE)

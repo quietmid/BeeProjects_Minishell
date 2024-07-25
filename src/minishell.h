@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 18:26:04 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:46:35 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_data
 	int				status;
 	int				arr_len;
 	int				hd;
+	int				ms_stat;
 	char			**paths;
 	char			**env_arr;
 	char			*path_cmd;
@@ -133,15 +134,13 @@ void	redirect_last(t_data *data, int x);
 void	child_process(t_data *data, int x);
 
 // signals
-int		set_signal_handler(int signum, void (*handler)(int));
-int		set_signal_handler(int signum, void (*handler)(int));
+int		set_signal_handler(int signum, void (*handler)(int), t_data *data);
 void	toggle_input(int mode);
 void	heredoc_handler(int sig);
-void	signal_setup(int mode);
+void	signal_setup(int mode, t_data *data);
 void	sig_handler(int sig);
 void	toggle_input(int mode);
 void	signal_d(void);
-// void	rl_replace_line(const char *text, int clear_undo);
 
 //Input checking
 int		prompt_check(t_data *data, char *line);
@@ -164,7 +163,7 @@ char	**prompt_prep(char *line, int opt);
 //expand
 char	*check_expand(char *s, t_data *d);
 char	*expand_key(t_data *data, char *key);
-int		ft_isexpand(char c);
+int		ft_isexp(char c);
 
 // Remove Quotes
 void	ft_removequotes(char *str);

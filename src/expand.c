@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 17:54:35 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 19:22:49 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 16:46:19 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ char	*check_expand(char *s, t_data *d)
 	while (s[i])
 	{
 		q = quote_finder(s[i], q);
-		if ((s[i] == 36 && s[i + 1] && ft_isexpand(s[i + 1]))
-			&& (q == 34 || !q))
+		if ((s[i] == 36 && s[i + 1] && ft_isexp(s[i + 1])) && (q == 34 || !q))
 		{
 			if (new_line)
 				free(new_line);
@@ -108,6 +107,7 @@ char	*check_expand(char *s, t_data *d)
 			free(s);
 			s = ft_strdup(new_line);
 			i = 0;
+			q = 0;
 		}
 		else
 			i++;

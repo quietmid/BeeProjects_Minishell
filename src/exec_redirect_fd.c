@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:17:18 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/24 18:23:12 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:15:20 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ void	redir_hd_fd(t_data *data, int x)
 			data->token->in = open(data->token[x].hdfile, O_RDONLY);
 			if (data->token->in < 0)
 				unlink_error(data, XFD, x);
-			if (data->token[x].cmd)
+			if (data->token[x].cmd && data->ms_stat == 0)
 			{
 				if (dup2(data->token->in, STDIN_FILENO) < 0)
 					unlink_error(data, XDUP, x);
 			}
-			close(data->token->in);
+			if (data->token->in > 0)
+				close(data->token->in);
 		}
 		i++;
 	}
@@ -68,12 +69,13 @@ void	redir_in_fd(t_data *data, int x)
 			{
 				error_var(data, XFD, data->token[x].redir[i][1], 1);
 			}
-			if (data->token[x].cmd)
+			if (data->token[x].cmd && data->ms_stat == 0)
 			{
 				if (dup2(data->token->in, STDIN_FILENO) < 0)
 					error(data, XDUP, 0);
 			}
-			close(data->token->in);
+			if (data->token->in > 0)
+				close(data->token->in);
 		}
 		i++;
 	}
@@ -92,12 +94,13 @@ void	redir_out_fd(t_data *data, int x)
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->token->out < 0)
 				error_var(data, XFD, data->token[x].redir[i][1], 1);
-			if (data->token[x].cmd)
+			if (data->token[x].cmd && data->ms_stat == 0)
 			{
 				if (dup2(data->token->out, STDOUT_FILENO) < 0)
 					error(data, XDUP, 0);
 			}
-			close(data->token->out);
+			if (data->token->out > 0)
+				close(data->token->out);
 		}
 		i++;
 	}
@@ -116,12 +119,13 @@ void	redir_append_fd(t_data *data, int x)
 				O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->token->out < 0)
 				error_var(data, XFD, data->token[x].redir[i][1], 1);
-			if (data->token[x].cmd)
+			if (data->token[x].cmd && data->ms_stat == 0)
 			{
 				if (dup2(data->token->out, STDOUT_FILENO) < 0)
 					error(data, XDUP, 0);
 			}
-			close(data->token->out);
+			if (data->token->out > 0)
+				close(data->token->out);
 		}
 		i++;
 	}
