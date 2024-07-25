@@ -6,7 +6,7 @@
 /*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:03:33 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/19 18:03:37 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 17:13:03 by jlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,17 @@ char	*expand_key(t_data *data, char *key)
 		e = e->next;
 	}
 	return (NULL);
+}
+
+int	expandable_check(char *s, int i)
+{
+	if (s[i + 1] && ft_isexp(s[i + 1]))
+	{
+		if (ft_isquote(s[i + 1]) && i - 1 >= 0)
+		{
+			if (ft_isquote(s[i - 1]))
+				return (0);
+		}
+	}
+	return (1);
 }
