@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:17:18 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/25 16:15:20 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 19:02:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ void	redir_in_fd(t_data *data, int x)
 			data->token->in = open(data->token[x].redir[i][1], O_RDONLY);
 			if (data->token->in < 0)
 			{
-				error_var(data, XFD, data->token[x].redir[i][1], 1);
+				error_fd(data, errno, data->token[x].redir[i][1], 1);
+				if (data->ms_stat == 1)
+					break ;
 			}
 			if (data->token[x].cmd && data->ms_stat == 0)
 			{
@@ -93,7 +95,11 @@ void	redir_out_fd(t_data *data, int x)
 			data->token->out = open(data->token[x].redir[i][1], \
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->token->out < 0)
-				error_var(data, XFD, data->token[x].redir[i][1], 1);
+			{
+				error_fd(data, errno, data->token[x].redir[i][1], 1);
+				if (data->ms_stat == 1)
+					break ;
+			}
 			if (data->token[x].cmd && data->ms_stat == 0)
 			{
 				if (dup2(data->token->out, STDOUT_FILENO) < 0)
@@ -118,7 +124,11 @@ void	redir_append_fd(t_data *data, int x)
 			data->token->out = open(data->token[x].redir[i][1], \
 				O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->token->out < 0)
-				error_var(data, XFD, data->token[x].redir[i][1], 1);
+			{
+				error_fd(data, errno, data->token[x].redir[i][1], 1);
+				if (data->ms_stat == 1)
+					break ;
+			}
 			if (data->token[x].cmd && data->ms_stat == 0)
 			{
 				if (dup2(data->token->out, STDOUT_FILENO) < 0)

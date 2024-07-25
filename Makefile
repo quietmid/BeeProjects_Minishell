@@ -15,10 +15,12 @@ SRC =	./src/builtin.c \
 		./src/builtin_init.c \
 		./src/envp_init.c \
 		./src/errors.c \
+		./src/errors2.c \
 		./src/exec_child.c \
 		./src/exec_redir_builtin.c \
 		./src/exec_redirect.c \
  		./src/exec_redirect_fd.c \
+		./src/exec_utils.c \
 		./src/expand.c \
 		./src/expand_helpers.c \
 		./src/free_all.c \

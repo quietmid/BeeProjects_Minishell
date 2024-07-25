@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:57:38 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/24 18:52:22 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:39:22 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@
 # define ERR_CWD "unexpected error while executing cwd"
 # define ERR_EXP "not a valid identifier"
 
-# define ERR_CMD "command not found"
-# define ERR_NOFILE "No such file or directory"
+# define ERR_CMD ": command not found"
+# define ERR_NOFILE ": No such file or directory"
 # define ERR_HOME "cd: HOME not set"
 # define ERR_OLDPWD "cd: OLDPWD not set"
-# define ERR_DIR "Is a directory"
+# define ERR_DIR ": Is a directory"
+# define ERR_PERM ": Permission Denied"
 
 typedef enum error
 {

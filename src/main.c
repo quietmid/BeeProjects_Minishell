@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:10:28 by jlu               #+#    #+#             */
-/*   Updated: 2024/07/25 16:04:09 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 18:17:37 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute(t_data	*data)
 			redirect_builtin(data, 0);
 		if (is_builtin(data) == TRUE && data->ms_stat == 0)
 			exec_builtin(data, 0);
-		if (data->token[0].redir != NULL)
+		if (data->token[0].redir != NULL && data->ms_stat == 0)
 			restore_stdio(data, 0);
 		free_single_token(data, 0);
 	}
