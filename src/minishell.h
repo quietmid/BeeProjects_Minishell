@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlu <jlu@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 18:00:05 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/07/25 17:13:34 by jlu              ###   ########.fr       */
+/*   Updated: 2024/07/25 19:26:37 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ void	error_msg(char *msg);
 void	error(t_data *data, t_error code, int e);
 void	error_var(t_data *data, t_error code, char *var, int e);
 void	error_cd(t_data *data, t_error code, char *var, char c);
+void	error_fd(t_data *data, int err, char *var, int e);
 
 //memory cleaning
 void	free_data_all(t_data *data, int type);
