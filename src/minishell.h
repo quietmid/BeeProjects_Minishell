@@ -164,6 +164,7 @@ char	**prompt_prep(char *line, int opt);
 char	*check_expand(char *s, t_data *d);
 char	*expand_key(t_data *data, char *key);
 int		ft_isexp(char c);
+int		expandable_check(char *s, int i);
 
 // Remove Quotes
 void	ft_removequotes(char *str);
